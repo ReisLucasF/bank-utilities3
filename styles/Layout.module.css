@@ -1,5 +1,3 @@
-/* styles/Layout.module.css */
-/* Layout Container */
 .container {
   display: flex;
   flex-direction: column;
@@ -26,7 +24,7 @@
   height: var(--topbar-height);
   background-color: var(--topbar-bg-light);
   color: white;
-  z-index: 30;
+  z-index: 40;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
 }
@@ -40,9 +38,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0;
   height: 100%;
-  max-width: 1400px;
+  max-width: 99vw;
   margin: 0 auto;
 }
 
@@ -57,14 +55,20 @@
   color: white;
   cursor: pointer;
   margin-right: 1rem;
-  display: none;
-  padding: 0.25rem;
+  padding: 0.5rem;
   border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.2s;
 }
 
 .menuButton:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menuButton:active {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .title {
@@ -128,6 +132,7 @@
   display: flex;
   flex: 1;
   margin-top: var(--topbar-height);
+  position: relative;
 }
 
 /* Sidebar */
@@ -144,65 +149,36 @@
     transform 0.3s ease,
     width 0.3s ease,
     background-color 0.3s;
-  z-index: 20;
+  z-index: 30;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .darkTheme .sidebar {
   background-color: var(--sidebar-bg-dark);
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .sidebarClosed {
   transform: translateX(-100%);
 }
 
-.sidebarCollapsed {
-  width: var(--sidebar-collapsed-width);
-  overflow-x: hidden;
-}
-
-.collapseButton {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  color: white;
-  border-radius: 6px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.collapseButton:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateX(2px);
-}
-
-.sidebarCollapsed .collapseButton {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(-2px);
-}
-
-.sidebarCollapsed .collapseButton:hover {
-  transform: translateX(-2px);
+/* Mobile Sidebar */
+.mobileSidebar {
+  width: 85%;
+  max-width: 300px;
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 35;
 }
 
 .nav {
   padding: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .navList {
   list-style: none;
   padding: 0;
   margin: 0;
-  margin-top: 2rem;
 }
 
 .navItem {
@@ -242,29 +218,16 @@
   text-overflow: ellipsis;
 }
 
-.sidebarCollapsed .navText {
-  display: none;
-}
-
-.sidebarCollapsed .navLink {
-  justify-content: center;
-  padding: 0.75rem;
-}
-
-.sidebarCollapsed .navIcon {
-  margin-right: 0;
-}
-
 /* Main Content */
 .main {
   flex: 1;
   padding: 1.5rem;
-  margin-left: var(--sidebar-width);
+  margin-left: 0; /* Sem sidebar por padrão */
   transition: margin-left 0.3s ease;
 }
 
-.mainWithCollapsedSidebar {
-  margin-left: var(--sidebar-collapsed-width);
+.mainWithSidebar {
+  margin-left: var(--sidebar-width);
 }
 
 .mainContent {
@@ -272,9 +235,15 @@
   margin: 0 auto;
 }
 
-/* Overlay para dispositivos móveis */
+/* Overlay apenas para dispositivos móveis quando sidebar está aberta */
 .overlay {
-  display: none;
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
 }
 
 /* Footer */
@@ -295,32 +264,27 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .menuButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .main {
-    margin-left: 0;
-  }
-
-  .mainWithCollapsedSidebar {
-    margin-left: 0;
-  }
-
-  .overlay {
-    display: block;
-    position: fixed;
-    top: var(--topbar-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-  }
-
-  .collapseButton {
+  .userName {
     display: none;
+  }
+
+  .logoutText {
+    display: none;
+  }
+
+  .logoutButton {
+    padding: 0.5rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .topbarRight {
+    gap: 0.5rem;
+  }
+
+  .mainWithSidebar {
+    margin-left: 0; /* Em mobile, a sidebar sobrepõe o conteúdo */
   }
 }

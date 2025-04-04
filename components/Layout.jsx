@@ -6,8 +6,6 @@ import {
   X,
   Sun,
   Moon,
-  PanelLeftClose,
-  PanelLeftOpen,
   LayoutDashboard,
   Package,
   Users,
@@ -17,9 +15,21 @@ import {
 } from "lucide-react";
 
 export default function Layout({ children }) {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,11 +41,8 @@ export default function Layout({ children }) {
       const storedSidebarOpen = sessionStorage.getItem("sidebarOpen");
       if (storedSidebarOpen !== null) {
         setSidebarOpen(storedSidebarOpen === "true");
-      }
-
-      const storedSidebarCollapsed = sessionStorage.getItem("sidebarCollapsed");
-      if (storedSidebarCollapsed !== null) {
-        setSidebarCollapsed(storedSidebarCollapsed === "true");
+      } else {
+        setSidebarOpen(false);
       }
 
       if (storedTheme === "dark") {
@@ -50,12 +57,6 @@ export default function Layout({ children }) {
     const newState = !isSidebarOpen;
     setSidebarOpen(newState);
     sessionStorage.setItem("sidebarOpen", newState.toString());
-  };
-
-  const toggleSidebarCollapse = () => {
-    const newState = !isSidebarCollapsed;
-    setSidebarCollapsed(newState);
-    sessionStorage.setItem("sidebarCollapsed", newState.toString());
   };
 
   const toggleTheme = () => {
@@ -78,12 +79,13 @@ export default function Layout({ children }) {
       <header className={styles.topbar}>
         <div className={styles.topbarContent}>
           <div className={styles.topbarLeft}>
+            {/* Botão de toggle da sidebar (hamburguer) */}
             <button
               onClick={toggleSidebar}
               className={styles.menuButton}
-              aria-label="Toggle Sidebar"
+              aria-label={isSidebarOpen ? "Fechar Menu" : "Abrir Menu"}
             >
-              <Menu size={24} />
+              {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             <h1 className={styles.title}>Minha Aplicação</h1>
           </div>
@@ -98,39 +100,24 @@ export default function Layout({ children }) {
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <span>Usuário</span>
+            <span className={styles.userName}>Usuário</span>
             <button className={styles.logoutButton}>
               <LogOut size={16} className={styles.logoutIcon} />
-              <span>Sair</span>
+              <span className={styles.logoutText}>Sair</span>
             </button>
           </div>
         </div>
       </header>
 
       <div className={styles.content}>
-        {/* Sidebar */}
+        {/* Sidebar - visível apenas quando isSidebarOpen é verdadeiro */}
         <aside
           className={`
           ${styles.sidebar} 
           ${!isSidebarOpen ? styles.sidebarClosed : ""} 
-          ${isSidebarCollapsed ? styles.sidebarCollapsed : ""}
+          ${isMobile ? styles.mobileSidebar : ""}
         `}
         >
-          {/* Botão para retrair/expandir a sidebar */}
-          <button
-            onClick={toggleSidebarCollapse}
-            className={styles.collapseButton}
-            aria-label={
-              isSidebarCollapsed ? "Expandir sidebar" : "Retrair sidebar"
-            }
-          >
-            {isSidebarCollapsed ? (
-              <PanelLeftOpen size={18} />
-            ) : (
-              <PanelLeftClose size={18} />
-            )}
-          </button>
-
           <nav className={styles.nav}>
             <ul className={styles.navList}>
               <li className={styles.navItem}>
@@ -181,11 +168,11 @@ export default function Layout({ children }) {
         <main
           className={`
           ${styles.main} 
-          ${isSidebarCollapsed ? styles.mainWithCollapsedSidebar : ""}
+          ${isSidebarOpen ? styles.mainWithSidebar : ""}
         `}
         >
-          {/* Overlay para dispositivos móveis quando o sidebar está aberto */}
-          {isSidebarOpen && (
+          {/* Overlay quando o sidebar está aberto apenas em dispositivos móveis */}
+          {isMobile && isSidebarOpen && (
             <div className={styles.overlay} onClick={toggleSidebar}></div>
           )}
           <div className={styles.mainContent}>{children}</div>
