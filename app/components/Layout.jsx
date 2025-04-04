@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import styles from "../styles/Layout.module.css";
+import styles from "/styles/Layout.module.css";
 import {
   Menu,
   X,
@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   Settings,
   LogOut,
+  Bell,
 } from "lucide-react";
 
 export default function Layout({ children }) {
@@ -129,27 +130,27 @@ export default function Layout({ children }) {
                 </Link>
               </li>
               <li className={styles.navItem}>
+                <Link href="/pacientes" className={styles.navLink}>
+                  <span className={styles.navIcon}>
+                    <Users size={20} />
+                  </span>
+                  <span className={styles.navText}>Pacientes</span>
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link href="/painel-chamada" className={styles.navLink}>
+                  <span className={styles.navIcon}>
+                    <Bell size={20} />
+                  </span>
+                  <span className={styles.navText}>Painel de Chamada</span>
+                </Link>
+              </li>
+              <li className={styles.navItem}>
                 <Link href="/produtos" className={styles.navLink}>
                   <span className={styles.navIcon}>
                     <Package size={20} />
                   </span>
                   <span className={styles.navText}>Produtos</span>
-                </Link>
-              </li>
-              <li className={styles.navItem}>
-                <Link href="/clientes" className={styles.navLink}>
-                  <span className={styles.navIcon}>
-                    <Users size={20} />
-                  </span>
-                  <span className={styles.navText}>Clientes</span>
-                </Link>
-              </li>
-              <li className={styles.navItem}>
-                <Link href="/pedidos" className={styles.navLink}>
-                  <span className={styles.navIcon}>
-                    <ShoppingCart size={20} />
-                  </span>
-                  <span className={styles.navText}>Pedidos</span>
                 </Link>
               </li>
               <li className={styles.navItem}>

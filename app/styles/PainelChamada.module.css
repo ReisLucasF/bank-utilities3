@@ -1,0 +1,236 @@
+/* styles/PainelChamada.module.css */
+
+.painelContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.painelWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.painelContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Seção principal */
+.painelMainInfo {
+  display: flex;
+  flex-grow: 1;
+}
+
+.pacienteInfo {
+  width: 33.33%;
+  background-color: #3b82f6;
+  color: white;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-top-left-radius: 16px;
+}
+
+.pacienteLabel {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.pacienteNome {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.profissionalLabel {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.profissionalNome {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+.localInfo {
+  width: 66.67%;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem;
+  border-top-right-radius: 16px;
+}
+
+.localLabel {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.localNome {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+/* Seção de histórico */
+.historicoSection {
+  padding: 2rem;
+  background-color: white;
+}
+
+.historicoTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
+.tabelaContainer {
+  overflow-x: auto;
+}
+
+.tabelaHistorico {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tabelaHistorico th {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+}
+
+.tabelaHistorico th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.tabelaHistorico th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.tabelaHistorico td {
+  padding: 1rem 1.5rem;
+  font-size: 1.125rem;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabelaHistorico tr:last-child td {
+  border-bottom: none;
+}
+
+.tabelaHistorico tr:hover td {
+  background-color: #f8fafc;
+}
+
+.nenhumRegistro {
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Footer */
+.painelFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #3b82f6;
+  color: white;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.horarioAtual {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.footerInfo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.instituicao {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Responsividade */
+@media (max-width: 991px) {
+  .painelMainInfo {
+    flex-direction: column;
+  }
+
+  .pacienteInfo,
+  .localInfo {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .pacienteNome {
+    font-size: 2.5rem;
+  }
+
+  .profissionalNome {
+    font-size: 1.75rem;
+  }
+
+  .localNome {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .historicoTitle {
+    font-size: 1.25rem;
+  }
+
+  .tabelaHistorico th,
+  .tabelaHistorico td {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .painelFooter {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .horarioAtual,
+  .instituicao {
+    font-size: 1rem;
+  }
+}

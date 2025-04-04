@@ -1,0 +1,362 @@
+/* styles/Pacientes.module.css */
+
+.pacientesContainer {
+  padding: 1.5rem;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+:global(.dark-theme) .pageTitle {
+  color: #f8fafc;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.625rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+}
+
+.searchContainer {
+  margin-bottom: 1.5rem;
+  max-width: 32rem;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  color: #94a3b8;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.625rem 1rem 0.625rem 2.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+:global(.dark-theme) .searchInput {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+:global(.dark-theme) .searchInput:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.tableContainer {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+:global(.dark-theme) .tableContainer {
+  background-color: #1e293b;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.3),
+    0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.pacientesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHead {
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+:global(.dark-theme) .tableHead {
+  background-color: #0f172a;
+  border-bottom-color: #334155;
+}
+
+.tableHeader {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  user-select: none;
+}
+
+:global(.dark-theme) .tableHeader {
+  color: #cbd5e1;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortIcon {
+  color: #3b82f6;
+}
+
+:global(.dark-theme) .sortIcon {
+  color: #60a5fa;
+}
+
+.tableBody {
+  background-color: white;
+}
+
+:global(.dark-theme) .tableBody {
+  background-color: #1e293b;
+}
+
+.tableRow {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s;
+}
+
+.tableRow:hover {
+  background-color: #f8fafc;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+:global(.dark-theme) .tableRow {
+  border-bottom-color: #334155;
+}
+
+:global(.dark-theme) .tableRow:hover {
+  background-color: #0f172a;
+}
+
+.tableCell {
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+:global(.dark-theme) .tableCell {
+  color: #cbd5e1;
+}
+
+.patientName {
+  font-weight: 500;
+  color: #0f172a;
+}
+
+:global(.dark-theme) .patientName {
+  color: #f8fafc;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editButton {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.editButton:hover {
+  background-color: #dbeafe;
+}
+
+:global(.dark-theme) .editButton {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+:global(.dark-theme) .editButton:hover {
+  background-color: rgba(37, 99, 235, 0.3);
+}
+
+.callButton {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.callButton:hover {
+  background-color: #d1fae5;
+}
+
+:global(.dark-theme) .callButton {
+  background-color: rgba(5, 150, 105, 0.2);
+}
+
+:global(.dark-theme) .callButton:hover {
+  background-color: rgba(5, 150, 105, 0.3);
+}
+
+.deleteButton {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.deleteButton:hover {
+  background-color: #fecaca;
+}
+
+:global(.dark-theme) .deleteButton {
+  background-color: rgba(220, 38, 38, 0.2);
+}
+
+:global(.dark-theme) .deleteButton:hover {
+  background-color: rgba(220, 38, 38, 0.3);
+}
+
+/* Estados vazios e de carregamento */
+.emptyState,
+.loadingState {
+  padding: 4rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyStateTitle,
+.loadingState p {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #475569;
+}
+
+:global(.dark-theme) .emptyStateTitle,
+:global(.dark-theme) .loadingState p {
+  color: #cbd5e1;
+}
+
+.emptyStateMessage {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+:global(.dark-theme) .emptyStateMessage {
+  color: #94a3b8;
+}
+
+.clearSearchButton {
+  background-color: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clearSearchButton:hover {
+  background-color: #cbd5e1;
+}
+
+:global(.dark-theme) .clearSearchButton {
+  background-color: #334155;
+  color: #cbd5e1;
+}
+
+:global(.dark-theme) .clearSearchButton:hover {
+  background-color: #475569;
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+:global(.dark-theme) .loader {
+  border-color: #334155;
+  border-top-color: #60a5fa;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .actionButton span {
+    display: none;
+  }
+
+  .actionButton {
+    padding: 0.375rem;
+  }
+}
