@@ -303,7 +303,7 @@ const CardCreator = () => {
       const tituloLimpo = removerCaracteresIndesejados(tituloFinal);
       const subtituloLimpo = removerCaracteresIndesejados(subtituloFinal);
 
-      fetch("/modelo.json")
+      fetch("/modeloCard.json")
         .then((response) => response.json())
         .then((modeloJson) => {
           const imageBase64 = reader.result.split(",")[1]; 

@@ -340,11 +340,11 @@ const PopupCreator = () => {
       const imageBase64 = e.target.result.split(",")[1]; // Remover o prefixo data:image/xyz;base64,
 
       // Buscar o modelo JSON
-      fetch("/modelopopup.json")
+      fetch("/modeloPopUp.json")
         .then((response) => {
           if (!response.ok) {
             throw new Error(
-              `Erro ao carregar modelopopup.json: ${response.status}`,
+              `Erro ao carregar modeloPopUp.json: ${response.status}`,
             );
           }
           return response.json();
