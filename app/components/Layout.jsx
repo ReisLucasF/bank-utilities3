@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Target,
   FileCheck,
+  FileCode,
 } from "lucide-react";
 import { useTheme } from "/context/ThemeContext";
 
@@ -200,6 +201,55 @@ export default function Layout({ children }) {
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>
                         Ficha Compensação
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+
+              {/* Dropdown: Liberação */}
+              <li
+                className={`${styles.navItem} ${
+                  expandedMenus["liberacao"] ? styles.navItemActive : ""
+                }`}
+              >
+                <button
+                  onClick={() => toggleDropdown("liberacao")}
+                  className={styles.dropdownButton}
+                >
+                  <span className={styles.navIcon}>
+                    <FileCode size={20} />
+                  </span>
+                  <span className={styles.navText}>Liberação</span>
+                  <span className={styles.dropdownIcon}>
+                    {expandedMenus["liberacao"] ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronRight size={16} />
+                    )}
+                  </span>
+                </button>
+
+                {/* Submenu de Liberação */}
+                <ul
+                  className={`${styles.submenu} ${
+                    expandedMenus["liberacao"] ? styles.submenuExpanded : ""
+                  }`}
+                >
+                  <li className={styles.submenuItem}>
+                    <Link href="/liberacao" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>
+                        Script Convencional
+                      </span>
+                    </Link>
+                  </li>
+
+                  <li className={styles.submenuItem}>
+                    <Link href="/liberacao-atm" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>
+                        Script ATM
                       </span>
                     </Link>
                   </li>
