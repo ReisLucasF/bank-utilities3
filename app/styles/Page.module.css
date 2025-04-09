@@ -1,0 +1,15 @@
+/* Estilos para a página */
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pageDescription {
+  color: #6b7280;
+  font-size: 1rem;
+}

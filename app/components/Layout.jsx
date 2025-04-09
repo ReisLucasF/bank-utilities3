@@ -7,18 +7,19 @@ import {
   Sun,
   Moon,
   LayoutDashboard,
-  Package,
-  Users,
-  ShoppingCart,
-  Settings,
-  LogOut,
-  Bell,
+  Brain,
+  ChevronDown,
+  ChevronRight,
+  Target,
+  FileCheck,
 } from "lucide-react";
+import { useTheme } from "/context/ThemeContext";
 
 export default function Layout({ children }) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState({});
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -34,11 +35,6 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedTheme = sessionStorage.getItem("theme");
-      if (storedTheme) {
-        setIsDarkMode(storedTheme === "dark");
-      }
-
       const storedSidebarOpen = sessionStorage.getItem("sidebarOpen");
       if (storedSidebarOpen !== null) {
         setSidebarOpen(storedSidebarOpen === "true");
@@ -46,10 +42,14 @@ export default function Layout({ children }) {
         setSidebarOpen(false);
       }
 
-      if (storedTheme === "dark") {
-        document.documentElement.classList.add("dark-theme");
-      } else {
-        document.documentElement.classList.remove("dark-theme");
+      // Recuperar estado dos dropdowns
+      const storedExpandedMenus = sessionStorage.getItem("expandedMenus");
+      if (storedExpandedMenus) {
+        try {
+          setExpandedMenus(JSON.parse(storedExpandedMenus));
+        } catch (e) {
+          console.error("Erro ao carregar estado dos menus:", e);
+        }
       }
     }
   }, []);
@@ -60,16 +60,13 @@ export default function Layout({ children }) {
     sessionStorage.setItem("sidebarOpen", newState.toString());
   };
 
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    sessionStorage.setItem("theme", newTheme ? "dark" : "light");
-
-    if (newTheme) {
-      document.documentElement.classList.add("dark-theme");
-    } else {
-      document.documentElement.classList.remove("dark-theme");
-    }
+  const toggleDropdown = (menuId) => {
+    const newExpandedMenus = {
+      ...expandedMenus,
+      [menuId]: !expandedMenus[menuId],
+    };
+    setExpandedMenus(newExpandedMenus);
+    sessionStorage.setItem("expandedMenus", JSON.stringify(newExpandedMenus));
   };
 
   return (
@@ -88,7 +85,7 @@ export default function Layout({ children }) {
             >
               {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <h1 className={styles.title}>Minha Aplicação</h1>
+            <h1 className={styles.title}>Bank Utilities</h1>
           </div>
           <div className={styles.topbarRight}>
             {/* Botão de tema */}
@@ -101,23 +98,18 @@ export default function Layout({ children }) {
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <span className={styles.userName}>Usuário</span>
-            <button className={styles.logoutButton}>
-              <LogOut size={16} className={styles.logoutIcon} />
-              <span className={styles.logoutText}>Sair</span>
-            </button>
           </div>
         </div>
       </header>
 
       <div className={styles.content}>
-        {/* Sidebar - visível apenas quando isSidebarOpen é verdadeiro */}
+        {/* Sidebar */}
         <aside
           className={`
-          ${styles.sidebar} 
-          ${!isSidebarOpen ? styles.sidebarClosed : ""} 
-          ${isMobile ? styles.mobileSidebar : ""}
-        `}
+            ${styles.sidebar} 
+            ${!isSidebarOpen ? styles.sidebarClosed : ""} 
+            ${isMobile ? styles.mobileSidebar : ""}
+          `}
         >
           <nav className={styles.nav}>
             <ul className={styles.navList}>
@@ -129,36 +121,97 @@ export default function Layout({ children }) {
                   <span className={styles.navText}>Dashboard</span>
                 </Link>
               </li>
-              <li className={styles.navItem}>
-                <Link href="/pacientes" className={styles.navLink}>
+
+              {/* Dropdown: Ação Comercial */}
+              <li
+                className={`${styles.navItem} ${
+                  expandedMenus["acaoComercial"] ? styles.navItemActive : ""
+                }`}
+              >
+                <button
+                  onClick={() => toggleDropdown("acaoComercial")}
+                  className={styles.dropdownButton}
+                >
                   <span className={styles.navIcon}>
-                    <Users size={20} />
+                    <Target size={20} />
                   </span>
-                  <span className={styles.navText}>Pacientes</span>
-                </Link>
+                  <span className={styles.navText}>Ação Comercial</span>
+                  <span className={styles.dropdownIcon}>
+                    {expandedMenus["acaoComercial"] ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronRight size={16} />
+                    )}
+                  </span>
+                </button>
+
+                {/* Submenu de Ação Comercial */}
+                <ul
+                  className={`${styles.submenu} ${
+                    expandedMenus["acaoComercial"] ? styles.submenuExpanded : ""
+                  }`}
+                >
+                  <li className={styles.submenuItem}>
+                    <Link href="/card-creator" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>Card</span>
+                    </Link>
+                  </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/popup-creator" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>Popup</span>
+                    </Link>
+                  </li>
+                </ul>
               </li>
-              <li className={styles.navItem}>
-                <Link href="/painel-chamada" className={styles.navLink}>
+
+              {/* Dropdown: Comprovantes */}
+              <li
+                className={`${styles.navItem} ${
+                  expandedMenus["comprovantes"] ? styles.navItemActive : ""
+                }`}
+              >
+                <button
+                  onClick={() => toggleDropdown("comprovantes")}
+                  className={styles.dropdownButton}
+                >
                   <span className={styles.navIcon}>
-                    <Bell size={20} />
+                    <FileCheck size={20} />
                   </span>
-                  <span className={styles.navText}>Painel de Chamada</span>
-                </Link>
+                  <span className={styles.navText}>Comprovantes</span>
+                  <span className={styles.dropdownIcon}>
+                    {expandedMenus["comprovantes"] ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronRight size={16} />
+                    )}
+                  </span>
+                </button>
+
+                {/* Submenu de Comprovantes */}
+                <ul
+                  className={`${styles.submenu} ${
+                    expandedMenus["comprovantes"] ? styles.submenuExpanded : ""
+                  }`}
+                >
+                  <li className={styles.submenuItem}>
+                    <Link href="/recipt" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>
+                        Ficha Compensação
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
               </li>
+
               <li className={styles.navItem}>
-                <Link href="/produtos" className={styles.navLink}>
+                <Link href="/kbase" className={styles.navLink}>
                   <span className={styles.navIcon}>
-                    <Package size={20} />
+                    <Brain size={20} />
                   </span>
-                  <span className={styles.navText}>Produtos</span>
-                </Link>
-              </li>
-              <li className={styles.navItem}>
-                <Link href="/configuracoes" className={styles.navLink}>
-                  <span className={styles.navIcon}>
-                    <Settings size={20} />
-                  </span>
-                  <span className={styles.navText}>Configurações</span>
+                  <span className={styles.navText}>Base de Conhecimento</span>
                 </Link>
               </li>
             </ul>
@@ -168,9 +221,9 @@ export default function Layout({ children }) {
         {/* Main Content */}
         <main
           className={`
-          ${styles.main} 
-          ${isSidebarOpen ? styles.mainWithSidebar : ""}
-        `}
+            ${styles.main} 
+            ${isSidebarOpen ? styles.mainWithSidebar : ""}
+          `}
         >
           {/* Overlay quando o sidebar está aberto apenas em dispositivos móveis */}
           {isMobile && isSidebarOpen && (
@@ -183,7 +236,7 @@ export default function Layout({ children }) {
       {/* Footer */}
       <footer className={styles.footer}>
         <p>
-          © {new Date().getFullYear()} Minha Aplicação - Todos os direitos
+          © {new Date().getFullYear()} Bank Utilities - Todos os direitos
           reservados
         </p>
       </footer>

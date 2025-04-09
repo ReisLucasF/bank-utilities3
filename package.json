@@ -1,0 +1,13 @@
+{
+    "name": "poi",
+    "version": "1.0.0",
+    "description": "Project with multiple services",
+    "scripts": {
+        "start": "concurrently \"cd ws && node server.js\" \"cd app && npm run dev\"",
+        "start:ws": "cd ws && node server.js",
+        "start:app": "cd app && npm run dev"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.0"
+    }
+}

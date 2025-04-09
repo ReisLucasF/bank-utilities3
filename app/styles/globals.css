@@ -69,6 +69,17 @@ p {
     box-shadow 0.3s;
 }
 
+.container {
+  width: 100%;
+  padding: 0;
+  color: var(--text-light);
+  background-color: transparent;
+}
+
+.label, .quickAccessText, .appCardValue, .appCardTitle {
+  color: var(--text-light) !important;
+}
+
 .home-container {
   text-align: center;
   padding: 20px;

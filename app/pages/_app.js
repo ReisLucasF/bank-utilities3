@@ -1,14 +1,14 @@
 import Layout from "/components/Layout";
-import { NotificacaoProvider } from "/contexts/NotificacaoContext";
+import { ThemeProvider } from "/context/ThemeContext";
 import "/styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <NotificacaoProvider>
+    <ThemeProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </NotificacaoProvider>
+    </ThemeProvider>
   );
 }
 

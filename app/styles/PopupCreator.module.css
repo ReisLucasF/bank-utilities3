@@ -1,0 +1,541 @@
+/* PopupCreator.module.css */
+
+.popupCreatorContainer {
+  padding: 20px;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .contentContainer {
+    flex-direction: row;
+  }
+
+  .formSection {
+    width: 50%;
+  }
+
+  .previewSection {
+    width: 50%;
+  }
+}
+
+/* Formulário */
+.formSection {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  border: 1px solid #f0f0f0;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.formCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Accordion */
+.accordionItem {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordionHeader {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.accordionHeader:hover {
+  background-color: #edf2f7;
+}
+
+.accordionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.accordionIcon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.accordionContent {
+  padding: 16px 20px;
+  background-color: #fff;
+}
+
+/* Content sections */
+.contentSection {
+  margin-bottom: 20px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.contentSection:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.contentSectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+/* Form elements */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.formGrid3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.col2 {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .formGrid3 {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .col2 {
+    grid-column: span 2;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 6px;
+}
+
+.formInput,
+.formSelect {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.formInput:focus,
+.formSelect:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.fileUploadContainer {
+  display: flex;
+  align-items: center;
+}
+
+.fileUploadButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fileUploadButton:hover {
+  background-color: var(--primary-hover);
+}
+
+.uploadIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.statusArquivo {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.colorPickerContainer {
+  margin-top: 12px;
+}
+
+.colorInputWrapper {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.colorPicker {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 8px;
+}
+
+.colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 4px;
+}
+
+.colorInput {
+  flex-grow: 1;
+  border: none;
+  padding: 8px;
+  background: transparent;
+}
+
+.colorInput:focus {
+  outline: none;
+}
+
+.manualInputContainer {
+  margin-top: 8px;
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.actionButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btnReset {
+  padding: 10px 20px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btnReset:hover {
+  background-color: #e5e7eb;
+}
+
+.btnGerarScript {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btnGerarScript:hover {
+  background-color: var(--primary-hover);
+}
+
+.downloadIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Preview */
+.previewSection {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.previewStatus {
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+}
+
+/* Phone mockup */
+.phoneMockup {
+  width: 400px;
+  height: 700px;
+  border: 10px solid #1a1a1a;
+  border-radius: 36px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.phoneNotch {
+  width: 150px;
+  height: 25px;
+  background: #1a1a1a;
+  border-radius: 0 0 16px 16px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+}
+
+.phoneScreen {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f4f6;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Popup Container */
+.popupContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Popup Styles - REFATORADO */
+.popupPreview {
+  width: 100%;
+  height: 100%;
+  padding-top: 2rem;
+  background-color: transparent;
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.popupPreviewFull {
+  width: 300px;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.btnFechar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  z-index: 5;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+/* Imagem superior - Layout 333 */
+.popupImageTop {
+  width: 70%;
+  height: 200px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 5rem;
+  align-self: center;
+}
+
+/* Imagem inferior - Layout 334 */
+.popupImageMiddle {
+  width: 70%;
+  height: 180px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 10px auto;
+  align-self: center;
+}
+
+.popupImageFull {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.popupContent {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.popupTitle {
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.popupSubtitle {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* CTA Button - Posicionamento fixo na parte inferior */
+.popupCTA {
+  width: max-content;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: auto;
+  margin-bottom: 40px;
+  align-self: center;
+}
+
+/* Layout específico para quando a imagem está embaixo (334) */
+.layout334 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.layout334 .popupContent {
+  order: 1;
+  flex: 0 0 auto;
+  padding-bottom: 0;
+}
+
+.layout334 .popupImageMiddle {
+  order: 2;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.layout334 .popupCTAWrapper {
+  order: 3;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+/* Layout específico para quando a imagem está em cima (333) */
+.layout333 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.layout333 .popupImageTop {
+  order: 1;
+}
+
+.layout333 .popupContent {
+  order: 2;
+  padding-top: 0;
+}
+
+.layout333 .popupCTAWrapper {
+  order: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+/* Layout para imagem livre (335) */
+.layout335 {
+  height: 100%;
+}

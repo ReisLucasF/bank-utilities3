@@ -1,0 +1,357 @@
+/* Home.module.css */
+
+.homeContainer {
+  width: 100%;
+  color: var(--text-light);
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  border-radius: 2rem;
+}
+
+.darkTheme {
+  color: var(--text-dark);
+  background-color: #121212;
+}
+
+.welcomeSection {
+  background: linear-gradient(
+    to right,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  padding: 3rem 2rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcomeContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mainTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  opacity: 0.9;
+}
+
+.contentWrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+}
+
+/* Seção de Acesso Rápido */
+.quickAccessSection {
+  margin-bottom: 2.5rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.sectionIcon {
+  color: var(--primary-color);
+  margin-right: 0.75rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .toolsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .toolsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.toolCard {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-light);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.darkTheme .toolCard {
+  background-color: #1e1e1e;
+  color: var(--text-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.toolCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.darkTheme .toolCard:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.toolIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.toolInfo {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.toolTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.toolDescription {
+  font-size: 0.875rem;
+  color: #71717a;
+  margin-bottom: 1rem;
+}
+
+.darkTheme .toolDescription {
+  color: #a1a1aa;
+}
+
+.toolArrow {
+  color: var(--primary-color);
+  opacity: 0;
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.toolCard:hover .toolArrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* Layout de duas colunas */
+.twoColumnSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .twoColumnSection {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Cards de conteúdo */
+.card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.darkTheme .card {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: var(--primary-color);
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.featureIcon {
+  color: var(--primary-color);
+  margin-right: 0.75rem;
+  min-width: 20px;
+}
+
+.cardButton {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.cardButton:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Seção de próximas features */
+.upcomingList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.upcomingItem {
+  border-left: 3px solid var(--primary-color);
+  padding-left: 1rem;
+}
+
+.upcomingStatus {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.darkTheme .upcomingStatus {
+  background-color: rgba(59, 130, 246, 0.2);
+}
+
+.upcomingTitle {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.upcomingIcon {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.upcomingDescription {
+  font-size: 0.875rem;
+  color: #71717a;
+}
+
+.darkTheme .upcomingDescription {
+  color: #a1a1aa;
+}
+
+/* Banner de ajuda */
+.helpBanner {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.darkTheme .helpBanner {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.helpContent {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+.helpIcon {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.helpTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.helpText {
+  font-size: 0.9rem;
+  color: #71717a;
+  margin: 0;
+}
+
+.darkTheme .helpText {
+  color: #a1a1aa;
+}
+
+.helpButton {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.helpButton:hover {
+  background-color: var(--primary-hover);
+}
+
+@media (max-width: 640px) {
+  .helpContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .helpButton {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

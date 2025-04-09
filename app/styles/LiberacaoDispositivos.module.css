@@ -1,0 +1,279 @@
+/* LiberacaoDispositivos.module.css */
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  border: 2px dashed #475569;
+  margin: 1.5rem 0;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.mainLight {
+  background-color: #f5f7fa;
+  color: var(--text-light);
+  padding: 1.5rem;
+}
+
+.mainDark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  padding: 1.5rem;
+}
+
+.pageHeader {
+  margin-bottom: 1.5rem;
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pageSubtitle {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-top: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.primaryButton:hover {
+  background-color: var(--primary-hover);
+}
+
+.successButton {
+  display: flex;
+  align-items: center;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.successButton:hover {
+  background-color: #059669;
+}
+
+.buttonSuccess {
+  background-color: #059669;
+}
+
+.buttonIcon {
+  margin-right: 0.5rem;
+}
+
+.scriptsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scriptBlock {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+.scriptBlock:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.scriptBlockLight {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+}
+
+.scriptBlockDark {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+}
+
+.removeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.removeButtonLight {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.removeButtonLight:hover {
+  background-color: #fecaca;
+}
+
+.removeButtonDark {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.removeButtonDark:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+.formContainer {
+  padding: 1.5rem;
+}
+
+.formRowThree {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.formRowTwo {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.formRowTwo:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .formRowThree {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .formRowTwo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.inputLabelLight {
+  color: #4b5563;
+}
+
+.inputLabelDark {
+  color: #d1d5db;
+}
+
+.textInput,
+.selectInput {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+}
+
+.textInputLight,
+.selectInputLight {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.textInputLight:focus,
+.selectInputLight:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.textInputDark,
+.selectInputDark {
+  background-color: #111827;
+  border: 1px solid #4b5563;
+  color: #f9fafb;
+}
+
+.textInputDark:focus,
+.selectInputDark:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+}
+
+.inputErrorLight {
+  background-color: #fee2e2;
+}
+
+.inputErrorDark {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(10px);
+}
