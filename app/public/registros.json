@@ -1,9 +1,31 @@
 [
   {
+    "codigo": "Suporte App",
+    "categoria": "App",
+    "titulo": "Orientações de procedimentos primários para suporte em resoluções no App",
+    "causa": "Eventuais erros que possam surgir no App",
+    "orientacao": "- Verificar em qual momento exato o erro ocorre (Após qual ação realizada)\n- Foi exibida mensagem de erro? Se sim, qual a mensagem completa (incluíndo código se aplicável)\n- Realizar a limpeza de dados do app seguindo os caminhos:\n\n  -- Android: Configurações>Aplicativos>Banco Mercantil>Armazenamento>Limpar Dados\n  -- iOS: Configurações>Geral>Armazenamento do iPhone>Banco Mercantil>Apagar App\n\n- Verificar qual o modelo do dispositivo (ex: Galaxy A55, Iphone 12) e versãodo sistema operacional (ex: Android 13, iOS 16)\n- Qual o horário da tentativa realizada junto ao cliente\n- Verificar se o cliente está utilizando a versão mais atualizada do app (Android: Play Store, iOS: App Store)",
+    "gruposResolvedores": ["GR_Canais_APP_IBK", "GR_Canais_AppMB"],
+    "prioridade": "Baixa",
+    "impacto": "Não representa grande impacto até que seja diagnosticado o problema",
+    "tempoEstimado": "A depender da origem do erro"
+  },
+  {
+    "codigo": "Suporte IBK",
+    "categoria": "Internet Banking",
+    "titulo": "Orientações de procedimentos primários para suporte em resoluções no Internet Banking",
+    "causa": "Eventuais erros que possam surgir no Internet Banking em ambientes Desktop",
+    "orientacao": "- Verificar em qual momento exato o erro ocorre (Após qual ação realizada)\n- Foi exibida mensagem de erro? Se sim, qual a mensagem completa (incluíndo código se aplicável)\n- Qual o sistema operacional instlado na máquina e a sua versão (Windows 11, MacOS 10.15)\n- Realizar a limpeza de cache do navegador seguindo os caminhos:\n\n  -- Google Chrome: Configurações>Privacidade e Segurança>Limpar dados de navegação\n  -- Firefox: Configurações>Privacidade e Segurança>Cookies e dados do site>Limpar dados\n  -- Microsoft Edge: Configurações>Privacidade, pesquisa e serviços>Limpar dados de navegação\n\n- Verificar qual o navegador utilizado (ex: Google Chrome, Firefox, Microsoft Edge) e versão do navegador (ex: Google Chrome 115.0.5790.98)\n- Qual o horário da tentativa realizada junto ao cliente\n- Verificar se o cliente está utilizando a versão mais atualizada do navegador",
+    "gruposResolvedores": ["GR_Canais_APP_IBK", "GR_Canais_AppMB"],
+    "prioridade": "Baixa",
+    "impacto": "Não representa grande impacto até que seja diagnosticado o problema",
+    "tempoEstimado": "A depender da origem do erro"
+  },
+  {
     "codigo": "MBR100",
     "categoria": "Segurança",
-    "titulo": "Malware Detectado",
-    "causa": "Foi detectado algum programa malicioso no dispositivo do cliente",
+    "titulo": "Malware ou atividade suspeita detectada",
+    "causa": "Foi detectado algum programa malicioso no dispositivo do cliente, alguns exemplos são: \"Root\", \"Jailbreak\", \"Sobreposição de Tela (gravadores de tela)\",",
     "orientacao": "Abrir demanda ou designar a demanda para o GR_FRAUDES",
     "gruposResolvedores": ["GR_FRAUDES", "GR_FRAUDES_ELETRONICAS"],
     "prioridade": "Alta",
@@ -15,8 +37,8 @@
     "categoria": "Cadastro",
     "titulo": "Foto Ausente para Reconhecimento Facial",
     "causa": "Cliente com foto ausente cadastrada para a realização do reconhecimento facial",
-    "orientacao": "Solicitar ao cliente para que compareça em um PA para atualizar sua foto",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "orientacao": "Solicitar ao cliente para que compareça em um PA (Ponto de Atendimento) para atualizar sua foto",
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não conseguirá usar funcionalidades que exigem reconhecimento facial",
     "tempoEstimado": "Imediato após atualização da foto"
@@ -27,7 +49,7 @@
     "titulo": "Falha no Envio de Email com Recibo",
     "causa": "Proveniente do sistema SEC, se dá quando o cliente não consegue mais enviar por e-mail o recibo de transação efetuado via \"Internet Banking\"",
     "orientacao": "Estamos orientando a salvar como pdf e enviar por email.\n\nPrezados(as), bom dia!\n\nEstá havendo instabilidade com o envio de e-mails. Gentileza orientar o cliente a realizar o download do comprovante em formato PDF e encaminhar o arquivo para o email desejado. O caminho para gerar o arquivo é serviços de apoio > Controle de transações > Consulta e recibos de transações.\n\nAtenciosamente,\nCoordenação Canais Digitais (APPMB/IBK)",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue enviar comprovantes por email diretamente do sistema",
     "tempoEstimado": "Temporário - até resolução da instabilidade"
@@ -36,7 +58,7 @@
     "codigo": "FEP 755",
     "categoria": "Acesso",
     "titulo": "Bloqueio por Senha Incorreta",
-    "causa": "Bloqueio por inserir senha incorreta",
+    "causa": "Bloqueio por inserir senha incorreta por três vezes consecutivas",
     "orientacao": "O desbloqueio é realizado automaticamente após 24h, mas também pode ser feito no GIB: Suporte > Usuário > Desbloqueio de Cartão",
     "gruposResolvedores": ["*Atender*"],
     "prioridade": "Média",
@@ -58,8 +80,8 @@
     "codigo": "IBKM221E",
     "categoria": "Dispositivos",
     "titulo": "Acesso de Dispositivo Bloqueado",
-    "causa": "Cliente está tentando acessar de um dispositivo bloqueado",
-    "orientacao": "Realizar o desbloqueio do dispositivo mediante a IP e ID caso apareça ao usuário (REDCALL - para realizar IP e identificar o ID)",
+    "causa": "Cliente está tentando acessar de um dispositivo bloqueado (Mesmo caso do erro GIB0101)",
+    "orientacao": "Realizar o desbloqueio do dispositivo mediante a IP (Identificação Positiva) e ID (Identificador do Dispositivo) caso apareça ao usuário (REDCALL - para realizar IP e identificar o ID)",
     "gruposResolvedores": ["GR_Canais_AppMB"],
     "prioridade": "Alta",
     "impacto": "O cliente não consegue acessar o aplicativo do dispositivo atual",
@@ -122,14 +144,13 @@
   },
   {
     "codigo": "ERRO INTERNO DESCONHECIDO",
-    "categoria": "Geral",
-    "titulo": "Erro Desconhecido no Aplicativo",
+    "categoria": "App",
+    "titulo": "Erro Interno Desconhecido no Aplicativo",
     "causa": "Erro desconhecido no aplicativo, sem causa específica identificada",
-    "orientacao": "Normalmente se resolve após uma limpeza de dados completa do App, mas também pode ocorrer se tiver caracter especial no cadastro do cliente",
+    "orientacao": "Normalmente se resolve após uma limpeza de dados completa do App, mas também pode ocorrer se tiver caracter especial no cadastro do cliente.\n\nPara validar a existência de caracteres especiais, é necessário acessar o Emulador>SICS>IPC>Informar agência e Conta e consultar dados como Documento e Nome\n\nCaso não exista nenhum caractere, proceder com a limpeza de dados do App seguindo os caminhos:\n\n- Android: Configurações>Aplicativos>Banco Mercantil>Armazenamento>Limpar Dados\n- iOS: Configurações>Geral>Armazenamento do iPhone>Banco Mercantil>Apagar App\n\nApós isso, solicitar que o cliente faça o login novamente e verifique se o erro persiste.",
     "gruposResolvedores": [
-      "*Atender*",
-      "GR_Processamento_Cadastro",
-      "GR_Redecall_Call_Center"
+      "GR_Processamento_Cadastro (caracteres especiais)",
+      "GR_Canais_APP_IBK (processo de limpeza)"
     ],
     "prioridade": "Média",
     "impacto": "O cliente não consegue utilizar determinada função ou todo o aplicativo",
@@ -163,7 +184,7 @@
     "titulo": "Pessoa com Situação Cancelada no IPC",
     "causa": "Na tentativa de tornar PIX seguro, o erro é gerado porque a pessoa está com situação cancelada no IPC",
     "orientacao": "Solicitar que o redecall realize o procedimento padrão para tentar evitar o erro",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não consegue ativar a segurança do PIX",
     "tempoEstimado": "24h"
@@ -174,7 +195,7 @@
     "titulo": "Erro no Extrato de Benefício INSS",
     "causa": "Na tentativa de extratos de meses anteriores do Benefício do INSS",
     "orientacao": "Informar cliente que o extrato do benefício também pode ser retirado no Meu INSS e orientar em uma nova tentativa no APP",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)", "*Atender*"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK", "*Atender*"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue visualizar extratos de meses anteriores do benefício",
     "tempoEstimado": "Depende da tentativa do cliente ou acesso alternativo"
@@ -185,7 +206,7 @@
     "titulo": "Erro no Extrato de Benefício INSS",
     "causa": "Na tentativa de extratos de meses anteriores do Benefício do INSS",
     "orientacao": "Informar cliente que o extrato do benefício também pode ser retirado no Meu INSS e orientar em uma nova tentativa no APP",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)", "*Atender*"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK", "*Atender*"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue visualizar extratos de meses anteriores do benefício",
     "tempoEstimado": "Depende da tentativa do cliente ou acesso alternativo"
@@ -251,7 +272,7 @@
     "titulo": "Erro no Código de Barras ou Convênio não Aceito",
     "causa": "Cliente digitou o código de barras incorretamente, ou o MB não tem convênio para recebimento",
     "orientacao": "- Solicitar que cliente confira o código de barras informado (digitou o código de barras correto, entrou na opção de pagamento certa, etc)\n- Se ele estiver certo, neste caso, a demanda sempre deverá ser direcionada a gerência de produtos e serviços para verificação GR_Produto_Convenios.\n- Ao redirecionar, sempre informe o código de barras e o nome do convênio (empresa).",
-    "gruposResolvedores": ["GR_Produto_Convenios", "GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Produto_Convenios", "GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não consegue realizar o pagamento de determinado convênio",
     "tempoEstimado": "Imediato se for erro de digitação ou 24-48h para análise de convênio"
@@ -273,7 +294,7 @@
     "titulo": "Falha no Reconhecimento Facial",
     "causa": "Ops! Não conseguimos te reconhecer. Tente novamente.",
     "orientacao": "Não conseguiu fazer a prova de vida com sucesso (reconhecer uma pessoa na câmera).",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -350,7 +371,7 @@
     "titulo": "Qualidade da Imagem Baixa",
     "causa": "Qualidade da imagem baixa",
     "orientacao": "Rosto na imagem não identificado. Possíveis causas: qualidade da imagem, posicionamento, iluminação ambiente.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -361,7 +382,7 @@
     "titulo": "Rosto Muito Longe",
     "causa": "Rosto muito longe",
     "orientacao": "O rosto da pessoa está muito longe da câmera.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -372,7 +393,7 @@
     "titulo": "Rosto Muito Perto",
     "causa": "Rosto muito perto",
     "orientacao": "O rosto da pessoa está muito perto da câmera.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -383,7 +404,7 @@
     "titulo": "Iluminação Inadequada",
     "causa": "Iluminação muito clara ou muito escura",
     "orientacao": "A iluminação da imagem é muito ruim. No entanto, um rosto foi encontrado. Possíveis causas: muito claro ou muito escuro.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -394,7 +415,7 @@
     "titulo": "Imagem Sem Foco",
     "causa": "Imagem embaçada ou sem foco",
     "orientacao": "Imagem borrada ou qualidade muito baixa.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -405,7 +426,7 @@
     "titulo": "Rosto Inclinado",
     "causa": "Rosto inclinado",
     "orientacao": "O rosto está inclinado. Tire a foto com o rosto em posição reta para a câmera.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -416,7 +437,7 @@
     "titulo": "Rosto de Lado",
     "causa": "Rosto de lado",
     "orientacao": "O rosto está de lado. Tire a foto com o rosto em posição reta para a câmera.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -438,7 +459,7 @@
     "titulo": "Óculos Detectados",
     "causa": "Óculos",
     "orientacao": "Óculos não são permitidos.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa sem óculos"
@@ -449,7 +470,7 @@
     "titulo": "Imagem Embaçada",
     "causa": "Imagem embaçada",
     "orientacao": "Imagem embaçada.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Baixa",
     "impacto": "O cliente não consegue completar o processo de reconhecimento facial",
     "tempoEstimado": "Imediato com nova tentativa"
@@ -570,7 +591,7 @@
     "titulo": "Excedeu Tentativas",
     "causa": "Usuário fez a prova de vida da Único e excedeu o nº de tentativas",
     "orientacao": "Ops! Não foi possível prosseguir com seu cadastro. Tente novamente em alguns instantes e, se não conseguir, nos chame WhatsApp 0800 7070 398 (no menu Aplicativo, opção Relatar Problemas e erros)",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não consegue prosseguir com o cadastro",
     "tempoEstimado": "Aguardar tempo de bloqueio ou abrir chamado"
@@ -592,7 +613,7 @@
     "titulo": "Foto Ausente na Topaz",
     "causa": "Usuário caiu no fluxo médio ou baixo da Único e não possui foto na Topaz",
     "orientacao": "Ops! Não foi possível prosseguir com seu cadastro. Acesse o Menu Ajuda pelo Aplicativo e informe no WhatsApp (Menu Aplicativo, opção Relatar Problemas) o código MFAM044I.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente precisa atualizar sua foto para prosseguir",
     "tempoEstimado": "Depende da atualização da foto"
@@ -603,7 +624,7 @@
     "titulo": "Falha na Confirmação de Identidade",
     "causa": "Usuário caiu no fluxo médio ou baixo da Único, possui foto cadastrado e visualizou alerta de redirecionamento",
     "orientacao": "Ops! Não foi possível confirmar a sua identidade e precisamos tentar novamente. Siga as instruções que aparecem na tela quando for posicionar o seu rosto.",
-    "gruposResolvedores": ["GR_Redecall(IBK ou APP)"],
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente precisa tentar novamente o reconhecimento",
     "tempoEstimado": "Imediato com nova tentativa"
