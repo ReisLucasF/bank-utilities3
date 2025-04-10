@@ -1,0 +1,150 @@
+[
+    {
+        "value": "0",
+        "text": "Home App"
+    },
+    {
+        "value": "2",
+        "text": "Empréstimo Menu"
+    },
+    {
+        "value": "3",
+        "text": "Emprestimo Produtos"
+    },
+    {
+        "value": "4",
+        "text": "PIX Home"
+    },
+    {
+        "value": "5",
+        "text": "CDB Pre-Fixado"
+    },
+    {
+        "value": "6",
+        "text": "CDB Pós-Fixado"
+    },
+    {
+        "value": "7",
+        "text": "Recarga Celular"
+    },
+    {
+        "value": "8",
+        "text": "Débito Automático Menu"
+    },
+    {
+        "value": "9",
+        "text": "Extrato"
+    },
+    {
+        "value": "10",
+        "text": "Pagamento Código Barras"
+    },
+    {
+        "value": "11",
+        "text": "Pagamento Digitar Código Barras"
+    },
+    {
+        "value": "12",
+        "text": "Pagamento PIX Chave"
+    },
+    {
+        "value": "13",
+        "text": "Pagamento PIX QrCode"
+    },
+    {
+        "value": "14",
+        "text": "Pagamento PIX Copia e Cola"
+    },
+    {
+        "value": "15",
+        "text": "PIX - Receber QrCode"
+    },
+    {
+        "value": "16",
+        "text": "Seguro Transferência Protegida"
+    },
+    {
+        "value": "17",
+        "text": "Saque Cartão Consignado"
+    },
+    {
+        "value": "18",
+        "text": "Desbloqueio de Cartão"
+    },
+    {
+        "value": "19",
+        "text": "Empréstimo Saque Aniversário"
+    },
+    {
+        "value": "20",
+        "text": "Faturas - Home Cartões"
+    },
+    {
+        "value": "21",
+        "text": "Limites de Crédito - Home Cartões"
+    },
+    {
+        "value": "22",
+        "text": "1ª Via de Cartão - Home Cartões"
+    },
+    {
+        "value": "23",
+        "text": "Bloqueio - Home Cartões"
+    },
+    {
+        "value": "24",
+        "text": "Desbloqueio - Home Cartões"
+    },
+    {
+        "value": "25",
+        "text": "Recuperar Senha - Home Cartões"
+    },
+    {
+        "value": "26",
+        "text": "Aviso de Viagem - Home Cartões"
+    },
+    {
+        "value": "27",
+        "text": "Contactless - Home Cartões"
+    },
+    {
+        "value": "28",
+        "text": "Empréstimo Combo de Crédito"
+    },
+    {
+        "value": "29",
+        "text": "Atualização de Dados Cadastrais - Todos os Dados"
+    },
+    {
+        "value": "30",
+        "text": "Atualização de Dados Cadastrais - Telefones de Contato"
+    },
+    {
+        "value": "31",
+        "text": "Atualização de Dados Cadastrais - Endereço de Correspondência"
+    },
+    {
+        "value": "32",
+        "text": "Bloqueio de Cartão"
+    },
+    {
+        "value": "33",
+        "text": "Investimentos Menu"
+    },
+    {
+        "value": "35",
+        "text": "Home Cartões"
+    },
+    {
+        "value": "38",
+        "text": "Perfil de Investidor"
+    },
+    {
+        "value": "39",
+        "text": "Informe de Rendimentos"
+    },
+    {
+        "value": "40",
+        "text": "Minhas Chaves PIX"
+    }
+]

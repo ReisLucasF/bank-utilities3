@@ -30,6 +30,24 @@ const PopupCreator = () => {
   const [IDManual, setIDManual] = useState("");
   const [statusArquivo, setStatusArquivo] = useState("");
   const [statusArquivoCor, setStatusArquivoCor] = useState("");
+  const [opcoesRedirecionamento, setOpcoesRedirecionamento] = useState([]);
+
+  useEffect(() => {
+    const carregarOpcoesRedirecionamento = async () => {
+      try {
+        const response = await fetch("/redirecionamentos.json");
+        if (!response.ok) {
+          throw new Error("Falha ao carregar redirecionamentos.json");
+        }
+        const data = await response.json();
+        setOpcoesRedirecionamento(data);
+      } catch (error) {
+        console.error("Erro ao carregar redirecionamentos:", error);
+      }
+    };
+
+    carregarOpcoesRedirecionamento();
+  }, []);
 
   // Estados para controlar as seções abertas do accordion
   const [secaoAberta, setSecaoAberta] = useState({
@@ -565,28 +583,28 @@ const PopupCreator = () => {
                         <option value="40">Pequeno</option>
                       </select>
                     </div>
-                  </div>
-                  <div className={styles.colorPickerContainer}>
-                    <label htmlFor="corTitulo" className={styles.formLabel}>
-                      Cor do Título
-                    </label>
-                    <div className={styles.colorInputWrapper}>
-                      <input
-                        type="color"
-                        id="corTituloColor"
-                        value={corTitulo}
-                        onChange={(e) => setCorTitulo(e.target.value)}
-                        className={styles.colorPicker}
-                        ref={corTituloRef}
-                      />
-                      <input
-                        type="text"
-                        id="corTitulo"
-                        className={styles.colorInput}
-                        placeholder="#ffffff"
-                        value={corTitulo}
-                        onChange={(e) => setCorTitulo(e.target.value)}
-                      />
+                    <div>
+                      <label htmlFor="corTitulo" className={styles.formLabel}>
+                        Cor do Título
+                      </label>
+                      <div className={styles.colorInputWrapper}>
+                        <input
+                          type="color"
+                          id="corTituloColor"
+                          value={corTitulo}
+                          onChange={(e) => setCorTitulo(e.target.value)}
+                          className={styles.colorPicker}
+                          ref={corTituloRef}
+                        />
+                        <input
+                          type="text"
+                          id="corTitulo"
+                          className={styles.colorInput}
+                          placeholder="#ffffff"
+                          value={corTitulo}
+                          onChange={(e) => setCorTitulo(e.target.value)}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -623,28 +641,31 @@ const PopupCreator = () => {
                         <option value="32">Grande</option>
                       </select>
                     </div>
-                  </div>
-                  <div className={styles.colorPickerContainer}>
-                    <label htmlFor="corSubtitulo" className={styles.formLabel}>
-                      Cor do Subtítulo
-                    </label>
-                    <div className={styles.colorInputWrapper}>
-                      <input
-                        type="color"
-                        id="corSubtituloColor"
-                        value={corSubtitulo}
-                        onChange={(e) => setCorSubtitulo(e.target.value)}
-                        className={styles.colorPicker}
-                        ref={corSubtituloRef}
-                      />
-                      <input
-                        type="text"
-                        id="corSubtitulo"
-                        className={styles.colorInput}
-                        placeholder="#ffffff"
-                        value={corSubtitulo}
-                        onChange={(e) => setCorSubtitulo(e.target.value)}
-                      />
+                    <div>
+                      <label
+                        htmlFor="corSubtitulo"
+                        className={styles.formLabel}
+                      >
+                        Cor do Subtítulo
+                      </label>
+                      <div className={styles.colorInputWrapper}>
+                        <input
+                          type="color"
+                          id="corSubtituloColor"
+                          value={corSubtitulo}
+                          onChange={(e) => setCorSubtitulo(e.target.value)}
+                          className={styles.colorPicker}
+                          ref={corSubtituloRef}
+                        />
+                        <input
+                          type="text"
+                          id="corSubtitulo"
+                          className={styles.colorInput}
+                          placeholder="#ffffff"
+                          value={corSubtitulo}
+                          onChange={(e) => setCorSubtitulo(e.target.value)}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -667,7 +688,7 @@ const PopupCreator = () => {
                       onChange={(e) => setTextoCTA(e.target.value)}
                     />
                   </div>
-                  <div className={styles.formGrid}>
+                  <div className={styles.formGrid3}>
                     <div className={styles.formGroup}>
                       <label htmlFor="corTextoCTA" className={styles.formLabel}>
                         Cor do Texto
@@ -715,7 +736,7 @@ const PopupCreator = () => {
                       </div>
                     </div>
                   </div>
-                  <div className={styles.formGroup}>
+                  <div>
                     <label htmlFor="corBordaCTA" className={styles.formLabel}>
                       Cor da Borda
                     </label>
@@ -937,13 +958,11 @@ const PopupCreator = () => {
                         >
                           <option value="">Selecione</option>
                           <option value="manual">Inserir ID manualmente</option>
-                          <option value="14">
-                            14 - Pagamento PIX Copia e Cola
-                          </option>
-                          <option value="15">
-                            15 - Histórico de Transações
-                          </option>
-                          <option value="16">16 - Transferências</option>
+                          {opcoesRedirecionamento.map((opcao) => (
+                            <option key={opcao.value} value={opcao.value}>
+                              {opcao.value} - {opcao.text}
+                            </option>
+                          ))}
                         </select>
                         {ID === "manual" && (
                           <div className={styles.manualInputContainer}>

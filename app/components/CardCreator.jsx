@@ -26,6 +26,24 @@ const CardCreator = () => {
   const [IDManual, setIDManual] = useState("");
   const [statusArquivo, setStatusArquivo] = useState("");
   const [statusArquivoCor, setStatusArquivoCor] = useState("");
+  const [opcoesRedirecionamento, setOpcoesRedirecionamento] = useState([]);
+
+  useEffect(() => {
+    const carregarOpcoesRedirecionamento = async () => {
+      try {
+        const response = await fetch("/redirecionamentos.json");
+        if (!response.ok) {
+          throw new Error("Falha ao carregar redirecionamentos.json");
+        }
+        const data = await response.json();
+        setOpcoesRedirecionamento(data);
+      } catch (error) {
+        console.error("Erro ao carregar redirecionamentos:", error);
+      }
+    };
+
+    carregarOpcoesRedirecionamento();
+  }, []);
 
   // Estados para controlar as seções abertas do accordion
   const [secaoAberta, setSecaoAberta] = useState({
@@ -306,7 +324,7 @@ const CardCreator = () => {
       fetch("/modeloCard.json")
         .then((response) => response.json())
         .then((modeloJson) => {
-          const imageBase64 = reader.result.split(",")[1]; 
+          const imageBase64 = reader.result.split(",")[1];
 
           let script = modeloJson.script
             .replace("${ImagemEmBase64}", imageBase64)
@@ -838,8 +856,11 @@ const CardCreator = () => {
                         >
                           <option value="">Selecione</option>
                           <option value="manual">Inserir ID manualmente</option>
-                          <option value="ID1">2451 - ID de exemplo 1</option>
-                          <option value="ID2">3562 - ID de exemplo 2</option>
+                          {opcoesRedirecionamento.map((opcao) => (
+                            <option key={opcao.value} value={opcao.value}>
+                              {opcao.value} - {opcao.text}
+                            </option>
+                          ))}
                         </select>
                         {ID === "manual" && (
                           <div className={styles.manualInputContainer}>
