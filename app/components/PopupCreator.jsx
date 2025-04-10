@@ -33,6 +33,27 @@ const PopupCreator = () => {
   const [opcoesRedirecionamento, setOpcoesRedirecionamento] = useState([]);
   const [codigosLink, setCodigosLink] = useState([]);
 
+  // Função para verificar e ajustar campos baseado no tipo de layout
+  const verificarLayout = () => {
+    if (tipoLayout === "335") {
+      // Para o layout 335 (imagem livre), limpar os campos de texto
+      // pois eles não são necessários já que o texto está na imagem
+      setTitulo("");
+      setSubtitulo("");
+      setTextoCTA("");
+      setCorTitulo("");
+      setCorSubtitulo("");
+      setCorTextoCTA("");
+      setCorFundoCTA("");
+      setCorBordaCTA("");
+    }
+  };
+
+  // Executar verificação quando o tipo de layout mudar
+  useEffect(() => {
+    verificarLayout();
+  }, [tipoLayout]);
+
   useEffect(() => {
     const carregarOpcoesRedirecionamento = async () => {
       try {
@@ -51,7 +72,7 @@ const PopupCreator = () => {
   }, []);
 
   useEffect(() => {
-    const carregarCodigosLink = async () => {   
+    const carregarCodigosLink = async () => {
       try {
         const response = await fetch("/codigos.json");
         if (!response.ok) {
@@ -415,162 +436,162 @@ const PopupCreator = () => {
     setStatusArquivoCor("blue");
   };
 
-const gerarScript = () => {
-  // Verificações iniciais (espaços em branco nas cores, contraste, etc.)
-  for (const campoId in camposComEspaco) {
-    const valorCampo = eval(campoId).trim();
-    if (valorCampo && valorCampo.includes(" ")) {
-      alert(
-        `O campo ${camposComEspaco[campoId]} não pode conter espaços em branco.`,
-      );
+  const gerarScript = () => {
+    // Verificações iniciais (espaços em branco nas cores, contraste, etc.)
+    for (const campoId in camposComEspaco) {
+      const valorCampo = eval(campoId).trim();
+      if (valorCampo && valorCampo.includes(" ")) {
+        alert(
+          `O campo ${camposComEspaco[campoId]} não pode conter espaços em branco.`,
+        );
+        return;
+      }
+    }
+
+    // Validar contraste entre cores
+    if (!verificarContrasteCores(corInicio, corTitulo, "título")) return;
+    if (!verificarContrasteCores(corFim, corTitulo, "título")) return;
+    if (!verificarContrasteCores(corInicio, corSubtitulo, "subtítulo")) return;
+    if (!verificarContrasteCores(corFim, corSubtitulo, "subtítulo")) return;
+    if (!verificarContrasteCores(corFundoCTA, corTextoCTA, "texto CTA")) return;
+
+    // Validações básicas
+    if (!imagem) {
+      alert("É necessário selecionar uma imagem.");
       return;
     }
-  }
 
-  // Validar contraste entre cores
-  if (!verificarContrasteCores(corInicio, corTitulo, "título")) return;
-  if (!verificarContrasteCores(corFim, corTitulo, "título")) return;
-  if (!verificarContrasteCores(corInicio, corSubtitulo, "subtítulo")) return;
-  if (!verificarContrasteCores(corFim, corSubtitulo, "subtítulo")) return;
-  if (!verificarContrasteCores(corFundoCTA, corTextoCTA, "texto CTA")) return;
+    if (!numeroAcao) {
+      alert("É necessário informar o número de ação.");
+      return;
+    }
 
-  // Validações básicas
-  if (!imagem) {
-    alert("É necessário selecionar uma imagem.");
-    return;
-  }
+    // Modificar esta parte para usar .then() e .catch() adequadamente
+    verificarResolucaoImagem(imagem)
+      .then(() => {
+        // Preparar valores para o script
+        let idCATFinal = ID;
+        let codigoFinal = codigo;
+        let metodo = "";
+        let linkValue = "";
 
-  if (!numeroAcao) {
-    alert("É necessário informar o número de ação.");
-    return;
-  }
+        if (tipoLink === "1") {
+          // Sem redirecionamento
+          codigoFinal = "";
+          idCATFinal = "0";
+          metodo = "";
+        } else if (tipoLink === "2") {
+          // Link
+          idCATFinal = "0";
+          metodo = "Link";
+          linkValue = link || "";
 
-  // Modificar esta parte para usar .then() e .catch() adequadamente
-  verificarResolucaoImagem(imagem)
-    .then(() => {
-      // Preparar valores para o script
-      let idCATFinal = ID;
-      let codigoFinal = codigo;
-      let metodo = "";
-      let linkValue = "";
-
-      if (tipoLink === "1") {
-        // Sem redirecionamento
-        codigoFinal = "";
-        idCATFinal = "0";
-        metodo = "";
-      } else if (tipoLink === "2") {
-        // Link
-        idCATFinal = "0";
-        metodo = "Link";
-        linkValue = link || "";
-
-        if (!link) {
-          alert("É necessário informar um link de redirecionamento.");
-          setStatusArquivo("Erro ao gerar script: falta link");
-          setStatusArquivoCor("red");
-          return;
-        }
-      } else if (tipoLink === "3") {
-        // Push deep link
-        codigoFinal = "";
-        metodo = "PshDpLink";
-
-        if (!idCATFinal) {
-          alert("É necessário informar um ID de redirecionamento.");
-          setStatusArquivo("Erro ao gerar script: falta ID");
-          setStatusArquivoCor("red");
-          return;
-        }
-      }
-
-      if (idCATFinal === "manual") {
-        idCATFinal = IDManual;
-      }
-
-      if (codigoFinal === "manual") {
-        codigoFinal = codigoManual;
-      }
-
-      // Definir tamanhos para o modelo JSON
-      let setTamanhoTitulo = "1";
-      if (tamanhoTitulo === "50") setTamanhoTitulo = "2";
-      else if (tamanhoTitulo === "65") setTamanhoTitulo = "3";
-
-      let setTamanhoSubtitulo = "1";
-      if (tamanhoSubtitulo === "28") setTamanhoSubtitulo = "2";
-      else if (tamanhoSubtitulo === "32") setTamanhoSubtitulo = "3";
-
-      setStatusArquivo("Gerando script...");
-      setStatusArquivoCor("blue");
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imageBase64 = e.target.result.split(",")[1];
-
-        // Buscar o modelo JSON e continuar com a geração do script
-        fetch("/modeloPopUp.json")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                `Erro ao carregar modeloPopUp.json: ${response.status}`,
-              );
-            }
-            return response.json();
-          })
-          .then((modeloJson) => {
-            // Substituir os valores no template
-            let script = modeloJson.script
-              .replace("${ImagemEmBase64}", imageBase64)
-              .replace(/\${numeroAcao}/g, numeroAcao)
-              .replace(/\${titulo}/g, titulo)
-              .replace(/\${corInicio}/g, corInicio)
-              .replace(/\${corFim}/g, corFim)
-              .replace(/\${corTitulo}/g, corTitulo)
-              .replace(/\${subtitulo}/g, subtitulo)
-              .replace(/\${corSubtitulo}/g, corSubtitulo)
-              .replace(/\${textoCTA}/g, textoCTA)
-              .replace(/\${link}/g, linkValue)
-              .replace(/\${codigo}/g, codigoFinal)
-              .replace(/\${corTextoCTA}/g, corTextoCTA)
-              .replace(/\${corFundoCTA}/g, corFundoCTA)
-              .replace(/\${corBordaCTA}/g, corBordaCTA)
-              .replace(/\${tipoLayout}/g, tipoLayout)
-              .replace("${idCAT}", idCATFinal)
-              .replace("${metodo}", metodo)
-              .replace("${tamanhotitulo}", setTamanhoTitulo)
-              .replace("${tamanhosubtitulo}", setTamanhoSubtitulo)
-              .replace("${textoBotaoFechar}", textoBtnFechar)
-              .replace("${corBotaoFechar}", corBtnFechar);
-
-            // Criar e baixar o arquivo
-            const blob = new Blob([script], { type: "text/plain" });
-            const downloadLink = document.createElement("a");
-            downloadLink.href = window.URL.createObjectURL(blob);
-            downloadLink.download = `script_popup_${numeroAcao}.txt`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-
-            setStatusArquivo(`Script gerado com sucesso! Download iniciado.`);
-            setStatusArquivoCor("green");
-          })
-          .catch((error) => {
-            console.error("Erro:", error);
-            setStatusArquivo(`Erro ao gerar script: ${error.message}`);
+          if (!link) {
+            alert("É necessário informar um link de redirecionamento.");
+            setStatusArquivo("Erro ao gerar script: falta link");
             setStatusArquivoCor("red");
-          });
-      };
+            return;
+          }
+        } else if (tipoLink === "3") {
+          // Push deep link
+          codigoFinal = "";
+          metodo = "PshDpLink";
 
-      reader.readAsDataURL(imagem);
-    })
-    .catch((error) => {
-      // A rejeição da Promise já definiu o statusArquivo e mostrou o alerta
-      console.error("Erro na validação da imagem:", error);
-      // Não fazemos nada adicional aqui, pois os alertas e mensagens
-      // já foram exibidos na função verificarResolucaoImagem
-    });
-};
+          if (!idCATFinal) {
+            alert("É necessário informar um ID de redirecionamento.");
+            setStatusArquivo("Erro ao gerar script: falta ID");
+            setStatusArquivoCor("red");
+            return;
+          }
+        }
+
+        if (idCATFinal === "manual") {
+          idCATFinal = IDManual;
+        }
+
+        if (codigoFinal === "manual") {
+          codigoFinal = codigoManual;
+        }
+
+        // Definir tamanhos para o modelo JSON
+        let setTamanhoTitulo = "1";
+        if (tamanhoTitulo === "50") setTamanhoTitulo = "2";
+        else if (tamanhoTitulo === "65") setTamanhoTitulo = "3";
+
+        let setTamanhoSubtitulo = "1";
+        if (tamanhoSubtitulo === "28") setTamanhoSubtitulo = "2";
+        else if (tamanhoSubtitulo === "32") setTamanhoSubtitulo = "3";
+
+        setStatusArquivo("Gerando script...");
+        setStatusArquivoCor("blue");
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const imageBase64 = e.target.result.split(",")[1];
+
+          // Buscar o modelo JSON e continuar com a geração do script
+          fetch("/modeloPopUp.json")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Erro ao carregar modeloPopUp.json: ${response.status}`,
+                );
+              }
+              return response.json();
+            })
+            .then((modeloJson) => {
+              // Substituir os valores no template
+              let script = modeloJson.script
+                .replace("${ImagemEmBase64}", imageBase64)
+                .replaceAll(/\${numeroAcao}/g, numeroAcao)
+                .replace(/\${titulo}/g, titulo)
+                .replace(/\${corInicio}/g, corInicio)
+                .replace(/\${corFim}/g, corFim)
+                .replace(/\${corTitulo}/g, corTitulo)
+                .replace(/\${subtitulo}/g, subtitulo)
+                .replace(/\${corSubtitulo}/g, corSubtitulo)
+                .replace(/\${textoCTA}/g, textoCTA)
+                .replace(/\${link}/g, linkValue)
+                .replace(/\${codigo}/g, codigoFinal)
+                .replace(/\${corTextoCTA}/g, corTextoCTA)
+                .replace(/\${corFundoCTA}/g, corFundoCTA)
+                .replace(/\${corBordaCTA}/g, corBordaCTA)
+                .replace(/\${tipoLayout}/g, tipoLayout)
+                .replace("${idCAT}", idCATFinal)
+                .replace("${metodo}", metodo)
+                .replace("${tamanhotitulo}", setTamanhoTitulo)
+                .replace("${tamanhosubtitulo}", setTamanhoSubtitulo)
+                .replace("${textoBotaoFechar}", textoBtnFechar)
+                .replace("${corBotaoFechar}", corBtnFechar);
+
+              // Criar e baixar o arquivo
+              const blob = new Blob([script], { type: "text/plain" });
+              const downloadLink = document.createElement("a");
+              downloadLink.href = window.URL.createObjectURL(blob);
+              downloadLink.download = `script_popup_${numeroAcao}.txt`;
+              document.body.appendChild(downloadLink);
+              downloadLink.click();
+              document.body.removeChild(downloadLink);
+
+              setStatusArquivo(`Script gerado com sucesso! Download iniciado.`);
+              setStatusArquivoCor("green");
+            })
+            .catch((error) => {
+              console.error("Erro:", error);
+              setStatusArquivo(`Erro ao gerar script: ${error.message}`);
+              setStatusArquivoCor("red");
+            });
+        };
+
+        reader.readAsDataURL(imagem);
+      })
+      .catch((error) => {
+        // A rejeição da Promise já definiu o statusArquivo e mostrou o alerta
+        console.error("Erro na validação da imagem:", error);
+        // Não fazemos nada adicional aqui, pois os alertas e mensagens
+        // já foram exibidos na função verificarResolucaoImagem
+      });
+  };
 
   return (
     <div className={styles.contentContainer}>

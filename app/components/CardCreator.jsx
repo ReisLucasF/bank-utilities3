@@ -47,21 +47,21 @@ const CardCreator = () => {
   }, []);
 
   useEffect(() => {
-      const carregarCodigosLink = async () => {   
-        try {
-          const response = await fetch("/codigos.json");
-          if (!response.ok) {
-            throw new Error("Falha ao carregar codigos.json");
-          }
-          const data = await response.json();
-          setCodigosLink(data);
-        } catch (error) {
-          console.error("Erro ao carregar codigos:", error);
+    const carregarCodigosLink = async () => {
+      try {
+        const response = await fetch("/codigos.json");
+        if (!response.ok) {
+          throw new Error("Falha ao carregar codigos.json");
         }
-      };
-  
-      carregarCodigosLink();
-    }, []);
+        const data = await response.json();
+        setCodigosLink(data);
+      } catch (error) {
+        console.error("Erro ao carregar codigos:", error);
+      }
+    };
+
+    carregarCodigosLink();
+  }, []);
 
   // Estados para controlar as seções abertas do accordion
   const [secaoAberta, setSecaoAberta] = useState({
@@ -346,7 +346,7 @@ const CardCreator = () => {
 
           let script = modeloJson.script
             .replace("${ImagemEmBase64}", imageBase64)
-            .replace("${numeroAcao}", numeroAcao)
+            .replaceAll(/\${numeroAcao}/g, numeroAcao)
             .replace(/\${tipoLayout}/g, tipoLayout)
             .replace("${titulo}", tituloLimpo)
             .replace("${subtitulo}", subtituloLimpo)
