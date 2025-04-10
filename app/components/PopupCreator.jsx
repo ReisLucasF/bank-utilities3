@@ -31,6 +31,7 @@ const PopupCreator = () => {
   const [statusArquivo, setStatusArquivo] = useState("");
   const [statusArquivoCor, setStatusArquivoCor] = useState("");
   const [opcoesRedirecionamento, setOpcoesRedirecionamento] = useState([]);
+  const [codigosLink, setCodigosLink] = useState([]);
 
   useEffect(() => {
     const carregarOpcoesRedirecionamento = async () => {
@@ -47,6 +48,23 @@ const PopupCreator = () => {
     };
 
     carregarOpcoesRedirecionamento();
+  }, []);
+
+  useEffect(() => {
+    const carregarCodigosLink = async () => {   
+      try {
+        const response = await fetch("/codigos.json");
+        if (!response.ok) {
+          throw new Error("Falha ao carregar codigos.json");
+        }
+        const data = await response.json();
+        setCodigosLink(data);
+      } catch (error) {
+        console.error("Erro ao carregar codigos:", error);
+      }
+    };
+
+    carregarCodigosLink();
   }, []);
 
   // Estados para controlar as seções abertas do accordion
@@ -1067,8 +1085,11 @@ const gerarScript = () => {
                           <option value="manual">
                             Inserir código manualmente
                           </option>
-                          <option value="001">001 - Código exemplo 1</option>
-                          <option value="002">002 - Código exemplo 2</option>
+                          {codigosLink.map((opcao) => (
+                            <option key={opcao.value} value={opcao.value}>
+                              {opcao.value} - {opcao.text}
+                            </option>
+                          ))}
                         </select>
                         {codigo === "manual" && (
                           <div className={styles.manualInputContainer}>
