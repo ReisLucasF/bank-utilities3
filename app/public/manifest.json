@@ -1,0 +1,18 @@
+{
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Bank Utilities",
+  "short_name": "Bank Utilities",
+  "description": "Sistema de utilidades para serviços de suporte nos atendimentos de demandas.",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

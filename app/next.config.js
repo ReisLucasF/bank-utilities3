@@ -1,9 +1,8 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  webSocketServer: {
-    socket: true,
-  },
-};
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  sw: "sw.js",
+});
 
-module.exports = nextConfig;
+module.exports = withPWA();
