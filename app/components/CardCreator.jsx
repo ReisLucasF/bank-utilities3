@@ -27,6 +27,7 @@ const CardCreator = () => {
   const [statusArquivo, setStatusArquivo] = useState("");
   const [statusArquivoCor, setStatusArquivoCor] = useState("");
   const [opcoesRedirecionamento, setOpcoesRedirecionamento] = useState([]);
+  const [codigosLink, setCodigosLink] = useState([]);
 
   useEffect(() => {
     const carregarOpcoesRedirecionamento = async () => {
@@ -44,6 +45,23 @@ const CardCreator = () => {
 
     carregarOpcoesRedirecionamento();
   }, []);
+
+  useEffect(() => {
+      const carregarCodigosLink = async () => {   
+        try {
+          const response = await fetch("/codigos.json");
+          if (!response.ok) {
+            throw new Error("Falha ao carregar codigos.json");
+          }
+          const data = await response.json();
+          setCodigosLink(data);
+        } catch (error) {
+          console.error("Erro ao carregar codigos:", error);
+        }
+      };
+  
+      carregarCodigosLink();
+    }, []);
 
   // Estados para controlar as seções abertas do accordion
   const [secaoAberta, setSecaoAberta] = useState({
@@ -821,12 +839,11 @@ const CardCreator = () => {
                           <option value="manual">
                             Inserir código manualmente
                           </option>
-                          <option value="codigo1">
-                            001 - Código de exemplo 1
-                          </option>
-                          <option value="codigo2">
-                            002 - Código de exemplo 2
-                          </option>
+                          {codigosLink.map((opcao) => (
+                            <option key={opcao.value} value={opcao.value}>
+                              {opcao.value} - {opcao.text}
+                            </option>
+                          ))}
                         </select>
                         {codigo === "manual" && (
                           <div className={styles.manualInputContainer}>
@@ -904,7 +921,12 @@ const CardCreator = () => {
           <div className={styles.phoneScreen}>
             {/* Status Bar */}
             <div className={styles.statusBar}>
-              <div>{new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}</div>
+              <div>
+                {new Date().toLocaleTimeString("pt-BR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </div>
               <div className={styles.statusBarIcons}>
                 <span>•••</span>
                 <span>📶</span>
@@ -933,7 +955,6 @@ const CardCreator = () => {
                       <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
                   </div>
-            
                 </div>
               </div>
 
