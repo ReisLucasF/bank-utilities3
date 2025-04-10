@@ -904,7 +904,7 @@ const CardCreator = () => {
           <div className={styles.phoneScreen}>
             {/* Status Bar */}
             <div className={styles.statusBar}>
-              <div>09:37</div>
+              <div>{new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}</div>
               <div className={styles.statusBarIcons}>
                 <span>•••</span>
                 <span>📶</span>
