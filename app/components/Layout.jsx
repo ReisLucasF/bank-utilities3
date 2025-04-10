@@ -13,6 +13,7 @@ import {
   Target,
   FileCheck,
   FileCode,
+  Home,
 } from "lucide-react";
 import { useTheme } from "/context/ThemeContext";
 
@@ -117,9 +118,9 @@ export default function Layout({ children }) {
               <li className={styles.navItem}>
                 <Link href="/" className={styles.navLink}>
                   <span className={styles.navIcon}>
-                    <LayoutDashboard size={20} />
+                    <Home size={20} />
                   </span>
-                  <span className={styles.navText}>Dashboard</span>
+                  <span className={styles.navText}>Home</span>
                 </Link>
               </li>
 
