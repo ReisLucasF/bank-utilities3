@@ -298,7 +298,7 @@ const LiberacaoATM = () => {
                             : styles.inputLabelLight
                         }`}
                       >
-                        Nome do Solicitante
+                        Usuário Solicitante
                       </label>
                       <input
                         type="text"

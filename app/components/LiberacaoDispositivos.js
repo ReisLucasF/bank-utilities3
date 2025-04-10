@@ -84,11 +84,9 @@ const LiberacaoDispositivos = () => {
       // Verificar campos obrigatórios
       const camposObrigatorios = [
         "numeroDemanda",
-        "tipoAcesso",
         "idMachine",
         "agencia",
         "conta",
-        "titular",
         "nomeSolicitante",
       ];
 
@@ -234,58 +232,58 @@ const LiberacaoDispositivos = () => {
         </div>
 
         {scripts.length === 0 ? (
-                  <div className={styles.emptyState}>
-                    <p>
-                      Nenhum script adicionado. Clique em "Adicionar Script" para
-                      começar.
-                    </p>
-                  </div>
-                ) : (
-        <div className={styles.scriptsContainer}>
-          {scripts.map((script) => (
-            <div
-              key={script.id}
-              className={`${styles.scriptBlock} ${
-                isDarkMode ? styles.scriptBlockDark : styles.scriptBlockLight
-              }`}
-            >
-              <button
-                type="button"
-                onClick={() => removerScript(script.id)}
-                className={`${styles.removeButton} ${
-                  isDarkMode
-                    ? styles.removeButtonDark
-                    : styles.removeButtonLight
+          <div className={styles.emptyState}>
+            <p>
+              Nenhum script adicionado. Clique em "Adicionar Script" para
+              começar.
+            </p>
+          </div>
+        ) : (
+          <div className={styles.scriptsContainer}>
+            {scripts.map((script) => (
+              <div
+                key={script.id}
+                className={`${styles.scriptBlock} ${
+                  isDarkMode ? styles.scriptBlockDark : styles.scriptBlockLight
                 }`}
-                aria-label="Remover script"
               >
-                <X size={20} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => removerScript(script.id)}
+                  className={`${styles.removeButton} ${
+                    isDarkMode
+                      ? styles.removeButtonDark
+                      : styles.removeButtonLight
+                  }`}
+                  aria-label="Remover script"
+                >
+                  <X size={20} />
+                </button>
 
-              <div className={styles.formContainer}>
-                {/* Primeira linha: 3 colunas */}
-                <div className={styles.formRowThree}>
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Número da Demanda
-                    </label>
-                    <input
-                      type="number"
-                      value={script.numeroDemanda}
-                      onChange={(e) =>
-                        atualizarScript(
-                          script.id,
-                          "numeroDemanda",
-                          e.target.value,
-                        )
-                      }
-                      className={`
+                <div className={styles.formContainer}>
+                  {/* Primeira linha: 3 colunas */}
+                  <div className={styles.formRowThree}>
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Número da Demanda
+                      </label>
+                      <input
+                        type="number"
+                        value={script.numeroDemanda}
+                        onChange={(e) =>
+                          atualizarScript(
+                            script.id,
+                            "numeroDemanda",
+                            e.target.value,
+                          )
+                        }
+                        className={`
                         ${styles.textInput} 
                         ${isDarkMode ? styles.textInputDark : styles.textInputLight}
                         ${
@@ -298,26 +296,30 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    />
-                  </div>
+                        required
+                      />
+                    </div>
 
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Tipo
-                    </label>
-                    <select
-                      value={script.tipoAcesso}
-                      onChange={(e) =>
-                        atualizarScript(script.id, "tipoAcesso", e.target.value)
-                      }
-                      className={`
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Tipo
+                      </label>
+                      <select
+                        value={script.tipoAcesso}
+                        onChange={(e) =>
+                          atualizarScript(
+                            script.id,
+                            "tipoAcesso",
+                            e.target.value,
+                          )
+                        }
+                        className={`
                         ${styles.selectInput} 
                         ${isDarkMode ? styles.selectInputDark : styles.selectInputLight}
                         ${
@@ -330,33 +332,37 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    >
-                      <option value="AMBOS">
-                        Ambos (Liberação + Primeiro Acesso)
-                      </option>
-                      <option value="561">Liberação</option>
-                      <option value="589">Primeiro Acesso</option>
-                    </select>
-                  </div>
+                        required
+                      >
+                        <option value="AMBOS">
+                          Ambos (Liberação + Primeiro Acesso)
+                        </option>
+                        <option value="561">Liberação</option>
+                        <option value="589">Primeiro Acesso</option>
+                      </select>
+                    </div>
 
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      ID Machine
-                    </label>
-                    <input
-                      type="text"
-                      value={script.idMachine}
-                      onChange={(e) =>
-                        atualizarScript(script.id, "idMachine", e.target.value)
-                      }
-                      className={`
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        ID Machine
+                      </label>
+                      <input
+                        type="text"
+                        value={script.idMachine}
+                        onChange={(e) =>
+                          atualizarScript(
+                            script.id,
+                            "idMachine",
+                            e.target.value,
+                          )
+                        }
+                        className={`
                         ${styles.textInput} 
                         ${isDarkMode ? styles.textInputDark : styles.textInputLight}
                         ${
@@ -369,30 +375,30 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    />
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Segunda linha: 2 colunas */}
-                <div className={styles.formRowTwo}>
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Agência
-                    </label>
-                    <input
-                      type="number"
-                      value={script.agencia}
-                      onChange={(e) =>
-                        atualizarScript(script.id, "agencia", e.target.value)
-                      }
-                      className={`
+                  {/* Segunda linha: 2 colunas */}
+                  <div className={styles.formRowTwo}>
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Agência
+                      </label>
+                      <input
+                        type="number"
+                        value={script.agencia}
+                        onChange={(e) =>
+                          atualizarScript(script.id, "agencia", e.target.value)
+                        }
+                        className={`
                         ${styles.textInput} 
                         ${isDarkMode ? styles.textInputDark : styles.textInputLight}
                         ${
@@ -405,27 +411,27 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    />
-                  </div>
+                        required
+                      />
+                    </div>
 
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Conta
-                    </label>
-                    <input
-                      type="number"
-                      value={script.conta}
-                      onChange={(e) =>
-                        atualizarScript(script.id, "conta", e.target.value)
-                      }
-                      className={`
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Conta
+                      </label>
+                      <input
+                        type="number"
+                        value={script.conta}
+                        onChange={(e) =>
+                          atualizarScript(script.id, "conta", e.target.value)
+                        }
+                        className={`
                         ${styles.textInput} 
                         ${isDarkMode ? styles.textInputDark : styles.textInputLight}
                         ${
@@ -438,29 +444,29 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    />
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Terceira linha: 2 colunas */}
-                <div className={styles.formRowTwo}>
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Tipo
-                    </label>
-                    <select
-                      value={script.titular}
-                      onChange={(e) =>
-                        atualizarScript(script.id, "titular", e.target.value)
-                      }
-                      className={`
+                  {/* Terceira linha: 2 colunas */}
+                  <div className={styles.formRowTwo}>
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Tipo
+                      </label>
+                      <select
+                        value={script.titular}
+                        onChange={(e) =>
+                          atualizarScript(script.id, "titular", e.target.value)
+                        }
+                        className={`
                         ${styles.selectInput} 
                         ${isDarkMode ? styles.selectInputDark : styles.selectInputLight}
                         ${
@@ -473,37 +479,34 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    >
-                      <option value="" disabled>
-                        Selecione o tipo
-                      </option>
-                      <option value="TITULAR1">Primeiro Titular</option>
-                      <option value="TITULAR2">Segundo Titular</option>
-                    </select>
-                  </div>
+                        required
+                      >
+                        <option value="TITULAR1">Primeiro Titular</option>
+                        <option value="TITULAR2">Segundo Titular</option>
+                      </select>
+                    </div>
 
-                  <div className={styles.formGroup}>
-                    <label
-                      className={`${styles.inputLabel} ${
-                        isDarkMode
-                          ? styles.inputLabelDark
-                          : styles.inputLabelLight
-                      }`}
-                    >
-                      Nome do Solicitante
-                    </label>
-                    <input
-                      type="text"
-                      value={script.nomeSolicitante}
-                      onChange={(e) =>
-                        atualizarScript(
-                          script.id,
-                          "nomeSolicitante",
-                          e.target.value,
-                        )
-                      }
-                      className={`
+                    <div className={styles.formGroup}>
+                      <label
+                        className={`${styles.inputLabel} ${
+                          isDarkMode
+                            ? styles.inputLabelDark
+                            : styles.inputLabelLight
+                        }`}
+                      >
+                        Usuário Solicitante
+                      </label>
+                      <input
+                        type="text"
+                        value={script.nomeSolicitante}
+                        onChange={(e) =>
+                          atualizarScript(
+                            script.id,
+                            "nomeSolicitante",
+                            e.target.value,
+                          )
+                        }
+                        className={`
                         ${styles.textInput} 
                         ${isDarkMode ? styles.textInputDark : styles.textInputLight}
                         ${
@@ -516,14 +519,14 @@ const LiberacaoDispositivos = () => {
                             : ""
                         }
                       `}
-                      required
-                    />
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
