@@ -233,7 +233,6 @@
 /* Phone mockup */
 .phoneMockup {
   width: 400px;
-  height: 700px;
   border: 10px solid #1a1a1a;
   border-radius: 36px;
   position: relative;
@@ -258,27 +257,96 @@
 .phoneScreen {
   width: 100%;
   height: 100%;
-  background-color: #f3f4f6;
+  background-color: #f5f6f8;
   overflow-y: auto;
+}
+
+/* Status bar */
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #f5f6f8;
+  font-weight: 600;
+  font-size: 14px;
+  color: #000 !important;
+}
+
+.statusBarIcons {
+  display: flex;
+  gap: 6px;
+  
 }
 
 /* App UI */
 .appHeader {
-  background-color: #1e40af;
+  background-color: #0047ff;
   color: #fff;
-  padding: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  border-radius: 1rem;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.greeting {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.headerControls {
+  display: flex;
+  gap: 12px;
+}
+
+.headerControl {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.accountInfo {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 16px;
+}
+
+.balanceLabel {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.balanceInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.balanceValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.balanceAction {
+  color: white;
+  font-size: 0.9rem;
 }
 
 .backIcon {
   width: 20px;
   height: 20px;
   margin-right: 8px;
-}
-
-.appTitle {
-  font-weight: 500;
 }
 
 .appContent {
@@ -290,9 +358,18 @@
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 12px;
+  display: none; /* Escondendo este título pois não aparece na imagem */
 }
 
-/* Card Preview */
+/* Quick access menu */
+.quickMenu {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+/* Card Preview - PRESERVADO */
 .cardPreview {
   display: flex;
   overflow: hidden;
@@ -346,9 +423,9 @@
 .appCardWhite {
   background-color: #fff;
   color: #1f2937;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin-bottom: 12px;
 }
 
@@ -370,7 +447,7 @@
 }
 
 .appCardButton {
-  color: var(--primary-color);
+  color: #0047ff;
   font-size: 0.875rem;
   font-weight: 600;
   background: none;
@@ -390,12 +467,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
 }
 
 .quickAccessIcon {
   width: 40px;
   height: 40px;
-  background-color: #e0f2fe;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -406,9 +487,43 @@
 .icon {
   width: 20px;
   height: 20px;
-  color: var(--primary-color);
+  color: #0047ff;
 }
 
 .quickAccessText {
   font-size: 0.75rem;
+  color: #000;
+}
+
+/* Bottom navigation */
+.bottomNav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 0;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.navIcon {
+  margin-bottom: 4px;
+}
+
+.navItem.active {
+  color: #0047ff;
+}
+
+.navItem:not(.active) {
+  color: #9ca3af;
 }

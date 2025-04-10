@@ -902,29 +902,121 @@ const CardCreator = () => {
         <div className={styles.phoneMockup}>
           <div className={styles.phoneNotch}></div>
           <div className={styles.phoneScreen}>
-            {/* App Header */}
+            {/* Status Bar */}
+            <div className={styles.statusBar}>
+              <div>09:37</div>
+              <div className={styles.statusBarIcons}>
+                <span>•••</span>
+                <span>📶</span>
+                <span>🔋</span>
+              </div>
+            </div>
+
+            {/* App Header - Área azul */}
             <div className={styles.appHeader}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={styles.backIcon}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
+              <div className={styles.headerTop}>
+                <div className={styles.greeting}>Olá, Fulano(a)!</div>
+                <div className={styles.headerControls}>
+                  <div className={styles.headerControl}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                  </div>
+            
+                </div>
+              </div>
+
+              <div className={styles.accountInfo}>
+                Agência: 0001 | Conta: 09999999-1
+              </div>
+
+              <div className={styles.balanceLabel}>Saldo</div>
+              <div className={styles.balanceInfo}>
+                <div className={styles.balanceValue}>R$ 2.138,28</div>
+                <div className={styles.balanceAction}>Ver extrato &gt;</div>
+              </div>
+            </div>
+
+            {/* Quick Menu - Ícones de acesso rápido */}
+            <div className={styles.quickMenu}>
+              <div className={styles.quickAccessItem}>
+                <div className={styles.quickAccessIcon}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.icon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                </div>
+                <span className={styles.quickAccessText}>Pix</span>
+              </div>
+              <div className={styles.quickAccessItem}>
+                <div className={styles.quickAccessIcon}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.icon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <span className={styles.quickAccessText}>Empréstimos</span>
+              </div>
+              <div className={styles.quickAccessItem}>
+                <div className={styles.quickAccessIcon}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.icon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                </div>
+                <span className={styles.quickAccessText}>Investir</span>
+              </div>
+              <div className={styles.quickAccessItem}>
+                <div className={styles.quickAccessIcon}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.icon}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                  </svg>
+                </div>
+                <span className={styles.quickAccessText}>Pagar</span>
+              </div>
             </div>
 
             {/* App Content */}
             <div className={styles.appContent}>
               <h3 className={styles.appHeading}>Destaques para você</h3>
 
-              {/* Card Preview Layout */}
+              {/* Card Preview Layout - MANTIDO INTACTO */}
               <div
                 className={`${styles.cardPreview} ${isLayoutDireita ? styles.layoutDireita : styles.layoutEsquerda}`}
                 style={{
@@ -977,97 +1069,174 @@ const CardCreator = () => {
                 </div>
               </div>
 
-              {/* Mais conteúdo do App (para realismo) */}
+              {/* Outros Cards */}
               <div className={styles.appCardWhite}>
                 <div className={styles.appCardHeader}>
                   <div>
-                    <h4 className={styles.appCardTitle}>Saldo disponível</h4>
-                    <p className={styles.appCardValue}>R$ 2.459,00</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#E5F0FF",
+                          borderRadius: "50%",
+                          width: "32px",
+                          height: "32px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginRight: "8px",
+                        }}
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#0047FF"
+                          strokeWidth="2"
+                        >
+                          <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                      </div>
+                      <h4 className={styles.appCardTitle} style={{ margin: 0 }}>
+                        Saque Aniversário FGTS
+                      </h4>
+                    </div>
+                    <p style={{ fontSize: "0.8rem", margin: "0" }}>
+                      Novidade! Antecipe agora seu saldo do FGTS com as melhores
+                      taxas de mercado!
+                    </p>
                   </div>
-                  <button className={styles.appCardButton}>Ver extrato</button>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#0047FF"
+                      strokeWidth="2"
+                    >
+                      <path d="M9 18l6-6-6-6"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
 
               <div className={styles.appCardWhite}>
-                <h4 className={styles.appCardTitle}>Acesso rápido</h4>
-                <div className={styles.quickAccessGrid}>
-                  <div className={styles.quickAccessItem}>
-                    <div className={styles.quickAccessIcon}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className={styles.icon}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                <div className={styles.appCardHeader}>
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#E5F0FF",
+                          borderRadius: "50%",
+                          width: "32px",
+                          height: "32px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginRight: "8px",
+                        }}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#0047FF"
                           strokeWidth="2"
-                          d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"
-                        />
-                      </svg>
+                        >
+                          <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                        </svg>
+                      </div>
+                      <h4 className={styles.appCardTitle} style={{ margin: 0 }}>
+                        Cartões
+                      </h4>
                     </div>
-                    <span className={styles.quickAccessText}>Pix</span>
+                    <p style={{ fontSize: "0.8rem", margin: "0" }}>
+                      Repaginamos a nossa área de cartões. Confira as novidades!
+                    </p>
                   </div>
-                  <div className={styles.quickAccessItem}>
-                    <div className={styles.quickAccessIcon}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className={styles.icon}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                        />
-                      </svg>
-                    </div>
-                    <span className={styles.quickAccessText}>Cartão</span>
-                  </div>
-                  <div className={styles.quickAccessItem}>
-                    <div className={styles.quickAccessIcon}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className={styles.icon}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                        />
-                      </svg>
-                    </div>
-                    <span className={styles.quickAccessText}>Transferir</span>
-                  </div>
-                  <div className={styles.quickAccessItem}>
-                    <div className={styles.quickAccessIcon}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className={styles.icon}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                    <span className={styles.quickAccessText}>Pagar</span>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#0047FF"
+                      strokeWidth="2"
+                    >
+                      <path d="M9 18l6-6-6-6"></path>
+                    </svg>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Barra de navegação inferior */}
+            <div className={styles.bottomNav}>
+              <div className={`${styles.navItem} ${styles.active}`}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className={styles.navIcon}
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Início</span>
+              </div>
+              <div className={styles.navItem}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className={styles.navIcon}
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Ajuda</span>
+              </div>
+              <div className={styles.navItem}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className={styles.navIcon}
+                >
+                  <line x1="4" y1="12" x2="20" y2="12"></line>
+                  <line x1="4" y1="6" x2="20" y2="6"></line>
+                  <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+                <span>Serviços</span>
               </div>
             </div>
           </div>
