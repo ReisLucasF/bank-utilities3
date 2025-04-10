@@ -603,7 +603,7 @@ const ReceiptGenerator = () => {
         <table id="comprovanteTable">
           <tr>
             <th class="col2" colspan="2">
-              <div class="logo">BANCO</div><br />
+              <div class="logo"><img src="/logomerc.png"></div><br />
               Remissão de Pagamento Ficha Compensação
             </th>
           </tr>
