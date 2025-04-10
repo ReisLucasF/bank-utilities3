@@ -50,7 +50,7 @@ export default function Home() {
                 <div className={styles.toolInfo}>
                   <h3 className={styles.toolTitle}>Comprovantes</h3>
                   <p className={styles.toolDescription}>
-                    Gere e personalize comprovantes para seus clientes
+                    Gere comprovantes de forma simplificada
                   </p>
                 </div>
                 <ChevronRight className={styles.toolArrow} />
@@ -63,7 +63,7 @@ export default function Home() {
                 <div className={styles.toolInfo}>
                   <h3 className={styles.toolTitle}>Scripts Card</h3>
                   <p className={styles.toolDescription}>
-                    Crie scripts automatizados para cartões
+                    Crie scripts para Cards com mockup preview.
                   </p>
                 </div>
                 <ChevronRight className={styles.toolArrow} />
@@ -74,9 +74,9 @@ export default function Home() {
                   <Smartphone size={32} />
                 </div>
                 <div className={styles.toolInfo}>
-                  <h3 className={styles.toolTitle}>Preview Mobile</h3>
+                  <h3 className={styles.toolTitle}>Script Pop-up</h3>
                   <p className={styles.toolDescription}>
-                    Visualize em tempo real a experiência do cliente
+                    Crie scripts para Pop-up com mockup preview.
                   </p>
                 </div>
                 <ChevronRight className={styles.toolArrow} />
@@ -139,7 +139,8 @@ export default function Home() {
                       Correções do tema Escuro
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      Algumas sessões que estão pendentes de FIX e validação, ainda serão corrigidas conforme forem sendo identificadas.
+                      Algumas sessões que estão pendentes de FIX e validação,
+                      ainda serão corrigidas conforme forem sendo identificadas.
                     </p>
                   </div>
                 </div>
