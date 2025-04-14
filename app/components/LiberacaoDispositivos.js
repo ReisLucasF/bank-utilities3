@@ -119,7 +119,7 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, "589")
+            .replaceAll(/\${tipo_acesso}/g, "589")
             .replace(/\${tipoLiberacao}/g, "Primeiro Acesso")
             .replace(/\${titular}/g, script.titular);
 
@@ -134,7 +134,7 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, "561")
+            .replaceAll(/\${tipo_acesso}/g, "561")
             .replace(/\${tipoLiberacao}/g, "Liberação de Dispositivo")
             .replace(/\${titular}/g, script.titular);
 
@@ -157,7 +157,7 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, script.tipoAcesso)
+            .replaceAll(/\${tipo_acesso}/g, script.tipoAcesso)
             .replace(/\${tipoLiberacao}/g, tipoLiberacao)
             .replace(/\${titular}/g, script.titular);
 
