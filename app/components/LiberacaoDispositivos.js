@@ -119,13 +119,13 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replaceAll(/\${tipo_acesso}/g, "589")
+            .replace(/\${tipo_acesso}/g, "589") // Modificado de replaceAll para replace
             .replace(/\${tipoLiberacao}/g, "Primeiro Acesso")
             .replace(/\${titular}/g, script.titular);
 
           scriptGerar.push(scriptPrimeiroAcesso);
 
-          // Gerar script para Liberação (561)
+          // Criamos uma cópia do modelo original para o segundo script
           let scriptLiberacao = modeloScript
             .replace(/\${nome_do_solicitante}/g, script.nomeSolicitante)
             .replace(/\${numero_do_id_machine}/g, script.idMachine)
@@ -134,7 +134,7 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replaceAll(/\${tipo_acesso}/g, "561")
+            .replace(/\${tipo_acesso}/g, "561") // Modificado de replaceAll para replace
             .replace(/\${tipoLiberacao}/g, "Liberação de Dispositivo")
             .replace(/\${titular}/g, script.titular);
 
@@ -157,7 +157,7 @@ const LiberacaoDispositivos = () => {
             .replace(/\${id_machine_resto}/g, idMachineResto)
             .replace(/\${agencia}/g, script.agencia)
             .replace(/\${conta}/g, script.conta)
-            .replaceAll(/\${tipo_acesso}/g, script.tipoAcesso)
+            .replace(/\${tipo_acesso}/g, script.tipoAcesso) // Modificado de replaceAll para replace
             .replace(/\${tipoLiberacao}/g, tipoLiberacao)
             .replace(/\${titular}/g, script.titular);
 
