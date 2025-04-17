@@ -1,3 +1,3 @@
 {
-  "script": "-- ATIVAR LISTA PRESENCIAL DE ${tipo_acesso}\nINSERT INTO CTL_ LST_ PRS\n(NUM_DOC_CLI,COD_OPC,COD_SUB_OPC,IDT_ STT,DTA_CAD,DTA_ULT_ALT,NUM_DMD_CRI,IDT_U\nSU SLT_CRI,DES _OBS,DTA DTV/NUM DMD_DTV/IDT USU SLT DTV) VALUES\n('${cpf}',561,0,1,GETDATE(), GETDATE(,0,'${solicitante}', 'Solicitação via Demanda', NULL, '${numero_da_demanda}', NULL);"
+  "script": "--Demanda: ${numero_da_demanda}\n\n-- ATIVAR LISTA PRESENCIAL DE ${tipo_acesso}\nINSERT INTO CTL_ LST_ PRS\n(NUM_DOC_CLI,COD_OPC,COD_SUB_OPC,IDT_ STT,DTA_CAD,DTA_ULT_ALT,NUM_DMD_CRI,IDT_U\nSU SLT_CRI,DES _OBS,DTA DTV/NUM DMD_DTV/IDT USU SLT DTV) VALUES\n('${cpf}',561,0,1,GETDATE(), GETDATE(,0,'${solicitante}', 'Solicitação via Demanda', NULL, '${numero_da_demanda}', NULL);\n\n----------------------------------------------------------------------------"
 }

@@ -111,7 +111,7 @@ const LiberacaoATM = () => {
         // Gerar o script substituindo as variáveis
         let scriptTexto = modeloScript
           .replace(/\${solicitante}/g, script.nomeSolicitante)
-          .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
+          .replaceAll(/\${numero_da_demanda}/g, script.numeroDemanda)
           .replace(/\${cpf}/g, cpfFormatado)
           .replace(/\${tipo_acesso}/g, script.tipoAcesso);
 
