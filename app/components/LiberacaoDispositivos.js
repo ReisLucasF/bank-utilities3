@@ -27,7 +27,7 @@ const LiberacaoDispositivos = () => {
     };
 
     carregarModelo();
-  }, [scripts.length]); // Adicionamos scripts.length como dependência
+  }, []);
 
   // Adicionar um novo script
   const adicionarScript = () => {
@@ -35,11 +35,11 @@ const LiberacaoDispositivos = () => {
     const novoScript = {
       id: scriptCounter.current,
       numeroDemanda: "",
-      tipoAcesso: "",
+      tipoAcesso: "AMBOS", // Valor padrão
       idMachine: "",
       agencia: "",
       conta: "",
-      titular: "",
+      titular: "TITULAR1", // Valor padrão
       nomeSolicitante: "",
       error: {},
     };
@@ -110,35 +110,28 @@ const LiberacaoDispositivos = () => {
 
         // Lógica adicional para gerar scripts diferentes com base no tipo de acesso
         if (script.tipoAcesso === "AMBOS") {
-          // Gerar script para Primeiro Acesso (589)
-          let scriptPrimeiroAcesso = modeloScript
-            .replace(/\${nome_do_solicitante}/g, script.nomeSolicitante)
-            .replace(/\${numero_do_id_machine}/g, script.idMachine)
-            .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
-            .replace(/\${id_machine_primeiros_8_digitos}/g, idMachinePrimeiros8)
-            .replace(/\${id_machine_resto}/g, idMachineResto)
-            .replace(/\${agencia}/g, script.agencia)
-            .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, "589") // Modificado de replaceAll para replace
-            .replace(/\${tipoLiberacao}/g, "Primeiro Acesso")
-            .replace(/\${titular}/g, script.titular);
+          // Script para Primeiro Acesso - usa um template personalizado
+          const scriptPrimeiroAcesso = `--Demanda: ${script.numeroDemanda}
+
+--Primeiro Acesso
+
+INSERT INTO
+CTRL_EXC_FACEMATCH
+(IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
+VALUES
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}','${script.conta}','${script.titular}',GETDATE(),DATEADD(HOUR,+72,GETDATE()),561,0,${script.numeroDemanda},'Solicitado por ${script.nomeSolicitante}')
+
+--Liberação de Dispositivo
+
+INSERT INTO
+CTRL_EXC_FACEMATCH
+(IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
+VALUES
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}',${script.conta},'TITULAR1',GETDATE(),DATEADD(HOUR,+72,GETDATE()),589,0,'${script.numeroDemanda}','Solicitado por ${script.nomeSolicitante}')
+
+----------------------------------------------------------------------------`;
 
           scriptGerar.push(scriptPrimeiroAcesso);
-
-          // Criamos uma cópia do modelo original para o segundo script
-          let scriptLiberacao = modeloScript
-            .replace(/\${nome_do_solicitante}/g, script.nomeSolicitante)
-            .replace(/\${numero_do_id_machine}/g, script.idMachine)
-            .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
-            .replace(/\${id_machine_primeiros_8_digitos}/g, idMachinePrimeiros8)
-            .replace(/\${id_machine_resto}/g, idMachineResto)
-            .replace(/\${agencia}/g, script.agencia)
-            .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, "561") // Modificado de replaceAll para replace
-            .replace(/\${tipoLiberacao}/g, "Liberação de Dispositivo")
-            .replace(/\${titular}/g, script.titular);
-
-          scriptGerar.push(scriptLiberacao);
         } else {
           // Determinar o tipo de liberação
           let tipoLiberacao = "";
@@ -148,20 +141,18 @@ const LiberacaoDispositivos = () => {
             tipoLiberacao = "Liberação de Dispositivo";
           }
 
-          // Gerar o script substituindo as variáveis
-          let scriptTexto = modeloScript
-            .replace(/\${nome_do_solicitante}/g, script.nomeSolicitante)
-            .replace(/\${numero_do_id_machine}/g, script.idMachine)
-            .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
-            .replace(/\${id_machine_primeiros_8_digitos}/g, idMachinePrimeiros8)
-            .replace(/\${id_machine_resto}/g, idMachineResto)
-            .replace(/\${agencia}/g, script.agencia)
-            .replace(/\${conta}/g, script.conta)
-            .replace(/\${tipo_acesso}/g, script.tipoAcesso) // Modificado de replaceAll para replace
-            .replace(/\${tipoLiberacao}/g, tipoLiberacao)
-            .replace(/\${titular}/g, script.titular);
+          // Script personalizado para liberação única
+          const scriptUnico = `--Demanda: ${script.numeroDemanda}
+--${tipoLiberacao}
+INSERT INTO
+CTRL_EXC_FACEMATCH
+(IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
+VALUES
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}','${script.conta}','${script.titular}',GETDATE(),DATEADD(HOUR,+72,GETDATE()),${script.tipoAcesso},0,${script.numeroDemanda},'Solicitado por ${script.nomeSolicitante}')
 
-          scriptGerar.push(scriptTexto);
+----------------------------------------------------------------------------`;
+
+          scriptGerar.push(scriptUnico);
         }
       }
     });
