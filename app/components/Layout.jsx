@@ -205,6 +205,14 @@ export default function Layout({ children }) {
                       </span>
                     </Link>
                   </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/consumo" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>
+                        Consumo
+                      </span>
+                    </Link>
+                  </li>
                 </ul>
               </li>
 
@@ -249,9 +257,7 @@ export default function Layout({ children }) {
                   <li className={styles.submenuItem}>
                     <Link href="/liberacao-atm" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
-                      <span className={styles.submenuText}>
-                        Script ATM
-                      </span>
+                      <span className={styles.submenuText}>Script ATM</span>
                     </Link>
                   </li>
                 </ul>
