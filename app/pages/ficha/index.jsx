@@ -1,32 +1,29 @@
 import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
-// Configuração para comprovante de Contas de Consumo
-const utilityBillReceiptConfig = {
-  title: "Gerar Comprovante - Contas de Consumo",
+// Configuração para comprovante de Ficha de Compensação
+const compensationSlipReceiptConfig = {
+  title: "Gerar Comprovante - Ficha de Compensação",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 
-  formFields: [
-    {
-      id: "convenio",
-      label: "Convênio",
-      placeholder: "Ex: CEMIG, COPASA, SABESP, etc.",
-      required: true,
-    },
-  ],
+  // Sem campos adicionais no formulário
+  formFields: [],
 
   extractFields: [
     { id: "nsu", label: "Nº da Transação" },
-    { id: "valorDocumento", label: "Valor" },
+    { id: "valorDocumento", label: "Valor Nominal" },
+    { id: "valorPago", label: "Valor Pago" },
     { id: "dataPagamento", label: "Data de Pagamento" },
+    { id: "dataVencimento", label: "Data de Vencimento" },
     { id: "codigoBarras", label: "Código de Barras", fullWidth: true },
     { id: "nome", label: "Nome", fullWidth: true },
-    { id: "agenciaConta", label: "Agência/Conta", fullWidth: true },
+    { id: "cpfCnpj", label: "CPF/CNPJ", fullWidth: true },
   ],
 
-  fileNamePrefix: "comprovante_consumo_",
-  numZeros: 14,
+  fileNamePrefix: "comprovante_ficha_",
+  numZeros: 10,
 
+  // Template HTML para o comprovante de Ficha de Compensação
   receiptTemplate: `
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -89,17 +86,13 @@ const utilityBillReceiptConfig = {
           <tr>
             <th class="col2" colspan="2">
               <div class="logo"><img src="/logomerc.png"></div><br />
-              <h4>
-                Remissão de Transação Nº<span id="numerotransação"></span> -
-                Pagamento de conta consumo
-              </h4>
+              Remissão de Pagamento Ficha Compensação
             </th>
           </tr>
           <tr>
             <td><br /></td>
             <td></td>
           </tr>
-
           <tr></tr>
           <tr class="mb">
             <td>Data de Emissão</td>
@@ -113,21 +106,25 @@ const utilityBillReceiptConfig = {
             <td>Forma de pagamento</td>
             <td id="formaPagamento"></td>
           </tr>
+          <br />
+
           <tr>
             <td><br /></td>
             <td></td>
           </tr>
+
           <tr class="mb">
-            <td>Conta a Débito</td>
+            <td>Pagador</td>
           </tr>
           <tr class="mb">
             <td>Nome:</td>
             <td id="nomepagador"></td>
           </tr>
           <tr class="mb">
-            <td>Agência/Conta:</td>
-            <td id="agenciaconta"></td>
+            <td>CPF/CPJ:</td>
+            <td id="cpfcnpj"></td>
           </tr>
+
           <tr>
             <td><br /></td>
             <td></td>
@@ -137,8 +134,20 @@ const utilityBillReceiptConfig = {
             <td id="dataMovimento"></td>
           </tr>
           <tr class="mb">
-            <td>Convênio</td>
-            <td id="convenio"></td>
+            <td>Data do Vencimento</td>
+            <td id="dataVencimento"></td>
+          </tr>
+          <tr class="mb">
+            <td>Valor Nominal</td>
+            <td id="valorDocumento"></td>
+          </tr>
+          <tr class="mb">
+            <td>Encargos</td>
+            <td id="encargos"></td>
+          </tr>
+          <tr class="mb">
+            <td>Desconto</td>
+            <td id="desconto"></td>
           </tr>
           <tr class="mb">
             <td>Valor Pago</td>
@@ -160,10 +169,13 @@ const utilityBillReceiptConfig = {
           <tr>
             <td colspan="2">
               <p class="footer1">
-                Informações sujeitas a confirmação. A efetivação dessa operação será
-                mediante débito em conta corrente. <br />
-                Autorizo o débito em minha conta corrente de eventual diferença
-                apurada em razão de informações inexatas por mim prestadas.
+                Em caso de digitação incorreta de dados que ocasione pagamento de
+                valor inferior ao devido, autorizo o débito dessa diferença em minha
+                conta-corrente. Se o Banco beneficiário deste pagamento recusá-lo,
+                autorizo o crédito, em minha conta-corrente, do valor pago indicado
+                nesta transação. <br />
+                ATENÇÃO: Prezado cliente, este pagamento não poderá ser cancelado
+                após efetivação.
               </p>
             </td>
           </tr>
@@ -186,25 +198,47 @@ const utilityBillReceiptConfig = {
           </tr>
           <tr>
             <td colspan="2">
-              <p class="footer3">WhatsApp: <b>bm.b.br/mel</b></p>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <p class="footer3">
-                <b>alo@mercantil.com.br</b>
-              </p>
+              <p class="footer3"><b>2ª VIA</b></p>
             </td>
           </tr>
         </table>
       </body>
     </html>
   `,
+
+  // Configurações customizadas para extratores de dados específicos
+  customExtractors: {
+    // Extrator customizado para CPF/CNPJ
+    cpfCnpj: (textContent) => {
+      const cpfcnpjMatch = textContent.match(
+        /CPF\/CNPJ do sacado\s*:\s*(\d+)/i,
+      );
+      if (cpfcnpjMatch && cpfcnpjMatch[1]) {
+        const numero = cpfcnpjMatch[1];
+
+        if (/^\d{14}$/.test(numero) && /^[1-9]/.test(numero.substr(0, 3))) {
+          // Se o número tem exatamente 14 dígitos e os três primeiros não são zero, é CNPJ
+          return numero.replace(
+            /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+            "$1.$2.$3/$4-$5",
+          );
+        } else {
+          // Do contrário CPF
+          return numero
+            .substr(3)
+            .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+        }
+      }
+      return "";
+    },
+  },
 };
 
-// Componente que renderiza apenas o gerador de comprovante de Contas de Consumo
-const UtilityBillReceiptGenerator = () => {
-  return <CustomizableReceiptGenerator config={utilityBillReceiptConfig} />;
+// Componente que renderiza o gerador de comprovante de Ficha de Compensação
+const CompensationSlipReceiptGenerator = () => {
+  return (
+    <CustomizableReceiptGenerator config={compensationSlipReceiptConfig} />
+  );
 };
 
-export default UtilityBillReceiptGenerator;
+export default CompensationSlipReceiptGenerator;

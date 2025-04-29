@@ -1,16 +1,21 @@
 import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
-// Configuração para comprovante de Contas de Consumo
-const utilityBillReceiptConfig = {
-  title: "Gerar Comprovante - Contas de Consumo",
+// Configuração para comprovante GPS
+const gpsReceiptConfig = {
+  title: "Gerar Comprovante - GPS",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 
   formFields: [
     {
-      id: "convenio",
-      label: "Convênio",
-      placeholder: "Ex: CEMIG, COPASA, SABESP, etc.",
+      id: "possuiCodigo",
+      label: "Possui código de barras",
+      type: "select",
+      options: [
+        { value: "sim", label: "Sim" },
+        { value: "nao", label: "Não" },
+      ],
+      defaultValue: "sim",
       required: true,
     },
   ],
@@ -19,13 +24,20 @@ const utilityBillReceiptConfig = {
     { id: "nsu", label: "Nº da Transação" },
     { id: "valorDocumento", label: "Valor" },
     { id: "dataPagamento", label: "Data de Pagamento" },
+    { id: "dataVencimento", label: "Data de Vencimento" },
     { id: "codigoBarras", label: "Código de Barras", fullWidth: true },
-    { id: "nome", label: "Nome", fullWidth: true },
-    { id: "agenciaConta", label: "Agência/Conta", fullWidth: true },
   ],
 
-  fileNamePrefix: "comprovante_consumo_",
+  fileNamePrefix: "comprovante_gps_",
   numZeros: 14,
+
+  conditionalFields: [
+    {
+      id: "codigoBarras",
+      condition: (formValues) => formValues.possuiCodigo === "sim",
+      removePattern: '<tr[^>]*id="codigo"[^>]*>.*?</tr>',
+    },
+  ],
 
   receiptTemplate: `
     <!DOCTYPE html>
@@ -43,11 +55,11 @@ const utilityBillReceiptConfig = {
           table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             page-break-inside: auto;
           }
           th, td {
-            padding: 5px;
+            padding: 2px;
             text-align: left;
             font-size: 12px;
             color: #000000 !important;
@@ -57,7 +69,7 @@ const utilityBillReceiptConfig = {
           }
           .col2 {
             text-align: center;
-            font-size: 25px;
+            font-size: 18px;
             font-weight: 100;
             color: #325797;
           }
@@ -69,14 +81,13 @@ const utilityBillReceiptConfig = {
             font-weight: 600;
           }
           .logo {
-            margin: 15px 0;
+            margin: 2px 0 9px;
           }
           .mb {
             border-bottom: 1px solid rgba(0, 0, 0, 0.164);
           }
           .foco {
             font-weight: 700;
-            color: #000000 !important;
           }
           h4 {
             font-size: 19px;
@@ -89,17 +100,13 @@ const utilityBillReceiptConfig = {
           <tr>
             <th class="col2" colspan="2">
               <div class="logo"><img src="/logomerc.png"></div><br />
-              <h4>
-                Remissão de Transação Nº<span id="numerotransação"></span> -
-                Pagamento de conta consumo
-              </h4>
+              Remissão de transação Previdência Social - GPS
             </th>
           </tr>
           <tr>
             <td><br /></td>
             <td></td>
           </tr>
-
           <tr></tr>
           <tr class="mb">
             <td>Data de Emissão</td>
@@ -113,42 +120,29 @@ const utilityBillReceiptConfig = {
             <td>Forma de pagamento</td>
             <td id="formaPagamento"></td>
           </tr>
+
           <tr>
             <td><br /></td>
             <td></td>
           </tr>
-          <tr class="mb">
-            <td>Conta a Débito</td>
-          </tr>
-          <tr class="mb">
-            <td>Nome:</td>
-            <td id="nomepagador"></td>
-          </tr>
-          <tr class="mb">
-            <td>Agência/Conta:</td>
-            <td id="agenciaconta"></td>
-          </tr>
-          <tr>
-            <td><br /></td>
-            <td></td>
-          </tr>
-          <tr class="mb">
-            <td>Data do Pagamento</td>
-            <td id="dataMovimento"></td>
-          </tr>
-          <tr class="mb">
-            <td>Convênio</td>
-            <td id="convenio"></td>
+
+          <tr class="mb" id="codigo">
+            <td>Código de Barras</td>
+            <td id="codigoBarras"></td>
           </tr>
           <tr class="mb">
             <td>Valor Pago</td>
             <td id="valorPago"></td>
           </tr>
           <tr class="mb">
-            <td>Código de Barras</td>
-            <td id="codigoBarras"></td>
+            <td>Data do Pagamento</td>
+            <td id="dataMovimento"></td>
           </tr>
           <tr class="mb">
+            <td>Data do Vencimento</td>
+            <td id="dataVencimento"></td>
+          </tr>
+          <tr>
             <td><br /></td>
             <td></td>
           </tr>
@@ -160,10 +154,9 @@ const utilityBillReceiptConfig = {
           <tr>
             <td colspan="2">
               <p class="footer1">
-                Informações sujeitas a confirmação. A efetivação dessa operação será
-                mediante débito em conta corrente. <br />
-                Autorizo o débito em minha conta corrente de eventual diferença
-                apurada em razão de informações inexatas por mim prestadas.
+                O comprovante de pagamento de GPS está de acordo com a Portaria RFB
+                nº 1976, de 19 de Nov/2008 e Ato Declaratório Executivo Corat/Cotec
+                nº 1, de 23 de março de 2006.
               </p>
             </td>
           </tr>
@@ -174,7 +167,7 @@ const utilityBillReceiptConfig = {
           </tr>
           <tr>
             <td colspan="2">
-              <p class="footer3">SAC MB <b>0800 707 0398</b></p>
+              <p class="footer3">SAC MB <b>0800 707 398</b></p>
             </td>
           </tr>
           <tr>
@@ -202,9 +195,9 @@ const utilityBillReceiptConfig = {
   `,
 };
 
-// Componente que renderiza apenas o gerador de comprovante de Contas de Consumo
-const UtilityBillReceiptGenerator = () => {
-  return <CustomizableReceiptGenerator config={utilityBillReceiptConfig} />;
+// Componente que renderiza apenas o gerador de comprovante GPS
+const GPSReceiptGenerator = () => {
+  return <CustomizableReceiptGenerator config={gpsReceiptConfig} />;
 };
 
-export default UtilityBillReceiptGenerator;
+export default GPSReceiptGenerator;

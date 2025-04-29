@@ -198,7 +198,7 @@ export default function Layout({ children }) {
                   }`}
                 >
                   <li className={styles.submenuItem}>
-                    <Link href="/recipt" className={styles.submenuLink}>
+                    <Link href="/ficha" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>
                         Ficha Compensação
@@ -208,9 +208,25 @@ export default function Layout({ children }) {
                   <li className={styles.submenuItem}>
                     <Link href="/consumo" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
-                      <span className={styles.submenuText}>
-                        Consumo
-                      </span>
+                      <span className={styles.submenuText}>Consumo</span>
+                    </Link>
+                  </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/fgts" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>FGTS</span>
+                    </Link>
+                  </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/gps" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>GPS</span>
+                    </Link>
+                  </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/tributo_municipal" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>Tributo Municipal</span>
                     </Link>
                   </li>
                 </ul>

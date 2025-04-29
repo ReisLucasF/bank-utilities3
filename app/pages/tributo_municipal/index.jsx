@@ -1,16 +1,17 @@
 import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
-// Configuração para comprovante de Contas de Consumo
-const utilityBillReceiptConfig = {
-  title: "Gerar Comprovante - Contas de Consumo",
+// Configuração para comprovante de Tributo Municipal
+const municipalTaxReceiptConfig = {
+  title: "Gerar Comprovante - Tributo Municipal",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 
+  // Campo adicional para o município
   formFields: [
     {
-      id: "convenio",
-      label: "Convênio",
-      placeholder: "Ex: CEMIG, COPASA, SABESP, etc.",
+      id: "municipio",
+      label: "Município",
+      placeholder: "Informe o município aqui",
       required: true,
     },
   ],
@@ -19,14 +20,16 @@ const utilityBillReceiptConfig = {
     { id: "nsu", label: "Nº da Transação" },
     { id: "valorDocumento", label: "Valor" },
     { id: "dataPagamento", label: "Data de Pagamento" },
+    { id: "dataVencimento", label: "Data de Vencimento" },
     { id: "codigoBarras", label: "Código de Barras", fullWidth: true },
     { id: "nome", label: "Nome", fullWidth: true },
     { id: "agenciaConta", label: "Agência/Conta", fullWidth: true },
   ],
 
-  fileNamePrefix: "comprovante_consumo_",
+  fileNamePrefix: "comprovante_tributo_",
   numZeros: 14,
 
+  // Template HTML para o comprovante de Tributo Municipal
   receiptTemplate: `
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -43,11 +46,11 @@ const utilityBillReceiptConfig = {
           table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             page-break-inside: auto;
           }
           th, td {
-            padding: 5px;
+            padding: 2px;
             text-align: left;
             font-size: 12px;
             color: #000000 !important;
@@ -57,7 +60,7 @@ const utilityBillReceiptConfig = {
           }
           .col2 {
             text-align: center;
-            font-size: 25px;
+            font-size: 18px;
             font-weight: 100;
             color: #325797;
           }
@@ -69,14 +72,13 @@ const utilityBillReceiptConfig = {
             font-weight: 600;
           }
           .logo {
-            margin: 15px 0;
+            margin: 2px 0 9px;
           }
           .mb {
             border-bottom: 1px solid rgba(0, 0, 0, 0.164);
           }
           .foco {
             font-weight: 700;
-            color: #000000 !important;
           }
           h4 {
             font-size: 19px;
@@ -90,8 +92,8 @@ const utilityBillReceiptConfig = {
             <th class="col2" colspan="2">
               <div class="logo"><img src="/logomerc.png"></div><br />
               <h4>
-                Remissão de Transação Nº<span id="numerotransação"></span> -
-                Pagamento de conta consumo
+                Remissão de Transação Nº<span id="numerotransação"></span> - Pagamento
+                de tributo municipal
               </h4>
             </th>
           </tr>
@@ -99,7 +101,6 @@ const utilityBillReceiptConfig = {
             <td><br /></td>
             <td></td>
           </tr>
-
           <tr></tr>
           <tr class="mb">
             <td>Data de Emissão</td>
@@ -133,22 +134,26 @@ const utilityBillReceiptConfig = {
             <td></td>
           </tr>
           <tr class="mb">
-            <td>Data do Pagamento</td>
-            <td id="dataMovimento"></td>
-          </tr>
-          <tr class="mb">
-            <td>Convênio</td>
-            <td id="convenio"></td>
+            <td>Código de Barras</td>
+            <td id="codigoBarras"></td>
           </tr>
           <tr class="mb">
             <td>Valor Pago</td>
             <td id="valorPago"></td>
           </tr>
           <tr class="mb">
-            <td>Código de Barras</td>
-            <td id="codigoBarras"></td>
+            <td>Data do Pagamento</td>
+            <td id="dataMovimento"></td>
           </tr>
           <tr class="mb">
+            <td>Data do Vencimento</td>
+            <td id="dataVencimento"></td>
+          </tr>
+          <tr class="mb">
+            <td>Município</td>
+            <td id="municipio"></td>
+          </tr>
+          <tr>
             <td><br /></td>
             <td></td>
           </tr>
@@ -159,12 +164,7 @@ const utilityBillReceiptConfig = {
 
           <tr>
             <td colspan="2">
-              <p class="footer1">
-                Informações sujeitas a confirmação. A efetivação dessa operação será
-                mediante débito em conta corrente. <br />
-                Autorizo o débito em minha conta corrente de eventual diferença
-                apurada em razão de informações inexatas por mim prestadas.
-              </p>
+              <p class="footer1">Operação realizada mediante débito em conta.</p>
             </td>
           </tr>
           <tr>
@@ -174,7 +174,7 @@ const utilityBillReceiptConfig = {
           </tr>
           <tr>
             <td colspan="2">
-              <p class="footer3">SAC MB <b>0800 707 0398</b></p>
+              <p class="footer3">SAC MB <b>0800 707 398</b></p>
             </td>
           </tr>
           <tr>
@@ -200,11 +200,35 @@ const utilityBillReceiptConfig = {
       </body>
     </html>
   `,
+
+  // Customizações específicas
+  customExtractors: {
+    // Extrator customizado para agência/conta
+    agenciaConta: (textContent) => {
+      const agenciaRecebedoraMatch = textContent.match(
+        /Agencia recebedora\s*:\s*(\d+)/i,
+      );
+      const contaMatch = textContent.match(
+        /Conta para Debito\s*:\s*([^\n]+)\b/i,
+      );
+
+      if (agenciaRecebedoraMatch && contaMatch) {
+        return `${agenciaRecebedoraMatch[1]}/${contaMatch[1]}`;
+      }
+      return "";
+    },
+
+    // Extrator para nome do cliente
+    nome: (textContent) => {
+      const nomeMatch = textContent.match(/Nome do cliente\s*:\s*(.+)/i);
+      return nomeMatch ? nomeMatch[1] : "";
+    },
+  },
 };
 
-// Componente que renderiza apenas o gerador de comprovante de Contas de Consumo
-const UtilityBillReceiptGenerator = () => {
-  return <CustomizableReceiptGenerator config={utilityBillReceiptConfig} />;
+// Componente que renderiza o gerador de comprovante de Tributo Municipal
+const MunicipalTaxReceiptGenerator = () => {
+  return <CustomizableReceiptGenerator config={municipalTaxReceiptConfig} />;
 };
 
-export default UtilityBillReceiptGenerator;
+export default MunicipalTaxReceiptGenerator;
