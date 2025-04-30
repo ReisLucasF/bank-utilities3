@@ -332,7 +332,7 @@
 }
 
 .submenuExpanded {
-  max-height: 200px;
+  max-height: 100%;
 }
 
 .submenuItem {
