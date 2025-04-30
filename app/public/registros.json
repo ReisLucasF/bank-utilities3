@@ -212,17 +212,6 @@
     "tempoEstimado": "Depende da tentativa do cliente ou acesso alternativo"
   },
   {
-    "codigo": "GIB0101",
-    "categoria": "Dispositivos",
-    "titulo": "Dispositivo Bloqueado na PLA",
-    "causa": "Tentativa de acesso a dispositivo bloqueado manualmente na PLA",
-    "orientacao": "Verificar o ID Único correspondente ao dispositivo e realizar a IP rigorosa para liberação. Ou orientar na liberação no ponto de atendimento",
-    "gruposResolvedores": ["GR_Canais_AppMB"],
-    "prioridade": "Alta",
-    "impacto": "O cliente não consegue acessar o aplicativo do dispositivo atual",
-    "tempoEstimado": "1-2h após liberação"
-  },
-  {
     "codigo": "22961",
     "categoria": "Dispositivos",
     "titulo": "Dispositivo Bloqueado na PLA",

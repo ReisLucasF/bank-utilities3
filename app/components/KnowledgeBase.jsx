@@ -42,8 +42,10 @@ const KnowledgeBase = () => {
         }
 
         const data = await response.json();
-        setErrors(data);
-        setFilteredErrors(data);
+        // Remove duplicatas no carregamento inicial
+        const uniqueData = removeDuplicates(data);
+        setErrors(uniqueData);
+        setFilteredErrors(uniqueData);
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       } finally {
@@ -54,33 +56,97 @@ const KnowledgeBase = () => {
     loadErrorData();
   }, []);
 
+  // Função para remover resultados duplicados
+  const removeDuplicates = (items) => {
+    if (!items || !Array.isArray(items)) return [];
+
+    const seen = new Map();
+    return items.filter((item) => {
+      if (!item || !item.codigo) return false;
+
+      // Cria uma chave única baseada no código e título
+      const key = `${item.codigo}-${item.titulo}`;
+
+      if (seen.has(key)) return false;
+      seen.set(key, true);
+      return true;
+    });
+  };
+
   // Filtrar erros com base na pesquisa e categoria
   useEffect(() => {
-    if (errors.length === 0) return;
+    if (!errors || errors.length === 0) return;
 
-    const filtered = errors.filter((error) => {
-      // Filtrar por categoria
-      const categoryMatch =
-        activeCategory === "todos" || error.categoria === activeCategory;
+    let filtered = [...errors];
 
-      // Se não há termo de busca, retornar apenas com base na categoria
-      if (!searchTerm.trim()) return categoryMatch;
+    // Filtrar por categoria
+    if (activeCategory !== "todos") {
+      filtered = filtered.filter((error) => error.categoria === activeCategory);
+    }
 
-      // Pesquisar em vários campos
+    // Aplicar filtro de busca
+    if (searchTerm && searchTerm.trim()) {
       const term = searchTerm.toLowerCase().trim();
-      return (
-        categoryMatch &&
-        (error.codigo?.toLowerCase().includes(term) ||
-          error.titulo?.toLowerCase().includes(term) ||
+
+      // Correspondências exatas no código (prioridade máxima)
+      const exactCodeMatches = filtered.filter(
+        (error) => error.codigo?.toLowerCase() === term,
+      );
+
+      // Correspondências parciais no código (prioridade alta)
+      const partialCodeMatches = filtered.filter((error) => {
+        // Pular se já foi incluído em correspondências exatas
+        if (exactCodeMatches.some((match) => match.codigo === error.codigo)) {
+          return false;
+        }
+
+        return error.codigo?.toLowerCase().includes(term);
+      });
+
+      // Correspondências no título (prioridade média)
+      const titleMatches = filtered.filter((error) => {
+        // Pular se já foi incluído em correspondências anteriores
+        if (
+          exactCodeMatches.some((match) => match.codigo === error.codigo) ||
+          partialCodeMatches.some((match) => match.codigo === error.codigo)
+        ) {
+          return false;
+        }
+
+        return error.titulo?.toLowerCase().includes(term);
+      });
+
+      // Outras correspondências (prioridade baixa)
+      const otherMatches = filtered.filter((error) => {
+        // Pular se já foi incluído em correspondências anteriores
+        if (
+          exactCodeMatches.some((match) => match.codigo === error.codigo) ||
+          partialCodeMatches.some((match) => match.codigo === error.codigo) ||
+          titleMatches.some((match) => match.codigo === error.codigo)
+        ) {
+          return false;
+        }
+
+        return (
           error.causa?.toLowerCase().includes(term) ||
           error.orientacao?.toLowerCase().includes(term) ||
           error.gruposResolvedores?.some((grupo) =>
             grupo.toLowerCase().includes(term),
-          ))
-      );
-    });
+          )
+        );
+      });
 
-    setFilteredErrors(filtered);
+      // Combinar todos os resultados na ordem de prioridade
+      filtered = [
+        ...exactCodeMatches,
+        ...partialCodeMatches,
+        ...titleMatches,
+        ...otherMatches,
+      ];
+    }
+
+    // Assegurar que não há duplicatas
+    setFilteredErrors(removeDuplicates(filtered));
   }, [searchTerm, activeCategory, errors]);
 
   // Obter todas as categorias únicas
@@ -205,6 +271,22 @@ ${(selectedError.gruposResolvedores || []).join(", ")}`;
   // Manipulador para mudança de categoria
   const handleCategoryChange = (category) => {
     setActiveCategory(category || "todos");
+
+    // Redefinir os resultados filtrados com base na nova categoria
+    if (!errors || errors.length === 0) return;
+
+    let newFiltered;
+    if (category === "todos") {
+      newFiltered = [...errors];
+    } else {
+      newFiltered = errors.filter((error) => error.categoria === category);
+    }
+
+    // Garantir que não há duplicatas
+    setFilteredErrors(removeDuplicates(newFiltered));
+
+    // Limpar a pesquisa ao mudar de categoria
+    setSearchTerm("");
   };
 
   // Manipulador para pesquisa
@@ -215,6 +297,21 @@ ${(selectedError.gruposResolvedores || []).join(", ")}`;
   // Limpar pesquisa
   const handleClearSearch = () => {
     setSearchTerm("");
+
+    // Redefinir os resultados filtrados com base na categoria atual
+    if (!errors || errors.length === 0) return;
+
+    let newFiltered;
+    if (activeCategory === "todos") {
+      newFiltered = [...errors];
+    } else {
+      newFiltered = errors.filter(
+        (error) => error.categoria === activeCategory,
+      );
+    }
+
+    // Garantir que não há duplicatas
+    setFilteredErrors(removeDuplicates(newFiltered));
   };
 
   return (
@@ -347,7 +444,7 @@ ${(selectedError.gruposResolvedores || []).join(", ")}`;
         </div>
       )}
 
-      {/* Modal de Detalhes - Versão simplificada para debugging */}
+      {/* Modal de Detalhes */}
       {isModalOpen && selectedError && (
         <div className={styles.modalOverlay}>
           <div
@@ -447,12 +544,18 @@ ${(selectedError.gruposResolvedores || []).join(", ")}`;
                   Grupos Resolvedores
                 </h4>
                 <div className={styles.groupsWrap}>
-                  {(selectedError.gruposResolvedores || []).map(
-                    (grupo, index) => (
-                      <div key={index} className={styles.groupBadgeLarge}>
-                        {grupo}
-                      </div>
-                    ),
+                  {(selectedError.gruposResolvedores || []).length > 0 ? (
+                    (selectedError.gruposResolvedores || []).map(
+                      (grupo, index) => (
+                        <div key={index} className={styles.groupBadgeLarge}>
+                          {grupo}
+                        </div>
+                      ),
+                    )
+                  ) : (
+                    <p className={styles.noGroupsText}>
+                      Nenhum grupo resolvedor definido.
+                    </p>
                   )}
                 </div>
               </div>
