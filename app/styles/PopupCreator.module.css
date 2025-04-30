@@ -341,7 +341,7 @@
 
 /* Phone mockup */
 .phoneMockup {
-  width: 400px;
+  width: 360px;
   height: 750px;
   padding-top: ;
   border: 10px solid #1a1a1a;
@@ -354,7 +354,7 @@
 }
 
 .phoneNotch {
-  width: 150px;
+  width: 140px;
   height: 25px;
   background: #1a1a1a;
   border-radius: 0 0 16px 16px;
