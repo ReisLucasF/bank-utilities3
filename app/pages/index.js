@@ -15,6 +15,7 @@ import {
   Lightbulb,
   Zap,
   Clock,
+  Rocket,
 } from "lucide-react";
 import styles from "/styles/Home.module.css";
 
@@ -125,22 +126,30 @@ export default function Home() {
             {/* Coluna da direita */}
             <section className={styles.upcomingSection}>
               <div className={styles.sectionHeader}>
-                <Clock className={styles.sectionIcon} />
-                <h2 className={styles.sectionTitle}>Próximas Features</h2>
+                <Rocket className={styles.sectionIcon} />
+                <h2 className={styles.sectionTitle}>Atualizações</h2>
               </div>
               <div className={styles.card}>
                 <div className={styles.upcomingList}>
                   <div className={styles.upcomingItem}>
-                    <div className={styles.upcomingStatus}>
-                      Em desenvolvimento
-                    </div>
+                    <div className={styles.upcomingStatus}>Lançada 30/04</div>
                     <h3 className={styles.upcomingTitle}>
                       <PlusCircle className={styles.upcomingIcon} />
-                      Correções do tema Escuro
+                      Botão fechar Popup
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      Algumas sessões que estão pendentes de FIX e validação,
-                      ainda serão corrigidas conforme forem sendo identificadas.
+                      Agora o botão fechar em Popup layout 335 é configurável e
+                      a imagem do layout foi ajustada para melhor fidedignidade.
+                    </p>
+                  </div>
+                  <div className={styles.upcomingItem}>
+                    <div className={styles.upcomingStatus}>Lançada 29/04</div>
+                    <h3 className={styles.upcomingTitle}>
+                      <PlusCircle className={styles.upcomingIcon} />
+                      Comprovantes
+                    </h3>
+                    <p className={styles.upcomingDescription}>
+                      Foram adicionados novos comprovantes para emissão de segunda via.
                     </p>
                   </div>
                 </div>
