@@ -224,9 +224,14 @@ export default function Layout({ children }) {
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
-                    <Link href="/tributo_municipal" className={styles.submenuLink}>
+                    <Link
+                      href="/tributo_municipal"
+                      className={styles.submenuLink}
+                    >
                       <span className={styles.submenuIcon}></span>
-                      <span className={styles.submenuText}>Tributo Municipal</span>
+                      <span className={styles.submenuText}>
+                        Tributo Municipal
+                      </span>
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
@@ -316,7 +321,7 @@ export default function Layout({ children }) {
       <footer className={styles.footer}>
         <p>
           © {new Date().getFullYear()} Bank Utilities - Todos os direitos
-          reservados
+          reservados. | v1.0.5
         </p>
       </footer>
     </div>
