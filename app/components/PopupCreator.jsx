@@ -7,7 +7,7 @@ const PopupCreator = () => {
   const [numeroAcao, setNumeroAcao] = useState("");
   const [imagem, setImagem] = useState(null);
   const [imagemPreview, setImagemPreview] = useState("");
-  const [tipoLayout, setTipoLayout] = useState("333");
+  const [tipoLayout, setTipoLayout] = useState("335");
   const [titulo, setTitulo] = useState("Escreva um título");
   const [corTitulo, setCorTitulo] = useState("#ffffff");
   const [tamanhoTitulo, setTamanhoTitulo] = useState("65");
@@ -397,7 +397,11 @@ const PopupCreator = () => {
                   ? `url(${imagemPreview})`
                   : "none",
               }}
-            ></div>
+            >
+              <div className={styles.btnFechar} style={{ color: corBtnFechar }}>
+                X {textoBtnFechar}
+              </div>
+            </div>
           </div>
         );
 
@@ -406,38 +410,7 @@ const PopupCreator = () => {
     }
   };
 
-  // Função para limpar o formulário
-  const handleReset = () => {
-    setNumeroAcao("");
-    setImagem(null);
-    setImagemPreview("");
-    setTipoLayout("333");
-    setTitulo("Escreva um título");
-    setCorTitulo("#ffffff");
-    setTamanhoTitulo("65");
-    setSubtitulo("Escreva um subtítulo");
-    setCorSubtitulo("#ffffff");
-    setTamanhoSubtitulo("22");
-    setTextoCTA("Escreva a CTA");
-    setCorTextoCTA("#000000");
-    setCorFundoCTA("#ffffff");
-    setCorBordaCTA("#FFFFFF");
-    setCorInicio("#9EEBFF");
-    setCorFim("#000596");
-    setTextoBtnFechar("Fechar");
-    setCorBtnFechar("#ffffff");
-    setTipoLink("3");
-    setLink("");
-    setCodigo("");
-    setCodigoManual("");
-    setID("");
-    setIDManual("");
-    setStatusArquivo("Formulário limpo");
-    setStatusArquivoCor("blue");
-  };
-
   const gerarScript = () => {
-    // Verificações iniciais (espaços em branco nas cores, contraste, etc.)
     for (const campoId in camposComEspaco) {
       const valorCampo = eval(campoId).trim();
       if (valorCampo && valorCampo.includes(" ")) {
@@ -696,6 +669,9 @@ const PopupCreator = () => {
                   value={tipoLayout}
                   onChange={(e) => setTipoLayout(e.target.value)}
                 >
+                  <option value="335">
+                    POPUP COM IMAGEM LIVRE (TEXTOS JÁ FIXOS NA IMAGEM)
+                  </option>
                   <option value="333">
                     POPUP COM IMAGEM SUPERIOR - TÍTULO, SUBTÍTULO, TEXTO CTA
                     (BOTÃO)
@@ -704,19 +680,13 @@ const PopupCreator = () => {
                     POPUP COM IMAGEM INFERIOR - TÍTULO, SUBTÍTULO, TEXTO CTA
                     (BOTÃO)
                   </option>
-                  <option value="335">
-                    POPUP COM IMAGEM LIVRE (TEXTOS JÁ FIXOS NA IMAGEM)
-                  </option>
                 </select>
               </div>
             )}
           </div>
 
           {/* Seção 3: Conteúdo e Estilo */}
-          <div
-            className={styles.accordionItem}
-            style={{ display: tipoLayout === "335" ? "none" : "block" }}
-          >
+          <div className={styles.accordionItem}>
             <button
               type="button"
               className={`${styles.accordionHeader} ${secaoAberta.conteudoEstilo ? styles.active : ""}`}
@@ -731,7 +701,10 @@ const PopupCreator = () => {
             {secaoAberta.conteudoEstilo && (
               <div className={styles.accordionContent}>
                 {/* Título */}
-                <div className={styles.contentSection}>
+                <div
+                  className={styles.contentSection}
+                  style={{ display: tipoLayout === "335" ? "none" : "block" }}
+                >
                   <h4 className={styles.contentSectionTitle}>Título</h4>
                   <div className={styles.formGrid3}>
                     <div className={styles.col2}>
@@ -789,7 +762,10 @@ const PopupCreator = () => {
                 </div>
 
                 {/* Subtítulo */}
-                <div className={styles.contentSection}>
+                <div
+                  className={styles.contentSection}
+                  style={{ display: tipoLayout === "335" ? "none" : "block" }}
+                >
                   <h4 className={styles.contentSectionTitle}>Subtítulo</h4>
                   <div className={styles.formGrid3}>
                     <div className={styles.col2}>
@@ -850,7 +826,10 @@ const PopupCreator = () => {
                 </div>
 
                 {/* Botão CTA */}
-                <div className={styles.contentSection}>
+                <div
+                  className={styles.contentSection}
+                  style={{ display: tipoLayout === "335" ? "none" : "block" }}
+                >
                   <h4 className={styles.contentSectionTitle}>
                     Botão de Ação (CTA)
                   </h4>
@@ -941,7 +920,10 @@ const PopupCreator = () => {
                 </div>
 
                 {/* Cores de Fundo */}
-                <div className={styles.contentSection}>
+                <div
+                  className={styles.contentSection}
+                  style={{ display: tipoLayout === "335" ? "none" : "block" }}
+                >
                   <h4 className={styles.contentSectionTitle}>Cores de Fundo</h4>
                   <div className={styles.formGrid}>
                     <div className={styles.formGroup}>

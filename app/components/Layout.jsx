@@ -229,6 +229,12 @@ export default function Layout({ children }) {
                       <span className={styles.submenuText}>Tributo Municipal</span>
                     </Link>
                   </li>
+                  <li className={styles.submenuItem}>
+                    <Link href="/dae" className={styles.submenuLink}>
+                      <span className={styles.submenuIcon}></span>
+                      <span className={styles.submenuText}>DAE</span>
+                    </Link>
+                  </li>
                 </ul>
               </li>
 

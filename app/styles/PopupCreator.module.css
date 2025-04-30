@@ -342,7 +342,8 @@
 /* Phone mockup */
 .phoneMockup {
   width: 400px;
-  height: 700px;
+  height: 750px;
+  padding-top: ;
   border: 10px solid #1a1a1a;
   border-radius: 36px;
   position: relative;
@@ -352,7 +353,7 @@
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.phoneNotch {
+/* .phoneNotch {
   width: 150px;
   height: 25px;
   background: #1a1a1a;
@@ -362,7 +363,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 999999;
-}
+} */
 
 .phoneScreen {
   width: 100%;
