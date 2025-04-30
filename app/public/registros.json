@@ -617,5 +617,16 @@
     "prioridade": "Média",
     "impacto": "O cliente precisa tentar novamente o reconhecimento",
     "tempoEstimado": "Imediato com nova tentativa"
+  },
+  {
+    "codigo": "RECAPTCHA",
+    "categoria": "Segurança",
+    "titulo": "Bloqueio por reCAPTCHA",
+    "causa": "O usuário foi bloqueado pelo sistema reCAPTCHA v3",
+    "orientacao": "- Verifique sua rede:\n  Se você está em uma rede com muitos dispositivos ou atividade de bots, pode ser a causa do bloqueio. Tente acessar de outro dispositivo ou rede.\n\n- Limpe o cache do navegador:\n  O cache pode interferir no funcionamento do reCAPTCHA. Limpar o cache pode ajudar a resolver o problema.\n\n- Desative extensões:\n  Algumas extensões podem interferir no reCAPTCHA. Tente desativá-las para ver se isso resolve o problema.",
+    "gruposResolvedores": ["GR_Canais_APP_IBK"],
+    "prioridade": "Média", 
+    "impacto": "O cliente não consegue acessar devido ao bloqueio do reCAPTCHA",
+    "tempoEstimado": "Imediato após seguir as orientações"
   }
 ]

@@ -31,7 +31,7 @@ const KnowledgeBase = () => {
   const [copied, setCopied] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
 
-  // Carregar dados do JSON e verificar parâmetros da URL
+  // Carregar dados do JSON
   useEffect(() => {
     const loadErrorData = async () => {
       try {
@@ -46,9 +46,6 @@ const KnowledgeBase = () => {
         const uniqueData = removeDuplicates(data);
         setErrors(uniqueData);
         setFilteredErrors(uniqueData);
-
-        // Processar parâmetros da URL após carregar os dados
-        handleUrlParameters(uniqueData);
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       } finally {
@@ -58,80 +55,6 @@ const KnowledgeBase = () => {
 
     loadErrorData();
   }, []);
-
-  // Função para processar parâmetros da URL
-  const handleUrlParameters = (errorData) => {
-    if (typeof window === "undefined") return;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const codigoParam = urlParams.get("codigo");
-    const detalhesParam = urlParams.get("cod_detalhes");
-
-    if (codigoParam) {
-      // Converter para minúsculas para comparação sem distinção entre maiúsculas e minúsculas
-      const termToSearch = codigoParam.toLowerCase();
-      setSearchTerm(termToSearch);
-
-      // Filtrar erros que correspondem ao código
-      const filtered = errorData.filter(
-        (error) =>
-          error.codigo && error.codigo.toLowerCase().includes(termToSearch),
-      );
-
-      if (filtered.length > 0) {
-        setFilteredErrors(filtered);
-      }
-    }
-
-    if (detalhesParam) {
-      // Encontrar o erro pelo código e abrir modal
-      const errorToShow = errorData.find(
-        (error) =>
-          error.codigo &&
-          error.codigo.toLowerCase() === detalhesParam.toLowerCase(),
-      );
-
-      if (errorToShow) {
-        setSelectedError(errorToShow);
-        setIsModalOpen(true);
-
-        // Animar a entrada do modal
-        setTimeout(() => {
-          setModalAnimation(true);
-        }, 10);
-      }
-    }
-  };
-
-  // Atualizar URL quando o erro é selecionado ou filtrado
-  const updateUrl = (type, value) => {
-    if (typeof window === "undefined") return;
-
-    const url = new URL(window.location.href);
-
-    if (type === "filter") {
-      if (value) {
-        url.searchParams.set("codigo", value);
-        // Remover parâmetro de detalhes se existir
-        url.searchParams.delete("cod_detalhes");
-      } else {
-        // Se o valor for vazio, remover o parâmetro
-        url.searchParams.delete("codigo");
-      }
-    } else if (type === "details") {
-      if (value) {
-        url.searchParams.set("cod_detalhes", value);
-        // Remover parâmetro de filtro se existir
-        url.searchParams.delete("codigo");
-      } else {
-        // Se o valor for vazio, remover o parâmetro
-        url.searchParams.delete("cod_detalhes");
-      }
-    }
-
-    // Atualizar a URL sem recarregar a página
-    window.history.pushState({}, "", url);
-  };
 
   // Função para remover resultados duplicados
   const removeDuplicates = (items) => {
@@ -220,12 +143,6 @@ const KnowledgeBase = () => {
         ...titleMatches,
         ...otherMatches,
       ];
-
-      // Atualizar a URL com o termo de pesquisa
-      updateUrl("filter", searchTerm);
-    } else {
-      // Se a pesquisa estiver vazia, remover o parâmetro da URL
-      updateUrl("filter", "");
     }
 
     // Assegurar que não há duplicatas
@@ -271,22 +188,15 @@ const KnowledgeBase = () => {
       setTimeout(() => {
         setModalAnimation(true);
       }, 10);
-
-      // Atualizar a URL quando o modal é aberto
-      updateUrl("details", errorCode);
     }
   };
 
   // Função para fechar o modal
   const handleCloseModal = () => {
     setModalAnimation(false);
-
     setTimeout(() => {
       setIsModalOpen(false);
       setSelectedError(null);
-
-      // Limpar o parâmetro de detalhes da URL quando o modal é fechado
-      updateUrl("details", "");
     }, 300);
   };
 
@@ -294,10 +204,21 @@ const KnowledgeBase = () => {
   const handleCopyErrorInfo = () => {
     if (!selectedError) return;
 
-    const infoText = `
-    Orientação:
-    ${selectedError.orientacao || ""}
-    `;
+    const infoText = `Código: ${selectedError.codigo || ""}
+Título: ${selectedError.titulo || ""}
+Categoria: ${selectedError.categoria || ""}
+Prioridade: ${selectedError.prioridade || ""}
+Impacto: ${selectedError.impacto || ""}
+Tempo Estimado: ${selectedError.tempoEstimado || ""}
+
+Causa:
+${selectedError.causa || ""}
+
+Orientação:
+${selectedError.orientacao || ""}
+
+Grupos Resolvedores:
+${(selectedError.gruposResolvedores || []).join(", ")}`;
 
     navigator.clipboard
       .writeText(infoText)
@@ -366,9 +287,6 @@ const KnowledgeBase = () => {
 
     // Limpar a pesquisa ao mudar de categoria
     setSearchTerm("");
-
-    // Limpar os parâmetros da URL
-    updateUrl("filter", "");
   };
 
   // Manipulador para pesquisa
@@ -394,9 +312,6 @@ const KnowledgeBase = () => {
 
     // Garantir que não há duplicatas
     setFilteredErrors(removeDuplicates(newFiltered));
-
-    // Limpar o parâmetro de filtro da URL
-    updateUrl("filter", "");
   };
 
   return (
