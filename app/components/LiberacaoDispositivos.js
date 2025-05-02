@@ -127,7 +127,7 @@ INSERT INTO
 CTRL_EXC_FACEMATCH
 (IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
 VALUES
-('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}',${script.conta},'TITULAR1',GETDATE(),DATEADD(HOUR,+72,GETDATE()),589,0,'${script.numeroDemanda}','Solicitado por ${script.nomeSolicitante}')
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}',${script.conta},'${script.titular}',GETDATE(),DATEADD(HOUR,+72,GETDATE()),589,0,'${script.numeroDemanda}','Solicitado por ${script.nomeSolicitante}')
 
 ----------------------------------------------------------------------------`;
 

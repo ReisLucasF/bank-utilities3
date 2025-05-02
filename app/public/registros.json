@@ -627,6 +627,6 @@
     "gruposResolvedores": ["GR_Canais_APP_IBK"],
     "prioridade": "Média",
     "impacto": "O cliente não consegue acessar o Internet Banking devido ao bloqueio do reCAPTCHA",
-    "tempoEstimado": "Imediato se realizando testes em outro navegador ou até realizar os procedimentos sugeridos acima."
+    "tempoEstimado": "Imediato se realizando testes em outro navegador ou até realizar os procedimentos sugeridos acima.w"
   }
 ]
