@@ -116,12 +116,33 @@ const CardCreator = () => {
     });
   };
 
-  // Função para lidar com o upload de imagem
   const handleImagemChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
+      // Validação de tamanho PRIMEIRO (100KB = 100 * 1024 bytes)
+      if (file.size > 100 * 1024) {
+        alert(
+          "A imagem deve ter no máximo 100KB. Por favor, selecione uma imagem menor.",
+        );
+
+        // Limpa o input file
+        e.target.value = "";
+
+        // Reseta os estados
+        setImagem(null);
+        setImagemPreview("");
+        setStatusArquivo("Arquivo muito grande (máximo 100KB)");
+        setStatusArquivoCor("red");
+
+        return; // Para aqui, não processa mais nada
+      }
+
+      // Se chegou até aqui, o arquivo está dentro do limite
       setImagem(file);
-      setStatusArquivo(`Arquivo selecionado: ${file.name}`);
+      setStatusArquivo(
+        `Arquivo selecionado: ${file.name} (${(file.size / 1024).toFixed(1)}KB)`,
+      );
       setStatusArquivoCor("green");
 
       const reader = new FileReader();
