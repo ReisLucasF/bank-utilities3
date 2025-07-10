@@ -105,6 +105,13 @@
   margin-right: 8px;
 }
 
+.buttonDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
+
 /* Preview Column */
 .previewColumn {
   display: flex;

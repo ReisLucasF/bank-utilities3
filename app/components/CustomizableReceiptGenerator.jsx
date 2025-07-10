@@ -20,6 +20,8 @@ const CustomizableReceiptGenerator = ({ config }) => {
     icon: "file-text",
     color: "bg-blue-600 hover:bg-blue-700",
   });
+  // Novo estado para controlar se o botão deve estar desabilitado
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const textAreaRef = useRef(null);
   const formRefs = useRef({});
@@ -42,6 +44,7 @@ const CustomizableReceiptGenerator = ({ config }) => {
       previewExtractedInfo();
     } else {
       setIsDataExtracted(false);
+      setIsButtonDisabled(true); // Desabilita o botão quando não há texto
     }
   }, [logText]);
 
@@ -59,6 +62,7 @@ const CustomizableReceiptGenerator = ({ config }) => {
 
     if (!textContent) {
       setIsDataExtracted(false);
+      setIsButtonDisabled(true);
       return;
     }
 
@@ -89,6 +93,10 @@ const CustomizableReceiptGenerator = ({ config }) => {
         );
         if (codigoBarrasMatch && codigoBarrasMatch[1]) {
           newData.codigoBarras = codigoBarrasMatch[1];
+          // Verifica se o código de barras tem pelo menos 47 caracteres
+          setIsButtonDisabled(codigoBarrasMatch[1].length < 47);
+        } else {
+          setIsButtonDisabled(true); // Se não tem código de barras, desabilita o botão
         }
 
         // NSU
@@ -202,10 +210,12 @@ const CustomizableReceiptGenerator = ({ config }) => {
         setIsDataExtracted(true);
       } else {
         setIsDataExtracted(false);
+        setIsButtonDisabled(true); // Se não extraiu dados, desabilita o botão
       }
     } catch (error) {
       console.error("Erro ao extrair informações:", error);
       setIsDataExtracted(false);
+      setIsButtonDisabled(true); // Em caso de erro, desabilita o botão
     }
   };
 
@@ -235,6 +245,16 @@ const CustomizableReceiptGenerator = ({ config }) => {
         errorMessage =
           "O LOG não contém informações suficientes. Verifique se o formato está correto.";
         isValid = false;
+      }
+
+      // Verificar se o código de barras tem pelo menos 47 caracteres
+      if (codigoBarrasMatch && codigoBarrasMatch[1]) {
+        if (codigoBarrasMatch[1].length < 47) {
+          textAreaRef.current.classList.add(styles.inputError);
+          errorMessage =
+            "O código de barras deve ter pelo menos 47 caracteres.";
+          isValid = false;
+        }
       }
     }
 
@@ -365,8 +385,8 @@ const CustomizableReceiptGenerator = ({ config }) => {
       );
     }
 
-    // Código de barras
-    const codigoBarrasMatch = logText.match(/Codigo de Barras\s*:\s*(\d+})/i);
+    // Código de barras - Corrigido o regex que tinha um problema com '}'
+    const codigoBarrasMatch = logText.match(/Codigo de Barras\s*:\s*(\d+)/i);
     if (codigoBarrasMatch && codigoBarrasMatch[1]) {
       extractedValues.codigoBarras = codigoBarrasMatch[1];
     }
@@ -735,7 +755,8 @@ const CustomizableReceiptGenerator = ({ config }) => {
           <div className={styles.buttonContainer}>
             <button
               onClick={processLogAndGeneratePDF}
-              className={`${styles.button} ${buttonState.color}`}
+              className={`${styles.button} ${buttonState.color} ${isButtonDisabled ? styles.buttonDisabled : ""}`}
+              disabled={isButtonDisabled}
             >
               {buttonState.icon === "file-text" ? (
                 <FileText className={styles.buttonIcon} />
@@ -819,6 +840,10 @@ const CustomizableReceiptGenerator = ({ config }) => {
                   )}
                   <li>Verifique se os dados foram detectados corretamente</li>
                   <li>Clique em "Gerar Comprovante" para baixar o PDF</li>
+                  <li>
+                    Atenção: O código de barras deve ter pelo menos 47
+                    caracteres para gerar o comprovante
+                  </li>
                 </>
               )}
             </ul>
