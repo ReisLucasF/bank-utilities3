@@ -321,7 +321,7 @@ export default function Layout({ children }) {
       <footer className={styles.footer}>
         <p>
           © {new Date().getFullYear()} Bank Utilities - Todos os direitos
-          reservados. | v1.0.7
+          reservados. | v1.0.8
         </p>
       </footer>
     </div>
