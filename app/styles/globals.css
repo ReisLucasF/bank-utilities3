@@ -6,7 +6,7 @@
   --primary-hover: #2563eb;
   --bg-light: #ffffff;
   --bg-dark: #121212;
-  --text-light: #333333;
+  --text-light: #5d5d5d;
   --text-dark: #f3f4f6;
   --sidebar-bg-light: #1f2937;
   --sidebar-bg-dark: #111827;
@@ -76,7 +76,10 @@ p {
   background-color: transparent;
 }
 
-.label, .quickAccessText, .appCardValue, .appCardTitle {
+.label,
+.quickAccessText,
+.appCardValue,
+.appCardTitle {
   color: var(--text-light) !important;
 }
 

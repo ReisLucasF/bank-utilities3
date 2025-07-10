@@ -85,7 +85,7 @@ const CustomizableReceiptGenerator = ({ config }) => {
 
         // Código de barras
         const codigoBarrasMatch = textContent.match(
-          /Codigo de Barras\s*:\s*(\d+)/i,
+          /Codigo de Barras\s*:\s*(\d{7})/i,
         );
         if (codigoBarrasMatch && codigoBarrasMatch[1]) {
           newData.codigoBarras = codigoBarrasMatch[1];
@@ -227,7 +227,9 @@ const CustomizableReceiptGenerator = ({ config }) => {
       const valorMatch = logText.match(
         /Valor (do documento|liquido a debitar)\s*:\s*R\$\s*([\d,.]+)/i,
       );
-      const codigoBarrasMatch = logText.match(/Codigo de Barras\s*:\s*(\d+)/i);
+      const codigoBarrasMatch = logText.match(
+        /Codigo de Barras\s*:\s*(\d{7})/i,
+      );
       const nsuMatch = logText.match(/Nsu\s*:\s*(\d+)/i);
 
       if (!valorMatch && !codigoBarrasMatch && !nsuMatch) {
@@ -366,7 +368,9 @@ const CustomizableReceiptGenerator = ({ config }) => {
     }
 
     // Código de barras
-    const codigoBarrasMatch = logText.match(/Codigo de Barras\s*:\s*(\d+)/i);
+    const codigoBarrasMatch = logText.match(
+      /Codigo de Barras\s*:\s*(\d{47,50})/i,
+    );
     if (codigoBarrasMatch && codigoBarrasMatch[1]) {
       extractedValues.codigoBarras = codigoBarrasMatch[1];
     }

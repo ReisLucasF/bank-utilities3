@@ -1,6 +1,5 @@
 /* ReceiptGenerator.module.css - Melhorado */
 
-
 .header {
   margin-bottom: 20px;
 }
@@ -45,7 +44,8 @@
   margin-bottom: 10px;
 }
 
-.input, .textarea {
+.input,
+.textarea {
   width: 100%;
   padding: 16px;
   background-color: #1a202c;
@@ -57,7 +57,8 @@
   transition: all 0.2s ease;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
@@ -111,14 +112,16 @@
   gap: 24px;
 }
 
-.previewContainer, .instructionsContainer {
+.previewContainer,
+.instructionsContainer {
   padding: 24px;
   background-color: #1f2937;
   border: 1px solid #2d3748;
   border-radius: 8px;
 }
 
-.previewHeader, .instructionsHeader {
+.previewHeader,
+.instructionsHeader {
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -127,7 +130,8 @@
   margin-bottom: 16px;
 }
 
-.infoIcon, .helpIcon {
+.infoIcon,
+.helpIcon {
   width: 20px;
   height: 20px;
   margin-right: 10px;
@@ -154,7 +158,8 @@
   gap: 12px;
 }
 
-.infoItem, .infoItemFull {
+.infoItem,
+.infoItemFull {
   padding: 8px 0;
   border-bottom: 1px solid #2d3748;
 }
@@ -166,6 +171,7 @@
 .infoLabel {
   font-size: 0.875rem;
   margin-right: 4px;
+  color: #e2e8f0 !important;
 }
 
 .infoValue {
@@ -213,7 +219,9 @@
   padding: 32px;
   max-width: 480px;
   width: 100%;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #2d3748;
 }
 
