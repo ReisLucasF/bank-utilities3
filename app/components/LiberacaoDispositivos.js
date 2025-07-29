@@ -7,6 +7,7 @@ const LiberacaoDispositivos = () => {
   const { isDarkMode } = useTheme();
   const [scripts, setScripts] = useState([]);
   const [modeloScript, setModeloScript] = useState("");
+  const [modeloDesativacao, setModeloDesativacao] = useState("");
   const [gerando, setGerando] = useState(false);
   const scriptCounter = useRef(0);
 
@@ -18,6 +19,7 @@ const LiberacaoDispositivos = () => {
         if (!response.ok) throw new Error("Falha ao carregar modelo");
         const data = await response.json();
         setModeloScript(data.script);
+        setModeloDesativacao(data.desativacao);
       } catch (error) {
         console.error("Erro ao carregar modelo:", error);
         alert(
@@ -41,6 +43,7 @@ const LiberacaoDispositivos = () => {
       conta: "",
       titular: "TITULAR1", // Valor padrão
       nomeSolicitante: "",
+      cpfCliente: "",
       error: {},
     };
 
@@ -90,6 +93,11 @@ const LiberacaoDispositivos = () => {
         "nomeSolicitante",
       ];
 
+      // Se for EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO, CPF também é obrigatório
+      if (script.tipoAcesso === "EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO") {
+        camposObrigatorios.push("cpfCliente");
+      }
+
       let errorFields = {};
       camposObrigatorios.forEach((campo) => {
         if (!script[campo]) {
@@ -132,6 +140,45 @@ VALUES
 ----------------------------------------------------------------------------`;
 
           scriptGerar.push(scriptPrimeiroAcesso);
+        } else if (script.tipoAcesso === "EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO") {
+          if (!modeloDesativacao) {
+            alert(
+              "Modelo de desativação não foi carregado. Tente recarregar a página.",
+            );
+            return;
+          }
+
+          // Primeiro: Script de desativação usando o template do modeloLib.json
+          const scriptDesativacao = modeloDesativacao
+            .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
+            .replace(/\${numero_do_id_machine}/g, script.idMachine)
+            .replace(/\${cpf_cliente}/g, script.cpfCliente)
+            .replace(/\${id_solicitante}/g, script.nomeSolicitante);
+
+          // Segundo: Script de liberação + primeiro acesso
+          const scriptLiberacaoPrimeiroAcesso = `--Demanda: ${script.numeroDemanda}
+
+--Primeiro Acesso
+
+INSERT INTO
+CTRL_EXC_FACEMATCH
+(IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
+VALUES
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}','${script.conta}','${script.titular}',GETDATE(),DATEADD(HOUR,+72,GETDATE()),561,0,${script.numeroDemanda},'Solicitado por ${script.nomeSolicitante}')
+
+--Liberação de Dispositivo
+
+INSERT INTO
+CTRL_EXC_FACEMATCH
+(IDT_MQN,IDT_ECO_NET,NUM_DND,NUM_CTA,NOM_USU_IBK,DTA_HOR_CAD,DTA_HOR_VCT,COD_OPC,COD_SUB_OPC,NUM_DMD,DES_CTL_ECC_FCM)
+VALUES
+('${idMachinePrimeiros8}','${idMachineResto}','${script.agencia}',${script.conta},'${script.titular}',GETDATE(),DATEADD(HOUR,+72,GETDATE()),589,0,'${script.numeroDemanda}','Solicitado por ${script.nomeSolicitante}')
+
+----------------------------------------------------------------------------`;
+
+          // Adiciona primeiro o script de desativação, depois o de liberação
+          scriptGerar.push(scriptDesativacao);
+          scriptGerar.push(scriptLiberacaoPrimeiroAcesso);
         } else {
           // Determinar o tipo de liberação
           let tipoLiberacao = "";
@@ -328,6 +375,9 @@ VALUES
                         <option value="AMBOS">
                           Ambos (Liberação + Primeiro Acesso)
                         </option>
+                        <option value="EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO">
+                          Exclusão + Liberação + Primeiro Acesso
+                        </option>
                         <option value="561">Liberação</option>
                         <option value="589">Primeiro Acesso</option>
                       </select>
@@ -514,6 +564,50 @@ VALUES
                       />
                     </div>
                   </div>
+
+                  {/* Campo CPF - só aparece quando EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO está selecionado */}
+                  {script.tipoAcesso ===
+                    "EXCLUSAO_LIBERACAO_PRIMEIRO_ACESSO" && (
+                    <div className={styles.formRowTwo}>
+                      <div className={styles.formGroup}>
+                        <label
+                          className={`${styles.inputLabel} ${
+                            isDarkMode
+                              ? styles.inputLabelDark
+                              : styles.inputLabelLight
+                          }`}
+                        >
+                          CPF do Cliente
+                        </label>
+                        <input
+                          type="text"
+                          value={script.cpfCliente}
+                          onChange={(e) =>
+                            atualizarScript(
+                              script.id,
+                              "cpfCliente",
+                              e.target.value,
+                            )
+                          }
+                          className={`
+                          ${styles.textInput} 
+                          ${isDarkMode ? styles.textInputDark : styles.textInputLight}
+                          ${
+                            script.error.cpfCliente
+                              ? `${styles.inputError} ${
+                                  isDarkMode
+                                    ? styles.inputErrorDark
+                                    : styles.inputErrorLight
+                                }`
+                              : ""
+                          }
+                        `}
+                          placeholder="000.000.000-00"
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
