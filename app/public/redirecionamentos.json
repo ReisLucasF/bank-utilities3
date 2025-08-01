@@ -198,5 +198,33 @@
   {
     "value": "60",
     "text": "Shop Mercantil Magalu Menu"
+  },
+  {
+    "value": "61",
+    "text": "Shop Mercantil Magalu - Produto"
+  },
+  {
+    "value": "62",
+    "text": "Shop Mercantil Magalu - Categoria"
+  },
+  {
+    "value": "63",
+    "text": "Retenção Benefício INSS"
+  },
+  {
+    "value": "64",
+    "text": "Open Finance"
+  },
+  {
+    "value": "65",
+    "text": "Contratação Combinados"
+  },
+  {
+    "value": "66",
+    "text": "Open Finance - Trazer Dados"
+  },
+  {
+    "value": "67",
+    "text": "Pix Automático"
   }
 ]
