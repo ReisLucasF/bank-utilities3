@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "/context/ThemeContext";
-import { PlusCircle, FileText, X, Check } from "lucide-react";
+import { PlusCircle, X, Check, Copy, Download, Eye } from "lucide-react";
 import styles from "/styles/LiberacaoDispositivos.module.css";
 
 const LiberacaoATM = () => {
   const { isDarkMode } = useTheme();
   const [scripts, setScripts] = useState([]);
   const [modeloScript, setModeloScript] = useState("");
-  const [gerando, setGerando] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [scriptGerado, setScriptGerado] = useState("");
+  const [copied, setCopied] = useState(false);
   const scriptCounter = useRef(0);
 
   // Carregar o modelo de script
@@ -66,8 +68,20 @@ const LiberacaoATM = () => {
     );
   };
 
-  // Gerar os scripts
-  const gerarScripts = () => {
+  // Tratar CPF com zeros à esquerda
+  const tratarCPF = (id, valor) => {
+    // Remove caracteres não numéricos para contar apenas dígitos
+    const apenasNumeros = valor.replace(/\D/g, "");
+
+    // Se tiver menos de 11 dígitos, completa com zeros à esquerda
+    if (apenasNumeros.length > 0 && apenasNumeros.length < 11) {
+      const cpfComZeros = apenasNumeros.padStart(11, "0");
+      atualizarScript(id, "cpf", cpfComZeros);
+    }
+  };
+
+  // Visualizar os scripts
+  const visualizarScripts = () => {
     if (!modeloScript) {
       alert("Modelo de script não foi carregado. Tente recarregar a página.");
       return;
@@ -126,20 +140,31 @@ const LiberacaoATM = () => {
       return;
     }
 
-    // Cria e baixa o arquivo de script
-    const blob = new Blob([scriptGerar.join("\n\n")], {
+    // Define o script gerado e mostra a modal
+    setScriptGerado(scriptGerar.join("\n\n"));
+    setShowModal(true);
+  };
+
+  // Copiar script para clipboard
+  const copiarScript = async () => {
+    try {
+      await navigator.clipboard.writeText(scriptGerado);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Erro ao copiar:", err);
+    }
+  };
+
+  // Baixar script como arquivo
+  const baixarScript = () => {
+    const blob = new Blob([scriptGerado], {
       type: "text/plain;charset=utf-8",
     });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `scripts_atm_${new Date().toISOString().slice(0, 10)}.txt`;
     link.click();
-
-    // Feedback visual de sucesso
-    setGerando(true);
-    setTimeout(() => {
-      setGerando(false);
-    }, 2000);
   };
 
   return (
@@ -163,20 +188,11 @@ const LiberacaoATM = () => {
           </button>
           <button
             type="button"
-            onClick={gerarScripts}
-            className={`${styles.successButton} ${gerando ? styles.buttonSuccess : ""}`}
+            onClick={visualizarScripts}
+            className={styles.successButton}
           >
-            {gerando ? (
-              <>
-                <Check className={styles.buttonIcon} size={20} />
-                Script Gerado!
-              </>
-            ) : (
-              <>
-                <FileText className={styles.buttonIcon} size={20} />
-                Gerar Script
-              </>
-            )}
+            <Eye className={styles.buttonIcon} size={20} />
+            Visualizar Script
           </button>
         </div>
 
@@ -343,6 +359,7 @@ const LiberacaoATM = () => {
                         onChange={(e) =>
                           atualizarScript(script.id, "cpf", e.target.value)
                         }
+                        onBlur={() => tratarCPF(script.id, script.cpf)}
                         className={`
                           ${styles.textInput} 
                           ${isDarkMode ? styles.textInputDark : styles.textInputLight}
@@ -356,6 +373,7 @@ const LiberacaoATM = () => {
                               : ""
                           }
                         `}
+                        placeholder="000.000.000-00"
                         required
                       />
                     </div>
@@ -366,6 +384,138 @@ const LiberacaoATM = () => {
           </div>
         )}
       </div>
+
+      {/* Modal para visualizar/editar o script */}
+      {showModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: "2rem",
+          }}
+          onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
+        >
+          <div
+            style={{
+              backgroundColor: isDarkMode ? "#1e293b" : "#ffffff",
+              borderRadius: "12px",
+              width: "90%",
+              maxWidth: "800px",
+              maxHeight: "90vh",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              border: isDarkMode ? "1px solid #334155" : "1px solid #e5e7eb",
+            }}
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "1.5rem",
+                borderBottom: isDarkMode
+                  ? "1px solid #334155"
+                  : "1px solid #e5e7eb",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: isDarkMode ? "#ffffff" : "#1f2937",
+                  margin: 0,
+                }}
+              >
+                Script Gerado
+              </h2>
+              <button
+                onClick={() => setShowModal(false)}
+                className={`${styles.removeButton} ${
+                  isDarkMode
+                    ? styles.removeButtonDark
+                    : styles.removeButtonLight
+                }`}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div
+              style={{
+                padding: "1.5rem",
+                flex: 1,
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <textarea
+                value={scriptGerado}
+                onChange={(e) => setScriptGerado(e.target.value)}
+                style={{
+                  width: "100%",
+                  minHeight: "400px",
+                  padding: "1rem",
+                  border: isDarkMode
+                    ? "1px solid #4b5563"
+                    : "1px solid #d1d5db",
+                  borderRadius: "6px",
+                  backgroundColor: isDarkMode ? "#111827" : "#ffffff",
+                  color: isDarkMode ? "#f9fafb" : "#1f2937",
+                  fontSize: "0.875rem",
+                  fontFamily: 'Monaco, Consolas, "Ubuntu Mono", monospace',
+                  resize: "vertical",
+                  outline: "none",
+                }}
+                spellCheck={false}
+              />
+            </div>
+
+            {/* Footer */}
+            <div
+              style={{
+                padding: "1.5rem",
+                borderTop: isDarkMode
+                  ? "1px solid #334155"
+                  : "1px solid #e5e7eb",
+                display: "flex",
+                gap: "1rem",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button
+                onClick={copiarScript}
+                className={styles.primaryButton}
+                style={{
+                  backgroundColor: copied ? "#10b981" : undefined,
+                }}
+              >
+                {copied ? (
+                  <Check className={styles.buttonIcon} size={20} />
+                ) : (
+                  <Copy className={styles.buttonIcon} size={20} />
+                )}
+                {copied ? "Copiado!" : "Copiar"}
+              </button>
+              <button onClick={baixarScript} className={styles.successButton}>
+                <Download className={styles.buttonIcon} size={20} />
+                Baixar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
