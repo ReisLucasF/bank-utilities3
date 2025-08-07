@@ -197,9 +197,12 @@ VALUES
           // Script de exclusão apenas - template simplificado
           const scriptExclusao = `--Demanda: ${script.numeroDemanda}
 
--- Remoção da lista presencial
+--Desativação de Dispositivo
 
-UPDATE CTL_LST_PRS set IDT_STT = 0, DTA_DTV = GETDATE(), NUM_DMD_DTV = '${script.numeroDemanda}', IDT_USU_SLT_DTV = '${script.nomeSolicitante}' where NUM_DOC_CLI = '${script.cpfCliente}'
+DELETE FROM CTRL_EXC_FACEMATCH 
+WHERE NUM_CPF_CNPJ = '${script.cpfCliente}'
+
+--Registro da desativação solicitada por ${script.nomeSolicitante}
 
 ----------------------------------------------------------------------------`;
 
