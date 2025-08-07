@@ -33,6 +33,15 @@ const LiberacaoDispositivos = () => {
     carregarModelo();
   }, []);
 
+  const tratarCPF = (id, valor) => {
+    const apenasNumeros = valor.replace(/\D/g, "");
+
+    if (apenasNumeros.length > 0 && apenasNumeros.length < 11) {
+      const cpfComZeros = apenasNumeros.padStart(11, "0");
+      atualizarScript(id, "cpfCliente", cpfComZeros);
+    }
+  };
+
   // Adicionar um novo script
   const adicionarScript = () => {
     scriptCounter.current++;
@@ -456,6 +465,9 @@ VALUES
                                 : ""
                             }
                           `}
+                            onBlur={() =>
+                              tratarCPF(script.id, script.cpfCliente)
+                            } // ← ADICIONAR ESTA LINHA
                             placeholder="000.000.000-00"
                             required
                           />
@@ -820,6 +832,9 @@ VALUES
                                   : ""
                               }
                             `}
+                              onBlur={() =>
+                                tratarCPF(script.id, script.cpfCliente)
+                              }
                               placeholder="000.000.000-00"
                               required
                             />
