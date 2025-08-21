@@ -8,6 +8,7 @@ import {
   Moon,
   LayoutDashboard,
   Brain,
+  WholeWord,
   ChevronDown,
   ChevronRight,
   Target,
@@ -296,6 +297,15 @@ export default function Layout({ children }) {
                     <Brain size={20} />
                   </span>
                   <span className={styles.navText}>Base de Conhecimento</span>
+                </Link>
+              </li>
+
+              <li className={styles.navItem}>
+                <Link href="/caracteres" className={styles.navLink}>
+                  <span className={styles.navIcon}>
+                    <WholeWord size={20} />
+                  </span>
+                  <span className={styles.navText}>Caracteres</span>
                 </Link>
               </li>
             </ul>
