@@ -127,9 +127,8 @@ export default function Layout({ children }) {
 
               {/* Dropdown: Ação Comercial */}
               <li
-                className={`${styles.navItem} ${
-                  expandedMenus["acaoComercial"] ? styles.navItemActive : ""
-                }`}
+                className={`${styles.navItem} ${expandedMenus["acaoComercial"] ? styles.navItemActive : ""
+                  }`}
               >
                 <button
                   onClick={() => toggleDropdown("acaoComercial")}
@@ -150,9 +149,8 @@ export default function Layout({ children }) {
 
                 {/* Submenu de Ação Comercial */}
                 <ul
-                  className={`${styles.submenu} ${
-                    expandedMenus["acaoComercial"] ? styles.submenuExpanded : ""
-                  }`}
+                  className={`${styles.submenu} ${expandedMenus["acaoComercial"] ? styles.submenuExpanded : ""
+                    }`}
                 >
                   <li className={styles.submenuItem}>
                     <Link href="/card-creator" className={styles.submenuLink}>
@@ -171,9 +169,8 @@ export default function Layout({ children }) {
 
               {/* Dropdown: Comprovantes */}
               <li
-                className={`${styles.navItem} ${
-                  expandedMenus["comprovantes"] ? styles.navItemActive : ""
-                }`}
+                className={`${styles.navItem} ${expandedMenus["comprovantes"] ? styles.navItemActive : ""
+                  }`}
               >
                 <button
                   onClick={() => toggleDropdown("comprovantes")}
@@ -194,9 +191,8 @@ export default function Layout({ children }) {
 
                 {/* Submenu de Comprovantes */}
                 <ul
-                  className={`${styles.submenu} ${
-                    expandedMenus["comprovantes"] ? styles.submenuExpanded : ""
-                  }`}
+                  className={`${styles.submenu} ${expandedMenus["comprovantes"] ? styles.submenuExpanded : ""
+                    }`}
                 >
                   <li className={styles.submenuItem}>
                     <Link href="/ficha" className={styles.submenuLink}>
@@ -246,9 +242,8 @@ export default function Layout({ children }) {
 
               {/* Dropdown: Liberação */}
               <li
-                className={`${styles.navItem} ${
-                  expandedMenus["liberacao"] ? styles.navItemActive : ""
-                }`}
+                className={`${styles.navItem} ${expandedMenus["liberacao"] ? styles.navItemActive : ""
+                  }`}
               >
                 <button
                   onClick={() => toggleDropdown("liberacao")}
@@ -269,9 +264,8 @@ export default function Layout({ children }) {
 
                 {/* Submenu de Liberação */}
                 <ul
-                  className={`${styles.submenu} ${
-                    expandedMenus["liberacao"] ? styles.submenuExpanded : ""
-                  }`}
+                  className={`${styles.submenu} ${expandedMenus["liberacao"] ? styles.submenuExpanded : ""
+                    }`}
                 >
                   <li className={styles.submenuItem}>
                     <Link href="/liberacao" className={styles.submenuLink}>
@@ -331,7 +325,7 @@ export default function Layout({ children }) {
       <footer className={styles.footer}>
         <p>
           © {new Date().getFullYear()} Bank Utilities - Todos os direitos
-          reservados. | v1.0.8
+          reservados. | v1.0.9
         </p>
       </footer>
     </div>

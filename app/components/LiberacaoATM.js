@@ -31,19 +31,55 @@ const LiberacaoATM = () => {
     carregarModelo();
   }, []);
 
-  // Adicionar um novo script
+  // Estado do formulário de novo script
+  const [novoScript, setNovoScript] = useState({
+    numeroDemanda: "",
+    tipoAcesso: "LIBERACAO DE DISPOSITIVO",
+    nomeSolicitante: "",
+    cpf: "",
+    error: {},
+  });
+
+  // Adicionar script preenchido à lista
   const adicionarScript = () => {
+    // Validação dos campos obrigatórios
+    const camposObrigatorios = [
+      "numeroDemanda",
+      "tipoAcesso",
+      "nomeSolicitante",
+      "cpf",
+    ];
+    let errorFields = {};
+    let isValid = true;
+    camposObrigatorios.forEach((campo) => {
+      if (!novoScript[campo]) {
+        errorFields[campo] = true;
+        isValid = false;
+      }
+    });
+    if (!isValid) {
+      setNovoScript((prev) => ({ ...prev, error: errorFields }));
+      return;
+    }
     scriptCounter.current++;
-    const novoScript = {
-      id: scriptCounter.current,
+    setScripts((prevScripts) => [
+      {
+        id: scriptCounter.current,
+        numeroDemanda: novoScript.numeroDemanda,
+        tipoAcesso: novoScript.tipoAcesso,
+        nomeSolicitante: novoScript.nomeSolicitante,
+        cpf: novoScript.cpf,
+        error: {},
+      },
+      ...prevScripts,
+    ]);
+    setNovoScript({
       numeroDemanda: "",
-      tipoAcesso: "LIBERACAO DE DISPOSITIVO", // Valor padrão
+      tipoAcesso: "LIBERACAO DE DISPOSITIVO",
       nomeSolicitante: "",
       cpf: "",
       error: {},
-    };
-
-    setScripts((prevScripts) => [...prevScripts, novoScript]);
+    });
   };
 
   // Remover um script
@@ -53,30 +89,36 @@ const LiberacaoATM = () => {
     );
   };
 
-  // Atualizar um campo de um script
+  // Atualizar um campo do formulário de novo script
+  const atualizarNovoScript = (campo, valor) => {
+    setNovoScript((prev) => ({
+      ...prev,
+      [campo]: valor,
+      error: { ...prev.error, [campo]: false },
+    }));
+  };
+
+  // Atualizar um campo de um script já adicionado (caso queira editar depois)
   const atualizarScript = (id, campo, valor) => {
     setScripts((prevScripts) =>
       prevScripts.map((script) =>
         script.id === id
           ? {
-              ...script,
-              [campo]: valor,
-              error: { ...script.error, [campo]: false },
-            }
+            ...script,
+            [campo]: valor,
+            error: { ...script.error, [campo]: false },
+          }
           : script,
       ),
     );
   };
 
-  // Tratar CPF com zeros à esquerda
-  const tratarCPF = (id, valor) => {
-    // Remove caracteres não numéricos para contar apenas dígitos
+  // Tratar CPF com zeros à esquerda no formulário de novo script
+  const tratarNovoCPF = (valor) => {
     const apenasNumeros = valor.replace(/\D/g, "");
-
-    // Se tiver menos de 11 dígitos, completa com zeros à esquerda
     if (apenasNumeros.length > 0 && apenasNumeros.length < 11) {
       const cpfComZeros = apenasNumeros.padStart(11, "0");
-      atualizarScript(id, "cpf", cpfComZeros);
+      atualizarNovoScript("cpf", cpfComZeros);
     }
   };
 
@@ -177,30 +219,95 @@ const LiberacaoATM = () => {
           </p>
         </div>
 
-        <div className={styles.buttonContainer}>
-          <button
-            type="button"
-            onClick={adicionarScript}
-            className={styles.primaryButton}
-          >
-            <PlusCircle className={styles.buttonIcon} size={20} />
-            Adicionar Script
-          </button>
-          <button
-            type="button"
-            onClick={visualizarScripts}
-            className={styles.successButton}
-          >
-            <Eye className={styles.buttonIcon} size={20} />
-            Visualizar Script
-          </button>
+        {/* Formulário fixo para novo script */}
+        <div className={styles.formContainer} style={{ marginBottom: 32, border: '1px solid #e5e7eb', borderRadius: 8 }}>
+          <div className={styles.formRowThree}>
+            <div className={styles.formGroup}>
+              <label className={`${styles.inputLabel} ${isDarkMode ? styles.inputLabelDark : styles.inputLabelLight}`}>Número da Demanda</label>
+              <input
+                type="number"
+                value={novoScript.numeroDemanda}
+                onChange={(e) => atualizarNovoScript("numeroDemanda", e.target.value)}
+                className={`
+                  ${styles.textInput}
+                  ${isDarkMode ? styles.textInputDark : styles.textInputLight}
+                  ${novoScript.error.numeroDemanda ? `${styles.inputError} ${isDarkMode ? styles.inputErrorDark : styles.inputErrorLight}` : ""}
+                `}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={`${styles.inputLabel} ${isDarkMode ? styles.inputLabelDark : styles.inputLabelLight}`}>Tipo</label>
+              <select
+                value={novoScript.tipoAcesso}
+                onChange={(e) => atualizarNovoScript("tipoAcesso", e.target.value)}
+                className={`
+                  ${styles.selectInput}
+                  ${isDarkMode ? styles.selectInputDark : styles.selectInputLight}
+                  ${novoScript.error.tipoAcesso ? `${styles.inputError} ${isDarkMode ? styles.inputErrorDark : styles.inputErrorLight}` : ""}
+                `}
+                required
+              >
+                <option value="LIBERACAO DE DISPOSITIVO">Liberação</option>
+                <option value="PRIMEIRO ACESSO">Primeiro Acesso</option>
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label className={`${styles.inputLabel} ${isDarkMode ? styles.inputLabelDark : styles.inputLabelLight}`}>Usuário Solicitante</label>
+              <input
+                type="text"
+                value={novoScript.nomeSolicitante}
+                onChange={(e) => atualizarNovoScript("nomeSolicitante", e.target.value)}
+                className={`
+                  ${styles.textInput}
+                  ${isDarkMode ? styles.textInputDark : styles.textInputLight}
+                  ${novoScript.error.nomeSolicitante ? `${styles.inputError} ${isDarkMode ? styles.inputErrorDark : styles.inputErrorLight}` : ""}
+                `}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={`${styles.inputLabel} ${isDarkMode ? styles.inputLabelDark : styles.inputLabelLight}`}>CPF do titular</label>
+              <input
+                type="text"
+                value={novoScript.cpf}
+                onChange={(e) => atualizarNovoScript("cpf", e.target.value)}
+                onBlur={() => tratarNovoCPF(novoScript.cpf)}
+                className={`
+                  ${styles.textInput}
+                  ${isDarkMode ? styles.textInputDark : styles.textInputLight}
+                  ${novoScript.error.cpf ? `${styles.inputError} ${isDarkMode ? styles.inputErrorDark : styles.inputErrorLight}` : ""}
+                `}
+                placeholder="000.000.000-00"
+                required
+              />
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
+            <button
+              type="button"
+              onClick={adicionarScript}
+              className={styles.primaryButton}
+            >
+              <PlusCircle className={styles.buttonIcon} size={20} />
+              Adicionar Script
+            </button>
+            <button
+              type="button"
+              onClick={visualizarScripts}
+              className={styles.successButton}
+            >
+              <Eye className={styles.buttonIcon} size={20} />
+              Visualizar Script
+            </button>
+          </div>
         </div>
 
+        {/* Listagem de scripts adicionados */}
         {scripts.length === 0 ? (
           <div className={styles.emptyState}>
             <p>
-              Nenhum script adicionado. Clique em "Adicionar Script" para
-              começar.
+              Nenhum script adicionado. Preencha o formulário acima e clique em "Adicionar Script".
             </p>
           </div>
         ) : (
@@ -208,18 +315,16 @@ const LiberacaoATM = () => {
             {scripts.map((script) => (
               <div
                 key={script.id}
-                className={`${styles.scriptBlock} ${
-                  isDarkMode ? styles.scriptBlockDark : styles.scriptBlockLight
-                }`}
+                className={`${styles.scriptBlock} ${isDarkMode ? styles.scriptBlockDark : styles.scriptBlockLight
+                  }`}
               >
                 <button
                   type="button"
                   onClick={() => removerScript(script.id)}
-                  className={`${styles.removeButton} ${
-                    isDarkMode
+                  className={`${styles.removeButton} ${isDarkMode
                       ? styles.removeButtonDark
                       : styles.removeButtonLight
-                  }`}
+                    }`}
                   aria-label="Remover script"
                 >
                   <X size={20} />
@@ -230,11 +335,10 @@ const LiberacaoATM = () => {
                   <div className={styles.formRowThree}>
                     <div className={styles.formGroup}>
                       <label
-                        className={`${styles.inputLabel} ${
-                          isDarkMode
+                        className={`${styles.inputLabel} ${isDarkMode
                             ? styles.inputLabelDark
                             : styles.inputLabelLight
-                        }`}
+                          }`}
                       >
                         Número da Demanda
                       </label>
@@ -251,14 +355,12 @@ const LiberacaoATM = () => {
                         className={`
                           ${styles.textInput} 
                           ${isDarkMode ? styles.textInputDark : styles.textInputLight}
-                          ${
-                            script.error.numeroDemanda
-                              ? `${styles.inputError} ${
-                                  isDarkMode
-                                    ? styles.inputErrorDark
-                                    : styles.inputErrorLight
-                                }`
-                              : ""
+                          ${script.error.numeroDemanda
+                            ? `${styles.inputError} ${isDarkMode
+                              ? styles.inputErrorDark
+                              : styles.inputErrorLight
+                            }`
+                            : ""
                           }
                         `}
                         required
@@ -267,11 +369,10 @@ const LiberacaoATM = () => {
 
                     <div className={styles.formGroup}>
                       <label
-                        className={`${styles.inputLabel} ${
-                          isDarkMode
+                        className={`${styles.inputLabel} ${isDarkMode
                             ? styles.inputLabelDark
                             : styles.inputLabelLight
-                        }`}
+                          }`}
                       >
                         Tipo
                       </label>
@@ -287,14 +388,12 @@ const LiberacaoATM = () => {
                         className={`
                           ${styles.selectInput} 
                           ${isDarkMode ? styles.selectInputDark : styles.selectInputLight}
-                          ${
-                            script.error.tipoAcesso
-                              ? `${styles.inputError} ${
-                                  isDarkMode
-                                    ? styles.inputErrorDark
-                                    : styles.inputErrorLight
-                                }`
-                              : ""
+                          ${script.error.tipoAcesso
+                            ? `${styles.inputError} ${isDarkMode
+                              ? styles.inputErrorDark
+                              : styles.inputErrorLight
+                            }`
+                            : ""
                           }
                         `}
                         required
@@ -308,11 +407,10 @@ const LiberacaoATM = () => {
 
                     <div className={styles.formGroup}>
                       <label
-                        className={`${styles.inputLabel} ${
-                          isDarkMode
+                        className={`${styles.inputLabel} ${isDarkMode
                             ? styles.inputLabelDark
                             : styles.inputLabelLight
-                        }`}
+                          }`}
                       >
                         Usuário Solicitante
                       </label>
@@ -329,14 +427,12 @@ const LiberacaoATM = () => {
                         className={`
                           ${styles.textInput} 
                           ${isDarkMode ? styles.textInputDark : styles.textInputLight}
-                          ${
-                            script.error.nomeSolicitante
-                              ? `${styles.inputError} ${
-                                  isDarkMode
-                                    ? styles.inputErrorDark
-                                    : styles.inputErrorLight
-                                }`
-                              : ""
+                          ${script.error.nomeSolicitante
+                            ? `${styles.inputError} ${isDarkMode
+                              ? styles.inputErrorDark
+                              : styles.inputErrorLight
+                            }`
+                            : ""
                           }
                         `}
                         required
@@ -345,11 +441,10 @@ const LiberacaoATM = () => {
 
                     <div className={styles.formGroup}>
                       <label
-                        className={`${styles.inputLabel} ${
-                          isDarkMode
+                        className={`${styles.inputLabel} ${isDarkMode
                             ? styles.inputLabelDark
                             : styles.inputLabelLight
-                        }`}
+                          }`}
                       >
                         CPF do titular
                       </label>
@@ -363,14 +458,12 @@ const LiberacaoATM = () => {
                         className={`
                           ${styles.textInput} 
                           ${isDarkMode ? styles.textInputDark : styles.textInputLight}
-                          ${
-                            script.error.cpf
-                              ? `${styles.inputError} ${
-                                  isDarkMode
-                                    ? styles.inputErrorDark
-                                    : styles.inputErrorLight
-                                }`
-                              : ""
+                          ${script.error.cpf
+                            ? `${styles.inputError} ${isDarkMode
+                              ? styles.inputErrorDark
+                              : styles.inputErrorLight
+                            }`
+                            : ""
                           }
                         `}
                         placeholder="000.000.000-00"
@@ -440,11 +533,10 @@ const LiberacaoATM = () => {
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className={`${styles.removeButton} ${
-                  isDarkMode
+                className={`${styles.removeButton} ${isDarkMode
                     ? styles.removeButtonDark
                     : styles.removeButtonLight
-                }`}
+                  }`}
               >
                 <X size={24} />
               </button>
