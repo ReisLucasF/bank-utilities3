@@ -40,6 +40,19 @@ const LiberacaoATM = () => {
     error: {},
   });
 
+  // Copiar último script para o formulário (exceto CPF)
+  const copiarUltimoScript = () => {
+    if (scripts.length === 0) return;
+    const ultimo = scripts[0];
+    setNovoScript({
+      numeroDemanda: ultimo.numeroDemanda,
+      tipoAcesso: ultimo.tipoAcesso,
+      nomeSolicitante: ultimo.nomeSolicitante,
+      cpf: "",
+      error: {},
+    });
+  };
+
   // Adicionar script preenchido à lista
   const adicionarScript = () => {
     // Validação dos campos obrigatórios
@@ -219,6 +232,19 @@ const LiberacaoATM = () => {
           </p>
         </div>
 
+        {/* Botão copiar último script */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+          <button
+            type="button"
+            onClick={copiarUltimoScript}
+            className={styles.primaryButton}
+            disabled={scripts.length === 0}
+            style={{ opacity: scripts.length === 0 ? 0.5 : 1 }}
+          >
+            Copiar último script
+          </button>
+        </div>
+
         {/* Formulário fixo para novo script */}
         <div className={styles.formContainer} style={{ marginBottom: 32, border: '1px solid #e5e7eb', borderRadius: 8 }}>
           <div className={styles.formRowThree}>
@@ -322,8 +348,8 @@ const LiberacaoATM = () => {
                   type="button"
                   onClick={() => removerScript(script.id)}
                   className={`${styles.removeButton} ${isDarkMode
-                      ? styles.removeButtonDark
-                      : styles.removeButtonLight
+                    ? styles.removeButtonDark
+                    : styles.removeButtonLight
                     }`}
                   aria-label="Remover script"
                 >
@@ -336,8 +362,8 @@ const LiberacaoATM = () => {
                     <div className={styles.formGroup}>
                       <label
                         className={`${styles.inputLabel} ${isDarkMode
-                            ? styles.inputLabelDark
-                            : styles.inputLabelLight
+                          ? styles.inputLabelDark
+                          : styles.inputLabelLight
                           }`}
                       >
                         Número da Demanda
@@ -370,8 +396,8 @@ const LiberacaoATM = () => {
                     <div className={styles.formGroup}>
                       <label
                         className={`${styles.inputLabel} ${isDarkMode
-                            ? styles.inputLabelDark
-                            : styles.inputLabelLight
+                          ? styles.inputLabelDark
+                          : styles.inputLabelLight
                           }`}
                       >
                         Tipo
@@ -408,8 +434,8 @@ const LiberacaoATM = () => {
                     <div className={styles.formGroup}>
                       <label
                         className={`${styles.inputLabel} ${isDarkMode
-                            ? styles.inputLabelDark
-                            : styles.inputLabelLight
+                          ? styles.inputLabelDark
+                          : styles.inputLabelLight
                           }`}
                       >
                         Usuário Solicitante
@@ -442,8 +468,8 @@ const LiberacaoATM = () => {
                     <div className={styles.formGroup}>
                       <label
                         className={`${styles.inputLabel} ${isDarkMode
-                            ? styles.inputLabelDark
-                            : styles.inputLabelLight
+                          ? styles.inputLabelDark
+                          : styles.inputLabelLight
                           }`}
                       >
                         CPF do titular
@@ -534,8 +560,8 @@ const LiberacaoATM = () => {
               <button
                 onClick={() => setShowModal(false)}
                 className={`${styles.removeButton} ${isDarkMode
-                    ? styles.removeButtonDark
-                    : styles.removeButtonLight
+                  ? styles.removeButtonDark
+                  : styles.removeButtonLight
                   }`}
               >
                 <X size={24} />
