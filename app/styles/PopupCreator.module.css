@@ -415,7 +415,8 @@
   z-index: 5;
   cursor: pointer;
   padding: 5px 10px;
-  font-weight: 800;
+  font-weight: 600;
+  margin-top: 40px;
 }
 
 /* Imagem superior - Layout 333 */
