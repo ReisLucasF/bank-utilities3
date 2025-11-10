@@ -7,6 +7,7 @@ const LiberacaoATM = () => {
   const { isDarkMode } = useTheme();
   const [scripts, setScripts] = useState([]);
   const [modeloScript, setModeloScript] = useState("");
+  const [modeloDesativacao, setModeloDesativacao] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [scriptGerado, setScriptGerado] = useState("");
   const [copied, setCopied] = useState(false);
@@ -20,6 +21,8 @@ const LiberacaoATM = () => {
         if (!response.ok) throw new Error("Falha ao carregar modelo");
         const data = await response.json();
         setModeloScript(data.script);
+        // se houver um template de desativação no modelo, salva também
+        if (data.desativacao) setModeloDesativacao(data.desativacao);
       } catch (error) {
         console.error("Erro ao carregar modelo:", error);
         alert(
@@ -135,6 +138,15 @@ const LiberacaoATM = () => {
     }
   };
 
+  // Tratar CPF para scripts já adicionados (preenche zeros à esquerda e atualiza o script)
+  const tratarCPF = (id, valor) => {
+    const apenasNumeros = (valor || "").replace(/\D/g, "");
+    if (apenasNumeros.length > 0 && apenasNumeros.length < 11) {
+      const cpfComZeros = apenasNumeros.padStart(11, "0");
+      atualizarScript(id, "cpf", cpfComZeros);
+    }
+  };
+
   // Visualizar os scripts
   const visualizarScripts = () => {
     if (!modeloScript) {
@@ -152,13 +164,21 @@ const LiberacaoATM = () => {
     let scriptsAtualizados = [...scripts];
 
     scripts.forEach((script, index) => {
-      // Verificar campos obrigatórios
-      const camposObrigatorios = [
-        "numeroDemanda",
-        "tipoAcesso",
-        "nomeSolicitante",
-        "cpf",
-      ];
+      // Verificar campos obrigatórios baseado no tipo de acesso
+      let camposObrigatorios = [];
+
+      if (script.tipoAcesso === "EXCLUSAO") {
+        // Para exclusão apenas, só precisa de demanda, CPF e usuário solicitante
+        camposObrigatorios = ["numeroDemanda", "cpf", "nomeSolicitante"];
+      } else {
+        // Para outros tipos, mantém os campos principais
+        camposObrigatorios = [
+          "numeroDemanda",
+          "tipoAcesso",
+          "nomeSolicitante",
+          "cpf",
+        ];
+      }
 
       let errorFields = {};
       camposObrigatorios.forEach((campo) => {
@@ -175,16 +195,32 @@ const LiberacaoATM = () => {
 
       if (Object.keys(errorFields).length === 0) {
         // Formatar CPF (remover caracteres não numéricos)
-        const cpfFormatado = script.cpf.replace(/\D/g, "");
+        const cpfFormatado = (script.cpf || "").replace(/\D/g, "");
 
-        // Gerar o script substituindo as variáveis
-        let scriptTexto = modeloScript
-          .replace(/\${solicitante}/g, script.nomeSolicitante)
-          .replaceAll(/\${numero_da_demanda}/g, script.numeroDemanda)
-          .replace(/\${cpf}/g, cpfFormatado)
-          .replace(/\${tipo_acesso}/g, script.tipoAcesso);
+        // Lógica específica para exclusão
+        if (script.tipoAcesso === "EXCLUSAO") {
+          if (modeloDesativacao) {
+            const scriptExclusao = modeloDesativacao
+              .replace(/\${numero_da_demanda}/g, script.numeroDemanda)
+              .replace(/\${cpf}/g, cpfFormatado)
+              .replace(/\${solicitante}/g, script.nomeSolicitante);
 
-        scriptGerar.push(scriptTexto);
+            scriptGerar.push(scriptExclusao);
+          } else {
+            // fallback inline caso o modelo não exista
+            const scriptExclusao = `--Demanda: ${script.numeroDemanda}\n\n-- Remoção da lista presencial\nUPDATE CTL_LST_PRS set IDT_STT = 0, DTA_DTV = GETDATE(), NUM_DMD_DTV = '${script.numeroDemanda}', IDT_USU_SLT_DTV = '${script.nomeSolicitante}' where NUM_DOC_CLI = '${cpfFormatado}'\n\n----------------------------------------------------------------------------`;
+            scriptGerar.push(scriptExclusao);
+          }
+        } else {
+          // Gerar o script substituindo as variáveis com o template padrão
+          let scriptTexto = modeloScript
+            .replace(/\${solicitante}/g, script.nomeSolicitante)
+            .replaceAll(/\${numero_da_demanda}/g, script.numeroDemanda)
+            .replace(/\${cpf}/g, cpfFormatado)
+            .replace(/\${tipo_acesso}/g, script.tipoAcesso);
+
+          scriptGerar.push(scriptTexto);
+        }
       }
     });
 
@@ -276,6 +312,7 @@ const LiberacaoATM = () => {
               >
                 <option value="LIBERACAO DE DISPOSITIVO">Liberação</option>
                 <option value="PRIMEIRO ACESSO">Primeiro Acesso</option>
+                <option value="EXCLUSAO">Exclusão</option>
               </select>
             </div>
             <div className={styles.formGroup}>
@@ -428,6 +465,7 @@ const LiberacaoATM = () => {
                           Liberação
                         </option>
                         <option value="PRIMEIRO ACESSO">Primeiro Acesso</option>
+                        <option value="EXCLUSAO">Exclusão</option>
                       </select>
                     </div>
 
