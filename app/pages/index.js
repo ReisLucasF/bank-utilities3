@@ -132,24 +132,23 @@ export default function Home() {
               <div className={styles.card}>
                 <div className={styles.upcomingList}>
                   <div className={styles.upcomingItem}>
-                    <div className={styles.upcomingStatus}>Lançada 30/04</div>
+                    <div className={styles.upcomingStatus}>Lançada 11/11/2025</div>
                     <h3 className={styles.upcomingTitle}>
                       <PlusCircle className={styles.upcomingIcon} />
-                      Botão fechar Popup
+                      Adição de layouts card com imagem à direita.
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      Agora o botão fechar em Popup layout 335 é configurável e
-                      a imagem do layout foi ajustada para melhor fidedignidade.
+                      Agora é possível criar cards com imagem à direita.
                     </p>
                   </div>
                   <div className={styles.upcomingItem}>
-                    <div className={styles.upcomingStatus}>Lançada 29/04</div>
+                    <div className={styles.upcomingStatus}>Lançada 02/11/2025</div>
                     <h3 className={styles.upcomingTitle}>
                       <PlusCircle className={styles.upcomingIcon} />
-                      Comprovantes
+                      Refatoração do botão de fechar para popup
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      Foram adicionados novos comprovantes para emissão de segunda via.
+                      O botão de fechar foi ajustado para refletir melhor a tela de um dispositivo mobile.
                     </p>
                   </div>
                 </div>

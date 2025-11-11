@@ -1071,6 +1071,8 @@ const CardCreator = () => {
                     backgroundImage: imagemPreview
                       ? `url(${imagemPreview})`
                       : "none",
+                    backgroundPosition: isLayoutDireita ? "right center" : "left center",
+                    backgroundSize: 'cover',
                     order: isLayoutDireita ? 2 : 1,
                   }}
                 ></div>
