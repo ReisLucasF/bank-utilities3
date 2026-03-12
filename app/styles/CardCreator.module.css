@@ -161,6 +161,13 @@
   margin-top: 4px;
 }
 
+.charCounter {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
 .colorInputContainer {
   display: flex;
   align-items: center;

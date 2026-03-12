@@ -3,6 +3,9 @@ import styles from "/styles/CardCreator.module.css";
 import { ChevronDown } from "lucide-react";
 
 const CardCreator = () => {
+  const MAX_TITULO = 25;
+  const MAX_SUBTITULO = 90;
+
   // Estados para gerenciar os valores do formulário
   const [numeroAcao, setNumeroAcao] = useState("");
   const [imagem, setImagem] = useState(null);
@@ -211,6 +214,9 @@ const CardCreator = () => {
     return texto.replace(/[\[\]'"`]/g, "");
   };
 
+  const caracteresRestantesTitulo = MAX_TITULO - titulo.length;
+  const caracteresRestantesSubtitulo = MAX_SUBTITULO - subtitulo.length;
+
   // Gerar o script
   const gerarScript = (e) => {
     e.preventDefault();
@@ -227,11 +233,11 @@ const CardCreator = () => {
     }
 
     // Limita a quantidade de caracteres
-    if (titulo.length > 25) {
-      alert(`O título não pode ultrapassar 25 caracteres!`);
+    if (titulo.length > MAX_TITULO) {
+      alert(`O título não pode ultrapassar ${MAX_TITULO} caracteres!`);
       return;
-    } else if (subtitulo.length > 90) {
-      alert(`O subtítulo não pode ultrapassar 90 caracteres!`);
+    } else if (subtitulo.length > MAX_SUBTITULO) {
+      alert(`O subtítulo não pode ultrapassar ${MAX_SUBTITULO} caracteres!`);
       return;
     }
 
@@ -570,10 +576,13 @@ const CardCreator = () => {
                         id="titulo"
                         className={styles.formInput}
                         placeholder="Escreva um título"
-                        maxLength="25"
+                        maxLength={MAX_TITULO}
                         value={titulo}
                         onChange={(e) => setTitulo(e.target.value)}
                       />
+                      <span className={styles.charCounter}>
+                        {caracteresRestantesTitulo} caracteres restantes
+                      </span>
                     </div>
                     <div className={styles.formGroup}>
                       <label htmlFor="corTitulo" className={styles.formLabel}>
@@ -614,10 +623,13 @@ const CardCreator = () => {
                         id="subtitulo"
                         className={styles.formInput}
                         placeholder="Escreva um subtítulo"
-                        maxLength="90"
+                        maxLength={MAX_SUBTITULO}
                         value={subtitulo}
                         onChange={(e) => setSubtitulo(e.target.value)}
                       />
+                      <span className={styles.charCounter}>
+                        {caracteresRestantesSubtitulo} caracteres restantes
+                      </span>
                     </div>
                     <div className={styles.formGroup}>
                       <label
