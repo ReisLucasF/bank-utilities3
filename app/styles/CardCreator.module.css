@@ -231,7 +231,7 @@
 
 /* Phone mockup */
 .phoneMockup {
-  width: 400px;
+  width: 450px;
   border: 10px solid #1a1a1a;
   border-radius: 36px;
   position: relative;
@@ -375,7 +375,8 @@
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 16px;
-  min-height: 100px;
+  height: 120px;
+  min-height: 120px;
   position: relative;
 }
 
@@ -388,7 +389,7 @@
 }
 
 .layoutEsquerda .cardPreviewContent {
-  margin-left: 6rem;
+  margin-left: 6.5rem;
 }
 
 .layoutDireita .cardPreviewContent {
@@ -407,29 +408,36 @@
 .cardPreviewContent {
   position: relative;
   z-index: 2;
-  width: 50%;
+  width: 60%;
+  flex: 1;
   padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
 }
 
 .tituloPreview {
   font-weight: 600;
   font-size: 0.875rem;
+  word-break: break-word;
 }
 
 .subtituloPreview {
   font-size: 0.75rem;
   margin-bottom: 4px;
+  word-break: break-word;
 }
 
 .textoCTAPreview {
   font-size: 0.75rem;
   display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px 6px;
+  border-radius: 8px;
   width: fit-content;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
 }
 
 /* App cards */
