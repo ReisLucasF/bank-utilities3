@@ -125,6 +125,15 @@ export default function Layout({ children }) {
                 </Link>
               </li>
 
+              <li className={styles.navItem}>
+                <Link href="/script-tester" className={styles.navLink}>
+                  <span className={styles.navIcon}>
+                    <LayoutDashboard size={20} />
+                  </span>
+                  <span className={styles.navText}>Testar Script</span>
+                </Link>
+              </li>
+
               {/* Dropdown: Ação Comercial */}
               <li
                 className={`${styles.navItem} ${expandedMenus["acaoComercial"] ? styles.navItemActive : ""

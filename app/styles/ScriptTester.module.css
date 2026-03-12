@@ -1,0 +1,126 @@
+.testerGrid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.leftColumn,
+.rightColumn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.subtitle {
+    margin-top: 6px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #e2e8f0;
+}
+
+.labelSmall {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 280px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+    padding: 14px;
+    font-family: "Fira Code", Consolas, monospace;
+    font-size: 13px;
+    resize: vertical;
+}
+
+.controlsRow {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.selectWrapper {
+    flex: 1;
+    min-width: 220px;
+}
+
+.select {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #111827;
+    padding: 10px 12px;
+}
+
+.primaryButton {
+    background: linear-gradient(120deg, #22d3ee, #6366f1);
+    color: #0f172a;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.primaryButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+.errorBox {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fecdd3;
+    border-radius: 10px;
+}
+
+.rightColumn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phonePlaceholder {
+    min-height: 300px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    color: #6b7280;
+    border: 1px dashed #e5e7eb;
+    border-radius: 16px;
+    background: #f9fafb;
+    text-align: center;
+    padding: 16px;
+}
+
+.popupWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+    .testerGrid {
+        grid-template-columns: 1fr;
+    }
+}
