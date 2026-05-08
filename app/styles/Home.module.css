@@ -17,11 +17,9 @@
 }
 
 .welcomeSection {
-  background: linear-gradient(
-    to right,
-    var(--primary-color),
-    var(--primary-hover)
-  );
+  background: linear-gradient(to right,
+      var(--primary-color),
+      var(--primary-hover));
   padding: 3rem 2rem;
   color: white;
   text-align: center;
@@ -87,7 +85,7 @@
 
 @media (min-width: 1024px) {
   .toolsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -106,6 +104,46 @@
   position: relative;
   overflow: hidden;
   height: 100%;
+}
+
+.toolCardButton {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-light);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+.darkTheme .toolCardButton {
+  background-color: #1e1e1e;
+  color: var(--text-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.toolCardButton:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.darkTheme .toolCardButton:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.toolCardButton:hover .toolArrow {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
 .darkTheme .toolCard {
@@ -166,6 +204,136 @@
   transform: translateX(3px);
 }
 
+/* Modal de seleção de comprovantes */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  width: 100%;
+  max-width: 760px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.darkTheme .modal {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.modalTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modalClose {
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #71717a;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+}
+
+.darkTheme .modalClose {
+  color: #a1a1aa;
+}
+
+.modalClose:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.darkTheme .modalClose:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modalBody {
+  padding: 0.75rem 1.25rem 1.25rem;
+}
+
+.modalHint {
+  margin: 0;
+  color: #71717a;
+  font-size: 0.95rem;
+}
+
+.darkTheme .modalHint {
+  color: #a1a1aa;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .modalGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.modalItem {
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.9rem 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.darkTheme .modalItem {
+  background: #171717;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.modalItem:hover {
+  transform: translateY(-1px);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.darkTheme .modalItem:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.modalItemTitle {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.modalItemSubtitle {
+  font-size: 0.9rem;
+  color: #71717a;
+  line-height: 1.35;
+}
+
+.darkTheme .modalItemSubtitle {
+  color: #a1a1aa;
+}
+
 /* Layout de duas colunas */
 .twoColumnSection {
   display: grid;
@@ -176,7 +344,7 @@
 
 @media (min-width: 768px) {
   .twoColumnSection {
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
   }
 }
 

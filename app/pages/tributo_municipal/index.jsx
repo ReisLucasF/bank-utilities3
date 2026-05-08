@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante de Tributo Municipal
-const municipalTaxReceiptConfig = {
+export const municipalTaxReceiptConfig = {
   title: "Gerar Comprovante - Tributo Municipal",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

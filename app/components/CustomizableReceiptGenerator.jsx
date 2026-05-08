@@ -38,15 +38,43 @@ const CustomizableReceiptGenerator = ({ config }) => {
     setIsBrowser(true);
   }, [config]);
 
-  // Efeito para verificar quando o texto muda
-  useEffect(() => {
-    if (logText.trim()) {
-      previewExtractedInfo();
-    } else {
-      setIsDataExtracted(false);
-      setIsButtonDisabled(true); // Desabilita o botão quando não há texto
+  // Comprimento mínimo do código de barras (44 = padrão FEBRABAN; linha digitável costuma ter 47)
+  const minBarcodeLen = config.minBarcodeLength ?? 44;
+
+  const isBarcodeRequired = (values) => {
+    if (config.requireBarcode === false) return false;
+    if (values?.possuiCodigo === "nao") return false;
+    return true;
+  };
+
+  const applyButtonState = (newData, textContent, values) => {
+    const trimmed = textContent.trim();
+    if (!trimmed) {
+      setIsButtonDisabled(true);
+      return;
     }
-  }, [logText]);
+    if (Object.keys(newData).length === 0) {
+      setIsButtonDisabled(true);
+      return;
+    }
+    const needBarcode = isBarcodeRequired(values);
+    const codigo = newData.codigoBarras;
+    if (needBarcode) {
+      if (!codigo || String(codigo).length < minBarcodeLen) {
+        setIsButtonDisabled(true);
+        return;
+      }
+    }
+    if (config.formFields) {
+      for (const field of config.formFields) {
+        if (field.required && !String(values[field.id] ?? "").trim()) {
+          setIsButtonDisabled(true);
+          return;
+        }
+      }
+    }
+    setIsButtonDisabled(false);
+  };
 
   // Função para lidar com mudanças nos campos do formulário
   const handleFormChange = (fieldId, value) => {
@@ -93,10 +121,6 @@ const CustomizableReceiptGenerator = ({ config }) => {
         );
         if (codigoBarrasMatch && codigoBarrasMatch[1]) {
           newData.codigoBarras = codigoBarrasMatch[1];
-          // Verifica se o código de barras tem pelo menos 47 caracteres
-          setIsButtonDisabled(codigoBarrasMatch[1].length < 47);
-        } else {
-          setIsButtonDisabled(true); // Se não tem código de barras, desabilita o botão
         }
 
         // NSU
@@ -209,15 +233,26 @@ const CustomizableReceiptGenerator = ({ config }) => {
         setExtractedData(newData);
         setIsDataExtracted(true);
       } else {
+        setExtractedData({});
         setIsDataExtracted(false);
-        setIsButtonDisabled(true); // Se não extraiu dados, desabilita o botão
       }
+      applyButtonState(newData, logText, formValues);
     } catch (error) {
       console.error("Erro ao extrair informações:", error);
       setIsDataExtracted(false);
       setIsButtonDisabled(true); // Em caso de erro, desabilita o botão
     }
   };
+
+  // Atualiza pré-visualização e estado do botão quando o LOG ou o formulário mudam
+  useEffect(() => {
+    if (logText.trim()) {
+      previewExtractedInfo();
+    } else {
+      setIsDataExtracted(false);
+      setIsButtonDisabled(true);
+    }
+  }, [logText, formValues, config, minBarcodeLen]);
 
   // Função para validar o formulário
   const validateForm = () => {
@@ -247,12 +282,16 @@ const CustomizableReceiptGenerator = ({ config }) => {
         isValid = false;
       }
 
-      // Verificar se o código de barras tem pelo menos 47 caracteres
-      if (codigoBarrasMatch && codigoBarrasMatch[1]) {
-        if (codigoBarrasMatch[1].length < 47) {
+      const minLen = config.minBarcodeLength ?? 44;
+      if (isBarcodeRequired(formValues)) {
+        if (!codigoBarrasMatch || !codigoBarrasMatch[1]) {
           textAreaRef.current.classList.add(styles.inputError);
           errorMessage =
-            "O código de barras deve ter pelo menos 47 caracteres.";
+            "O LOG deve conter a linha 'Codigo de Barras' com os dígitos do boleto.";
+          isValid = false;
+        } else if (codigoBarrasMatch[1].length < minLen) {
+          textAreaRef.current.classList.add(styles.inputError);
+          errorMessage = `O código de barras deve ter pelo menos ${minLen} caracteres.`;
           isValid = false;
         }
       }
@@ -686,19 +725,21 @@ const CustomizableReceiptGenerator = ({ config }) => {
             <label htmlFor={field.id} className={styles.label}>
               {field.label}
             </label>
-            <select
-              id={field.id}
-              ref={(el) => (formRefs.current[field.id] = el)}
-              className={styles.select}
-              value={formValues[field.id] || ""}
-              onChange={(e) => handleFormChange(field.id, e.target.value)}
-            >
-              {field.options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <div className={styles.selectWrapper}>
+              <select
+                id={field.id}
+                ref={(el) => (formRefs.current[field.id] = el)}
+                className={styles.select}
+                value={formValues[field.id] || ""}
+                onChange={(e) => handleFormChange(field.id, e.target.value)}
+              >
+                {field.options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         );
       default:
@@ -841,8 +882,8 @@ const CustomizableReceiptGenerator = ({ config }) => {
                   <li>Verifique se os dados foram detectados corretamente</li>
                   <li>Clique em "Gerar Comprovante" para baixar o PDF</li>
                   <li>
-                    Atenção: O código de barras deve ter pelo menos 47
-                    caracteres para gerar o comprovante
+                    Atenção: O código de barras costuma ter 44 dígitos (ou 47 na
+                    linha digitável). Confira se o LOG trouxe o trecho completo.
                   </li>
                 </>
               )}

@@ -204,7 +204,7 @@ export default function Layout({ children }) {
                     }`}
                 >
                   <li className={styles.submenuItem}>
-                    <Link href="/ficha" className={styles.submenuLink}>
+                    <Link href="/comprovante/ficha" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>
                         Ficha Compensação
@@ -212,26 +212,26 @@ export default function Layout({ children }) {
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
-                    <Link href="/consumo" className={styles.submenuLink}>
+                    <Link href="/comprovante/consumo" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>Consumo</span>
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
-                    <Link href="/fgts" className={styles.submenuLink}>
+                    <Link href="/comprovante/fgts" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>FGTS</span>
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
-                    <Link href="/gps" className={styles.submenuLink}>
+                    <Link href="/comprovante/gps" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>GPS</span>
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
                     <Link
-                      href="/tributo_municipal"
+                      href="/comprovante/tributo_municipal"
                       className={styles.submenuLink}
                     >
                       <span className={styles.submenuIcon}></span>
@@ -241,7 +241,7 @@ export default function Layout({ children }) {
                     </Link>
                   </li>
                   <li className={styles.submenuItem}>
-                    <Link href="/dae" className={styles.submenuLink}>
+                    <Link href="/comprovante/dae" className={styles.submenuLink}>
                       <span className={styles.submenuIcon}></span>
                       <span className={styles.submenuText}>DAE</span>
                     </Link>
@@ -334,7 +334,7 @@ export default function Layout({ children }) {
       <footer className={styles.footer}>
         <p>
           © {new Date().getFullYear()} Bank Utilities - Todos os direitos
-          reservados. | v1.1.2
+          reservados. | v1.1.3
         </p>
       </footer>
     </div>

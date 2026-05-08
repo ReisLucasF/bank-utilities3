@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useTheme } from "/context/ThemeContext";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
 import {
   FileText,
   MessageSquare,
@@ -21,6 +23,37 @@ import styles from "/styles/Home.module.css";
 
 export default function Home() {
   const { isDarkMode } = useTheme();
+  const router = useRouter();
+  const [isReceiptsOpen, setIsReceiptsOpen] = useState(false);
+  const [receiptItems, setReceiptItems] = useState([]);
+  const [isLoadingReceipts, setIsLoadingReceipts] = useState(false);
+
+  const receiptsTitle = useMemo(
+    () => (isLoadingReceipts ? "Carregando comprovantes..." : "Comprovantes"),
+    [isLoadingReceipts],
+  );
+
+  useEffect(() => {
+    if (!isReceiptsOpen) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setIsReceiptsOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isReceiptsOpen]);
+
+  useEffect(() => {
+    if (!isReceiptsOpen) return;
+    if (receiptItems.length > 0) return;
+
+    setIsLoadingReceipts(true);
+    fetch("/api/comprovantes")
+      .then((r) => r.json())
+      .then((data) => setReceiptItems(Array.isArray(data?.itens) ? data.itens : []))
+      .catch(() => setReceiptItems([]))
+      .finally(() => setIsLoadingReceipts(false));
+  }, [isReceiptsOpen, receiptItems.length]);
 
   return (
     <>
@@ -44,18 +77,22 @@ export default function Home() {
               <h2 className={styles.sectionTitle}>Acesso Rápido</h2>
             </div>
             <div className={styles.toolsGrid}>
-              <Link href="/recipt" className={styles.toolCard}>
+              <button
+                type="button"
+                className={styles.toolCardButton}
+                onClick={() => setIsReceiptsOpen(true)}
+              >
                 <div className={styles.toolIcon}>
                   <FileText size={32} />
                 </div>
                 <div className={styles.toolInfo}>
-                  <h3 className={styles.toolTitle}>Comprovantes</h3>
+                  <h3 className={styles.toolTitle}>{receiptsTitle}</h3>
                   <p className={styles.toolDescription}>
                     Gere comprovantes de forma simplificada
                   </p>
                 </div>
                 <ChevronRight className={styles.toolArrow} />
-              </Link>
+              </button>
 
               <Link href="/card-creator" className={styles.toolCard}>
                 <div className={styles.toolIcon}>
@@ -83,7 +120,7 @@ export default function Home() {
                 <ChevronRight className={styles.toolArrow} />
               </Link>
 
-              <Link href="/kbase" className={styles.toolCard}>
+              {/* <Link href="/kbase" className={styles.toolCard}>
                 <div className={styles.toolIcon}>
                   <Database size={32} />
                 </div>
@@ -94,13 +131,13 @@ export default function Home() {
                   </p>
                 </div>
                 <ChevronRight className={styles.toolArrow} />
-              </Link>
+              </Link> */}
             </div>
           </section>
 
           <div className={styles.twoColumnSection}>
             {/* Coluna da esquerda */}
-            <section className={styles.knowledgeSection}>
+            {/* <section className={styles.knowledgeSection}>
               <div className={styles.sectionHeader}>
                 <Book className={styles.sectionIcon} />
                 <h2 className={styles.sectionTitle}>Base de Conhecimento</h2>
@@ -121,7 +158,7 @@ export default function Home() {
                   Acessar Base de Conhecimento
                 </Link>
               </div>
-            </section>
+            </section> */}
 
             {/* Coluna da direita */}
             <section className={styles.upcomingSection}>
@@ -132,31 +169,88 @@ export default function Home() {
               <div className={styles.card}>
                 <div className={styles.upcomingList}>
                   <div className={styles.upcomingItem}>
-                    <div className={styles.upcomingStatus}>Lançada 11/11/2025</div>
+                    <div className={styles.upcomingStatus}>Lançada 08/05/2026</div>
                     <h3 className={styles.upcomingTitle}>
                       <PlusCircle className={styles.upcomingIcon} />
-                      Adição de layouts card com imagem à direita.
+                      Correção na geração de comprovantes
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      Agora é possível criar cards com imagem à direita.
+                      Notamos que alguns comprovantes estavam vindo com mais de 44 caracteres, o que estava causando erros na geração do comprovante.
+                      Corrigimos o problema e agora os comprovantes estão sendo gerados corretamente.
                     </p>
                   </div>
                   <div className={styles.upcomingItem}>
-                    <div className={styles.upcomingStatus}>Lançada 02/11/2025</div>
+                    <div className={styles.upcomingStatus}>Lançada 12/03/2026</div>
                     <h3 className={styles.upcomingTitle}>
                       <PlusCircle className={styles.upcomingIcon} />
-                      Refatoração do botão de fechar para popup
+                      Preview de scripts popup
                     </h3>
                     <p className={styles.upcomingDescription}>
-                      O botão de fechar foi ajustado para refletir melhor a tela de um dispositivo mobile.
+                      Adicionamos um preview de scripts que faz a engenharia reversa do script para o popup, gerando a imagem com base no txt gerado.
                     </p>
                   </div>
                 </div>
               </div>
             </section>
           </div>
+          
         </div>
       </div>
+
+      {isReceiptsOpen && (
+        <div
+          className={styles.modalOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Selecione um comprovante"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setIsReceiptsOpen(false);
+          }}
+        >
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Selecione o tipo de comprovante</h3>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setIsReceiptsOpen(false)}
+                aria-label="Fechar"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className={styles.modalBody}>
+              {isLoadingReceipts ? (
+                <p className={styles.modalHint}>Carregando lista…</p>
+              ) : receiptItems.length === 0 ? (
+                <p className={styles.modalHint}>
+                  Não foi possível carregar os comprovantes. Tente novamente.
+                </p>
+              ) : (
+                <div className={styles.modalGrid}>
+                  {receiptItems.map((item) => (
+                    <button
+                      key={item.tipo}
+                      type="button"
+                      className={styles.modalItem}
+                      onClick={() => {
+                        setIsReceiptsOpen(false);
+                        router.push(item.href);
+                      }}
+                    >
+                      <div className={styles.modalItemTitle}>{item.title}</div>
+                      {item.subtitle ? (
+                        <div className={styles.modalItemSubtitle}>{item.subtitle}</div>
+                      ) : null}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante de DAE-DAF (DARF)
-const daeDafReceiptConfig = {
+export const daeDafReceiptConfig = {
   title: "Gerar Comprovante - DARF",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

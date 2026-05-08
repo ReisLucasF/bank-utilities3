@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante de Ficha de Compensação
-const compensationSlipReceiptConfig = {
+export const compensationSlipReceiptConfig = {
   title: "Gerar Comprovante - Ficha de Compensação",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

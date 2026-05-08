@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante de Contas de Consumo
-const utilityBillReceiptConfig = {
+export const utilityBillReceiptConfig = {
   title: "Gerar Comprovante - Contas de Consumo",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

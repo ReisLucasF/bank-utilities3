@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante GPS
-const gpsReceiptConfig = {
+export const gpsReceiptConfig = {
   title: "Gerar Comprovante - GPS",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

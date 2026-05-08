@@ -1,5 +1,17 @@
 /* ReceiptGenerator.module.css - Melhorado */
 
+.container {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  color: var(--rg-text);
+  background-color: transparent;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
 .header {
   margin-bottom: 20px;
 }
@@ -13,6 +25,7 @@
 .subtitle {
   font-size: 0.95rem;
   margin-bottom: 20px;
+  color: var(--rg-muted);
 }
 
 .content {
@@ -48,20 +61,74 @@
 .textarea {
   width: 100%;
   padding: 16px;
-  background-color: #1a202c;
-  border: 1px solid #2d3748;
+  background-color: var(--rg-field-bg);
+  border: 1px solid var(--rg-field-border);
   border-radius: 8px;
-  color: #e2e8f0;
+  color: var(--rg-field-text);
   font-size: 14px;
   resize: none;
   transition: all 0.2s ease;
 }
 
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--rg-field-placeholder);
+}
+
+.input:hover,
+.textarea:hover {
+  background-color: var(--rg-field-hover-bg);
+  border-color: var(--rg-field-hover-border);
+}
+
 .input:focus,
-.textarea:focus {
+.textarea:focus,
+.select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  border-color: var(--rg-focus-border);
+  box-shadow: 0 0 0 2px var(--rg-focus-ring);
+}
+
+/* Select alinhado ao tema escuro dos outros campos */
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  width: 100%;
+  padding: 16px 48px 16px 16px;
+  background-color: var(--rg-field-bg);
+  border: 1px solid var(--rg-field-border);
+  border-radius: 8px;
+  color: var(--rg-field-text);
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color-scheme: dark;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px 18px;
+}
+
+.select:hover {
+  border-color: var(--rg-field-hover-border);
+  background-color: var(--rg-field-hover-bg);
+}
+
+.select option,
+.select optgroup {
+  background-color: var(--rg-field-bg);
+  color: var(--rg-field-text);
+  padding: 12px;
 }
 
 .textarea {
@@ -70,8 +137,12 @@
 }
 
 .inputError {
-  border-color: #f56565 !important;
-  background-color: rgba(245, 101, 101, 0.1) !important;
+  border-color: var(--rg-danger) !important;
+  background-color: var(--rg-danger-bg) !important;
+}
+
+.select.inputError {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23fca5a5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 }
 
 .buttonContainer {
@@ -122,8 +193,8 @@
 .previewContainer,
 .instructionsContainer {
   padding: 24px;
-  background-color: #1f2937;
-  border: 1px solid #2d3748;
+  background-color: var(--rg-surface-bg);
+  border: 1px solid var(--rg-surface-border);
   border-radius: 8px;
 }
 
@@ -133,7 +204,7 @@
   align-items: center;
   font-size: 1rem;
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--rg-text);
   margin-bottom: 16px;
 }
 
@@ -155,7 +226,7 @@
 }
 
 .noDataMessage {
-  color: #a0aec0;
+  color: var(--rg-muted);
   font-size: 14px;
 }
 
@@ -168,7 +239,7 @@
 .infoItem,
 .infoItemFull {
   padding: 8px 0;
-  border-bottom: 1px solid #2d3748;
+  border-bottom: 1px solid var(--rg-surface-border);
 }
 
 .infoItemFull {
@@ -178,12 +249,12 @@
 .infoLabel {
   font-size: 0.875rem;
   margin-right: 4px;
-  color: #e2e8f0 !important;
+  color: var(--rg-text) !important;
 }
 
 .infoValue {
   font-weight: 500;
-  color: #e2e8f0;
+  color: var(--rg-text);
   font-size: 0.875rem;
   word-break: break-all;
 }
@@ -195,7 +266,7 @@
 }
 
 .instructionsList li {
-  color: #a0aec0;
+  color: var(--rg-muted);
   font-size: 0.875rem;
   margin-bottom: 8px;
   line-height: 1.5;

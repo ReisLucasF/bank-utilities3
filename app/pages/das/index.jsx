@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante DAS
-const dasReceiptConfig = {
+export const dasReceiptConfig = {
   title: "Gerar Comprovante - DAS",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 

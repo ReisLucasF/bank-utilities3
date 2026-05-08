@@ -18,6 +18,46 @@
   --footer-text-dark: #d1d5db;
   --border-light: #e5e7eb;
   --border-dark: #374151;
+
+  /* ReceiptGenerator (campos/containers) - tema claro (default) */
+  --rg-page-bg: #f5f7fa;
+  --rg-surface-bg: #ffffff;
+  --rg-surface-border: rgba(0, 0, 0, 0.08);
+  --rg-text: #111827;
+  --rg-muted: #6b7280;
+
+  --rg-field-bg: #ffffff;
+  --rg-field-border: #e5e7eb;
+  --rg-field-text: #111827;
+  --rg-field-placeholder: #9ca3af;
+  --rg-field-hover-bg: #f9fafb;
+  --rg-field-hover-border: #d1d5db;
+
+  --rg-focus-ring: rgba(59, 130, 246, 0.28);
+  --rg-focus-border: #3b82f6;
+  --rg-danger: #ef4444;
+  --rg-danger-bg: rgba(239, 68, 68, 0.08);
+}
+
+/* Tema escuro global (aplicado via ThemeContext no <html>) */
+html.dark-theme {
+  --rg-page-bg: #0b1220;
+  --rg-surface-bg: #0f172a;
+  --rg-surface-border: rgba(255, 255, 255, 0.08);
+  --rg-text: #e5e7eb;
+  --rg-muted: #9ca3af;
+
+  --rg-field-bg: #111827;
+  --rg-field-border: #334155;
+  --rg-field-text: #f3f4f6;
+  --rg-field-placeholder: #94a3b8;
+  --rg-field-hover-bg: #0b1220;
+  --rg-field-hover-border: #475569;
+
+  --rg-focus-ring: rgba(59, 130, 246, 0.35);
+  --rg-focus-border: #60a5fa;
+  --rg-danger: #f87171;
+  --rg-danger-bg: rgba(248, 113, 113, 0.12);
 }
 
 html,

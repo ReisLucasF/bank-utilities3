@@ -250,7 +250,7 @@ const PopupCreator = () => {
           reject(new Error("Resolução da imagem muito alta para o layout 333"));
         } else {
           // Verificar o tamanho do arquivo da imagem (limite de 100KB)
-          const limiteTamanhoBytes = 100 * 1024; // 100 KB em bytes
+          const limiteTamanhoBytes = 1000 * 1024; // 100 KB em bytes
           if (imagem.size > limiteTamanhoBytes) {
             alert("O tamanho da imagem não pode ultrapassar 100KB.");
             setStatusArquivo(
@@ -304,7 +304,7 @@ const PopupCreator = () => {
             }}
           >
             <div className={styles.btnFechar} style={{ color: corBtnFechar }}>
-              X {textoBtnFechar}
+              {textoBtnFechar} X
             </div>
             <div
               className={styles.popupImageTop}

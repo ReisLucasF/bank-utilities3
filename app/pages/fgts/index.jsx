@@ -2,7 +2,7 @@ import React from "react";
 import CustomizableReceiptGenerator from "/components/CustomizableReceiptGenerator";
 
 // Configuração para comprovante FGTS
-const fgtsReceiptConfig = {
+export const fgtsReceiptConfig = {
   title: "Gerar Comprovante - FGTS",
   subtitle: "Preencha os campos abaixo para gerar o comprovante de pagamento.",
 
