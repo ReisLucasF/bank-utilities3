@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comprovantes</title>
+    <link rel="stylesheet" href="css/receipt-generator.css" />
+  </head>
+  <body class="rg-index-body">
+    <main class="rg-index-wrap">
+      <header class="rg-index-hero">
+        <div class="rg-index-hero-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h1 class="rg-index-title">Comprovantes</h1>
+        <p class="rg-index-lead">Selecione o tipo de comprovante que deseja gerar.</p>
+      </header>
+
+      <ul id="tipo-list" class="rg-index-grid"></ul>
+    </main>
+
+    <script src="js/receipt-utils.js"></script>
+    <script src="js/configs.js"></script>
+    <script>
+      (function () {
+        function displayTitle(tipo, cfg) {
+          if (window.ReceiptUtils) return ReceiptUtils.getDisplayLabel(tipo, cfg);
+          return cfg.title || tipo;
+        }
+
+        var list = document.getElementById("tipo-list");
+        var configs = window.RECEIPT_CONFIGS || {};
+
+        Object.keys(configs)
+          .sort(function (a, b) {
+            return displayTitle(a, configs[a]).localeCompare(displayTitle(b, configs[b]), "pt-BR");
+          })
+          .forEach(function (tipo) {
+            var cfg = configs[tipo];
+            var li = document.createElement("li");
+            var a = document.createElement("a");
+            a.className = "rg-index-card";
+            a.href = "comprovante.html?tipo=" + encodeURIComponent(tipo);
+            a.innerHTML =
+              '<span class="rg-index-card-icon" aria-hidden="true">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+              '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
+              '<polyline points="14 2 14 8 20 8"/></svg></span>' +
+              '<span class="rg-index-card-text">' +
+              '<strong class="rg-index-card-title">' + displayTitle(tipo, cfg) + "</strong>" +
+              "</span>" +
+              '<span class="rg-index-card-arrow" aria-hidden="true">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+              '<path d="M9 18l6-6-6-6"/></svg></span>';
+            li.appendChild(a);
+            list.appendChild(li);
+          });
+      })();
+    </script>
+  </body>
+</html>

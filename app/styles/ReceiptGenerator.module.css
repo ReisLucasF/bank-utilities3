@@ -12,8 +12,29 @@
   margin-bottom: 20px;
 }
 
-.header {
-  margin-bottom: 20px;
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--rg-muted, #6b7280);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--rg-focus-border, #3b82f6);
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.backIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .title {

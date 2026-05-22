@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comprovante</title>
+    <link rel="stylesheet" href="css/receipt-generator.css" />
+  </head>
+  <body class="rg-page-body">
+    <!-- Apenas o main content — copie este bloco para ASP.NET -->
+    <div id="receipt-root"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
+    <script src="js/receipt-utils.js"></script>
+    <script src="js/configs.js"></script>
+    <script src="js/conditional-rules.js"></script>
+    <script src="js/custom-extractors.js"></script>
+    <script src="js/receipt-engine.js"></script>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var tipo = params.get("tipo") || "consumo";
+        var logoUrl = params.get("logo") || "logomerc.png";
+        var dark = params.get("theme") === "dark";
+
+        if (dark) {
+          document.body.classList.add("rg-dark");
+        }
+
+        if (!window.RECEIPT_CONFIGS || !window.RECEIPT_CONFIGS[tipo]) {
+          document.getElementById("receipt-root").innerHTML =
+            '<section class="rg-page"><main class="rg-page-main"><p class="rg-page-lead">Tipo inválido: <code>' +
+            tipo +
+            "</code>. Veja os tipos disponíveis em <a href=\"index.html\">index.html</a>.</p></main></section>";
+          return;
+        }
+
+        document.title = (window.ReceiptUtils && ReceiptUtils.getDisplayLabel(tipo, window.RECEIPT_CONFIGS[tipo])) || "Comprovante";
+
+        ReceiptGenerator.init({
+          container: "#receipt-root",
+          tipo: tipo,
+          logoUrl: logoUrl,
+          backHref: "index.html",
+          backLabel: "Voltar",
+        });
+      })();
+    </script>
+  </body>
+</html>
