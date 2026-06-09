@@ -221,6 +221,21 @@ const CardCreator = () => {
   const gerarScript = (e) => {
     e.preventDefault();
 
+    const possuiEmoji = (texto) => /\p{Extended_Pictographic}/u.test(texto);
+
+    if (possuiEmoji(titulo)) {
+      alert("O título não pode conter emojis.");
+      return;
+    }
+    if (possuiEmoji(subtitulo)) {
+      alert("O subtítulo não pode conter emojis.");
+      return;
+    }
+    if (textoCTA && possuiEmoji(textoCTA)) {
+      alert("O texto da CTA não pode conter emojis.");
+      return;
+    }
+
     // Validações básicas
     if (!imagem) {
       alert("É necessário selecionar uma imagem.");
@@ -334,9 +349,9 @@ const CardCreator = () => {
         // Link
         idCATFinal = "0";
         metodo = "Link";
-        linkValue = link || "";
+        linkValue = link ? link.trim() : "";
 
-        if (!link) {
+        if (!linkValue) {
           alert("É necessário informar um link de redirecionamento.");
           setStatusArquivo("Erro ao gerar script: falta link");
           setStatusArquivoCor("red");

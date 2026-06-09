@@ -457,9 +457,9 @@ const PopupCreator = () => {
           // Link
           idCATFinal = "0";
           metodo = "Link";
-          linkValue = link || "";
+          linkValue = link ? link.trim() : "";
 
-          if (!link) {
+          if (!linkValue) {
             alert("É necessário informar um link de redirecionamento.");
             setStatusArquivo("Erro ao gerar script: falta link");
             setStatusArquivoCor("red");
