@@ -234,5 +234,26 @@
   {
     "value": "69",
     "text": "Portabilidade de Benefícios Digitada"
+  },
+
+  {
+    "value": "70",
+    "text": "Oferta CP na Jornada Empréstimo Consignado"
+  },
+  {
+    "value": "94",
+    "text": "Portabilidade via Open Finance"
+  },
+  {
+    "value": "95",
+    "text": "Inteligencia Artificial - PushDeepLink"
+  },
+  {
+    "value": "96",
+    "text": "Portabilidade de Salário"
+  },
+  {
+    "value": "97",
+    "text": "Meu+"
   }
 ]
